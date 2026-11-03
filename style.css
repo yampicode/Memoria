@@ -333,7 +333,7 @@ text-align: center;
 }
 
 .modal-overlay,
-.gamer-containet {
+.gamer-container{
     position: fixed;
     top: 0;
     left: 0;
