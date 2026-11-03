@@ -176,7 +176,7 @@ export function actualizarUILogin() {
                 </span>    </button>
 
     
-<span style="color: #fff; font-weight: bold;">
+<span class="username">
 <span class="icofont-duotone icofont-user"></span> ${username} </span> 
 </div>
 `;
