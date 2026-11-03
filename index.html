@@ -74,6 +74,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 
 <main class="menu-principal" id="menu-principal">
+<!-- Barra de usuario (arriba del menú) -->
+<div style="position: absolute; top: 20px; right: 20px; display: flex; align-items: center; gap: 10px; z-index: 10;">
+    <button id="btn-login-menu" class="btn__secundario" style="padding: 8px 16px;">
+        Iniciar Sesión
+    </button>
+    <div id="user-info-menu" style="display: none; align-items: center; gap: 5px;"></div>
+</div>
     <div class="contenedor">
         <div class="cont__btn">
             <!-- Botones en pantalla móvil -->
@@ -87,6 +94,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </main>
 
 <!-- VISTA DEL JUEGO (Oculta al inicio, se muestra al dar click en Jugar) -->
+
 <section id="pantalla-juego" class="game-container" style="display: none;">
     <!-- Botones en tamaño de PC -->
     <button id="btn-volver-menu" class="btn__secundario" title="Volver" data-i18n-title="titulo_volver">
@@ -186,6 +194,55 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </a>
         </p>
         <button class="btn-cerrar-modal" data-i18n="cerrar">Cerrar</button>
+    </div>
+</div>
+
+<!-- MODAL: Login / Registro -->
+<div id="modal-login" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+        <h2 id="login-titulo">Iniciar Sesión</h2>
+        
+        <!-- Formulario -->
+        <form id="form-auth" style="display: flex; flex-direction: column; gap: 12px; margin: 20px 0;">
+            <input 
+                type="email" 
+                id="auth-email" 
+                placeholder="Correo electrónico" 
+                required
+                style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 15px;"
+            >
+            <input 
+                type="password" 
+                id="auth-password" 
+                placeholder="Contraseña (mín. 6 caracteres)" 
+                required
+                minlength="6"
+                style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 15px;"
+            >
+            <input 
+                type="text" 
+                id="auth-username" 
+                placeholder="Nombre de usuario (solo al registrarse)" 
+                style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 15px; display: none;"
+            >
+            
+            <button type="submit" id="btn-auth-submit" class="btn" style="margin-top: 5px;">
+                Entrar
+            </button>
+        </form>
+        
+        <!-- Mensaje de error / éxito -->
+        <p id="auth-mensaje" style="text-align: center; font-size: 14px; margin: 10px 0; min-height: 20px;"></p>
+        
+        <!-- Alternar entre login y registro -->
+        <p style="text-align: center; font-size: 14px;">
+            <span id="auth-cambiar-texto">¿No tienes cuenta?</span>
+            <a href="#" id="auth-cambiar-modo" style="color: #0056b3; font-weight: bold;">
+                Regístrate
+            </a>
+        </p>
+        
+        <button class="btn-cerrar-modal" style="margin-top: 15px;">Cerrar</button>
     </div>
 </div>
 
