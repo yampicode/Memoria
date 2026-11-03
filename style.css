@@ -329,11 +329,11 @@ text-align: center;
 /* Estilos generales para los modales */
 
 .game-container {
-    padding: 20px 0 0;
+    padding: 10px 0 0;
+z-index: 10000;
 }
 
-.modal-overlay,
-.gamer-container{
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -343,7 +343,6 @@ text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-z-index: 10000;
 }
 
 .modal-card {
