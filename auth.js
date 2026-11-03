@@ -85,12 +85,13 @@ formAuth.addEventListener('submit', async (e) => {
             }
             
             const { data, error } = await supabase.auth.signUp({
-                email,
-                password,
-                options: {
-                    data: { username: username } // se pasa al trigger
-                }
-            });
+    email,
+    password,
+    options: {
+        data: { username: username },
+        emailRedirectTo: 'https://memoria-ymujica.vercel.app' // o la URL donde quieras que vuelva
+    }
+});
             
             if (error) throw error;
             
