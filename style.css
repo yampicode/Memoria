@@ -40,8 +40,9 @@ position: relative;
     width: 100%;
 }
 
-.login {
- 
+.boton__flex {
+ display: flex;
+flex-direction: column;
 }
 
 .contenedor {
