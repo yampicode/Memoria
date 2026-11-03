@@ -43,10 +43,8 @@ position: relative;
 
 .login {
   position: absolute;
-top: 5px;
-right: ;
+top: 0;
 display: flex;
-align-items:;
 gap: 10px;
 }
 
