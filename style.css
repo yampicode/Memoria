@@ -324,9 +324,9 @@ text-align: center;
 /* Estilos generales para los modales */
 
 .game-container {
-background-color: var(--color-oscuro);
+background-color: #001f54;
     padding: 8px 0 0;
-z-index: 100000;
+z-index: 10000;
 }
 
 .modal-overlay {
