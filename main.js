@@ -1,5 +1,6 @@
 import { categoriasFiguras } from './categorias.js';
 import { t, traducciones } from './traducciones.js';
+import { abrirModalLogin, cerrarModalLogin, actualizarUILogin } from './auth.js';
 
 // ==========================================
 // SISTEMA DE INTERNACIONALIZACIÓN (i18n)
