@@ -332,7 +332,8 @@ text-align: center;
     padding: 20px 0 0;
 }
 
-.modal-overlay {
+.modal-overlay,
+.gamer-containet {
     position: fixed;
     top: 0;
     left: 0;
