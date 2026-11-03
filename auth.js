@@ -176,6 +176,9 @@ export function actualizarUILogin() {
                 </span>    </button>
 
     
+<span style="color: #333; font-weight: bold;">
+<span class="icofont-duotone icofont-user"></span> ${username} </span>
+
             `;
             document.getElementById('btn-logout').addEventListener('click', cerrarSesion);
         }
