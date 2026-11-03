@@ -35,6 +35,10 @@ body.dark-mode .tablero {
     background-color: #1e1e1e;
 }
 
+/* Ocultar la barra de usuario cuando la pantalla de juego esté activa */
+body:has(#pantalla-juego[style*="display: block"]) #top-bar-user {
+    display: none !important;
+}
 
 .header {
 position: relative;
