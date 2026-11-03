@@ -36,7 +36,7 @@ body.dark-mode .tablero {
 }
 
 .header {
-position: relative;
+position: ;
     width: 100%;
 }
 
@@ -205,7 +205,8 @@ filter: drop-shadow( 0 4px 6px var(--color-claro));
     transform-style: preserve-3d;
 }
 
-.card.flipped .card-inner {
+.card.flipped
+.card-inner {
     transform: rotateY(180deg);
 }
 
@@ -329,13 +330,14 @@ background-color: background-color: var(--color-oscuro);
     padding: 8px 0 0;
 z-index: ;
 }
+
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--color-oscuro);
+    background: #fff /*var(--color-oscuro)*;
     display: none; /* Oculto por defecto para que no aparezcan solos */
     justify-content: center;
     align-items: center;
