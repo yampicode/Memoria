@@ -46,16 +46,17 @@ flex-direction: column;
 }
 
 .username {
+align-items: center;
 color: var(--color-primary);
-font-size: 1em;
-font-weigth: bold;
+font-size: 1.3em;
+font-weight: bold;
+padding: 5px 0;
 text-aline: center;
 }
 
 .contenedor {
     width: 85%;
     margin: 0 auto;
-    overflow:;
     max-width: 1200px;
     padding: 20px 0 50px 0;
 }
