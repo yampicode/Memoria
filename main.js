@@ -643,4 +643,15 @@ btnReiniciar.onclick = () => {
     crearTablero();
 }
 
+// ==========================================
+// CONEXIÓN CON EL SISTEMA DE LOGIN
+// ==========================================
+document.getElementById('btn-login-menu')?.addEventListener('click', () => {
+    abrirModalLogin();
+});
+
+document.querySelector('#modal-login .btn-cerrar-modal')?.addEventListener('click', () => {
+    cerrarModalLogin();
+});
+
 document.addEventListener("DOMContentLoaded", crearTablero);
