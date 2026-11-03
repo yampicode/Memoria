@@ -171,10 +171,11 @@ export function actualizarUILogin() {
             const username = usuarioActual.user_metadata?.username 
                 || usuarioActual.email.split('@')[0];
             userInfo.innerHTML = `
-                <span style="color: #333; font-weight: bold;">
-                    👤 ${username}
-                </span>
-                <span id="btn-logout" style="margin-left: 5px; color: white; cursor: pointer;" class="icofont-duotone icofont-sign-out">
+<span id="btn-logout" style="margin-left: 5px; color: white; cursor: pointer;" class="icofont-duotone icofont-sign-out">
+                </span>              
+
+<span style="color: #333; font-weight: bold;">
+                    <span class="icofont-duotone icofont-user"></span> ${username}
                 </span>
             `;
             document.getElementById('btn-logout').addEventListener('click', cerrarSesion);
