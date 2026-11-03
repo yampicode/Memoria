@@ -45,6 +45,13 @@ position: relative;
 flex-direction: column;
 }
 
+.username {
+color: var(--color-primary);
+font-size: 1em;
+font-weigth: bold;
+text-aline: center;
+}
+
 .contenedor {
     width: 85%;
     margin: 0 auto;
