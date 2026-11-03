@@ -126,7 +126,35 @@ function reproducirEfectoSonido(tipo) {
         });
     }
 }
-MANEJO
+
+// --- MANEJO DE PANTALLAS ---
+const btnJugar = document.getElementById('btn-jugar');
+const menuPrincipal = document.getElementById('menu-principal');
+const pantallaJuego = document.getElementById('pantalla-juego');
+const btnVolverMenu = document.getElementById('btn-volver-menu');
+const img = document.getElementById('img');
+const topBarUser = document.getElementById('top-bar-user'); // <-- NUEVA LÍNEA
+
+btnJugar.addEventListener('click', () => {
+    reproducirEfectoSonido('clic');
+    menuPrincipal.style.display = 'none';
+    footer.style.display = 'none';
+    img.style.display = 'none';
+    if (topBarUser) topBarUser.style.display = 'none'; // <-- OCULTAR AQUÍ
+    pantallaJuego.style.display = 'block';
+    actualizarPanelEstadisticas();
+    actualizarBotonesJuego();
+});
+
+btnVolverMenu.addEventListener('click', () => {
+    reproducirEfectoSonido('clic');
+    pantallaJuego.style.display = 'none';
+    footer.style.display = 'block';
+    img.style.display = 'block';
+    if (topBarUser) topBarUser.style.display = 'flex'; // <-- MOSTRAR AQUÍ (usamos flex porque así lo definimos)
+    menuPrincipal.style.display = 'flex';
+});
+
 const btnSalir = document.getElementById('btn-salir');
 
 if (btnSalir) {
