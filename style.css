@@ -41,6 +41,15 @@ position: relative;
     width: ;
 }
 
+.login {
+  position: absolute;
+top: 10px;
+right: 10px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
 .contenedor {
     width: 90%;
     margin: 0 auto;
