@@ -330,7 +330,7 @@ background-color: background-color: var(--color-oscuro);
     padding: 8px 0 0;
 z-index: 10000;
 }
-/*
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -343,7 +343,7 @@ z-index: 10000;
     align-items: center;
 z-index: 10000;
 }
-*/
+
 
 .modal-card {
     background: white;
