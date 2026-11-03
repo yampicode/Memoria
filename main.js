@@ -126,32 +126,7 @@ function reproducirEfectoSonido(tipo) {
         });
     }
 }
-
-// --- MANEJO DE PANTALLAS ---
-const btnJugar = document.getElementById('btn-jugar');
-const menuPrincipal = document.getElementById('menu-principal');
-const pantallaJuego = document.getElementById('pantalla-juego');
-const btnVolverMenu = document.getElementById('btn-volver-menu');
-const img = document.getElementById('img');
-
-btnJugar.addEventListener('click', () => {
-    reproducirEfectoSonido('clic');
-    menuPrincipal.style.display = 'none';
-    footer.style.display = 'none';
-    img.style.display = 'none';
-    pantallaJuego.style.display = 'block';
-    actualizarPanelEstadisticas(); // Actualizar con el idioma actual
-    actualizarBotonesJuego();
-});
-
-btnVolverMenu.addEventListener('click', () => {
-    reproducirEfectoSonido('clic');
-    pantallaJuego.style.display = 'none';
-    footer.style.display = 'block';
-    img.style.display = 'block';
-    menuPrincipal.style.display = 'flex';
-});
-
+MANEJO
 const btnSalir = document.getElementById('btn-salir');
 
 if (btnSalir) {
