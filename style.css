@@ -324,7 +324,12 @@ text-align: center;
 /* Estilos generales para los modales */
 
 .game-container {
-background-color: ;
+background-color: background-color: var(--color-oscuro);
+position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     padding: 8px 0 0;
 z-index: 10000;
 }
@@ -335,7 +340,7 @@ z-index: 10000;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--color-oscuro);
+    
     display: flex;
     justify-content: center;
     align-items: center;
