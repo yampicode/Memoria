@@ -36,15 +36,14 @@ body.dark-mode .tablero {
 }
 
 .header {
-position: ;
+position: relative;
     width: 100%;
 }
 
 .login {
-  position: ;
+  position: position;
 top: 20px;
 left:10px;
-z-index:0;
 }
 
 .contenedor {
