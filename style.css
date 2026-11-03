@@ -395,7 +395,7 @@ text-align: center;
     display: none; /* Oculto por defecto para que no aparezcan solos */
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Asegura que esté por encima de todo */
+    z-index: 10000; /* Asegura que esté por encima de todo */
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
