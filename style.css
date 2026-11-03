@@ -48,6 +48,7 @@ flex-direction: column;
 .username {
 align-items: center;
 color: var(--color-primary);
+display: block;
 font-size: 1.3em;
 font-weight: bold;
 padding: 5px 0;
