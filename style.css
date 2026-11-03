@@ -37,6 +37,7 @@ body.dark-mode .tablero {
 
 
 .header {
+position: relative;
     width: 100%;
 }
 
