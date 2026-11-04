@@ -675,21 +675,53 @@ document.querySelector('#modal-login .btn-cerrar-modal')?.addEventListener('clic
 document.addEventListener('usuarioLogueado', async (e) => {
     const user = e.detail.user;
 
+    // 1. Leer lo que tenemos en el localStorage (como invitado) ANTES de borrarlo
+    const invitadoScore = parseInt(localStorage.getItem('scoreTotal')) || 0;
+    const invitadoNivel = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
+
+    // 2. Cargar datos de la nube
     const statsDB = await cargarStatsDesdeDB(user.id);
 
     if (statsDB) {
-        scoreTotal = statsDB.score_total;
+        // Si ya tenía progreso en la nube, comparamos
+        
+        // Nos quedamos con el mayor Score (por si jugó como invitado en otro dispositivo)
+        scoreTotal = Math.max(statsDB.score_total, invitadoScore);
+        
+        // Nos quedamos con el nivel más alto
+        indiceCategoriaActual = Math.max(statsDB.indice_categoria, invitadoNivel);
+
+        // Las vidas, victorias y derrotas las tomamos de la nube para no hacer trampa
         vidas = statsDB.vidas;
         victorias = statsDB.victorias;
         derrotas = statsDB.derrotas;
         mejorTiempo = statsDB.mejor_tiempo;
-        indiceCategoriaActual = statsDB.indice_categoria;
+
+        // Si el progreso de invitado era mayor, lo actualizamos en la nube
+        if (invitadoScore > statsDB.score_total || invitadoNivel > statsDB.indice_categoria) {
+            await guardarStatsEnDB(user.id, {
+                scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
+            });
+        }
+
     } else {
+        // Si es su primera vez en la nube, subimos lo que tenga en localStorage
         await guardarStatsEnDB(user.id, {
-            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
+            scoreTotal: invitadoScore, 
+            vidas, 
+            victorias, 
+            derrotas, 
+            mejorTiempo, 
+            indiceCategoriaActual: invitadoNivel
         });
     }
 
+    // 3. Borrar el localStorage de invitado para que no se mezcle en el futuro
+    // (Opcional: lo puedes dejar si quieres que el invitado mantenga su progreso si cierra sesión)
+    // localStorage.removeItem('scoreTotal');
+    // localStorage.removeItem('indiceCategoriaActual');
+
+    // 4. Actualizar la pantalla
     actualizarUI();
     crearTablero();
 });
