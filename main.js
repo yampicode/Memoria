@@ -671,33 +671,43 @@ document.querySelector('#modal-login .btn-cerrar-modal')?.addEventListener('clic
 // SINCRONIZACIÓN CON LA NUBE
 // ==========================================
 
-// 1. Cuando el usuario inicia sesión
+// 1. Cuando el usuario inicia sesión o se registra
 document.addEventListener('usuarioLogueado', async (e) => {
     const user = e.detail.user;
 
-    // 1. Leer lo que tenemos en el localStorage (como invitado) ANTES de borrarlo
+    // 1. Leer lo que tenemos en el localStorage (como invitado)
     const invitadoScore = parseInt(localStorage.getItem('scoreTotal')) || 0;
     const invitadoNivel = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
+    const invitadoMejorTiempo = parseInt(localStorage.getItem('mejorTiempo')) || null;
+    const invitadoVictorias = parseInt(localStorage.getItem('victorias')) || 0;
 
     // 2. Cargar datos de la nube
     const statsDB = await cargarStatsDesdeDB(user.id);
 
     if (statsDB) {
-        // Si ya tenía progreso en la nube, comparamos
+        // --- EL USUARIO YA TIENE DATOS EN LA NUBE ---
         
-        // Nos quedamos con el mayor Score (por si jugó como invitado en otro dispositivo)
+        // Regla 1: El Score Total más alto gana
         scoreTotal = Math.max(statsDB.score_total, invitadoScore);
         
-        // Nos quedamos con el nivel más alto
+        // Regla 2: El nivel más avanzado gana
         indiceCategoriaActual = Math.max(statsDB.indice_categoria, invitadoNivel);
+        
+        // Regla 3: El mejor tiempo (el menor número de segundos) gana
+        if (invitadoMejorTiempo && (!statsDB.mejor_tiempo || invitadoMejorTiempo < statsDB.mejor_tiempo)) {
+            mejorTiempo = invitadoMejorTiempo;
+        } else {
+            mejorTiempo = statsDB.mejor_tiempo;
+        }
 
-        // Las vidas, victorias y derrotas las tomamos de la nube para no hacer trampa
+        // Regla 4: Sumamos las victorias (porque el invitado pudo haber ganado rondas)
+        victorias = statsDB.victorias + invitadoVictorias;
+        
+        // Las vidas y derrotas las tomamos de la nube
         vidas = statsDB.vidas;
-        victorias = statsDB.victorias;
         derrotas = statsDB.derrotas;
-        mejorTiempo = statsDB.mejor_tiempo;
 
-        // Si el progreso de invitado era mayor, lo actualizamos en la nube
+        // Si los datos del invitado mejoraron la cuenta, actualizamos la nube
         if (invitadoScore > statsDB.score_total || invitadoNivel > statsDB.indice_categoria) {
             await guardarStatsEnDB(user.id, {
                 scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
@@ -705,23 +715,34 @@ document.addEventListener('usuarioLogueado', async (e) => {
         }
 
     } else {
-        // Si es su primera vez en la nube, subimos lo que tenga en localStorage
+        // --- ES UNA CUENTA NUEVA (O VACÍA) ---
+        // Le pasamos TODOS los datos del invitado a la nueva cuenta
+        scoreTotal = invitadoScore;
+        indiceCategoriaActual = invitadoNivel;
+        mejorTiempo = invitadoMejorTiempo;
+        victorias = invitadoVictorias;
+        
+        // Las vidas se reinician a 7 para la nueva cuenta, o mantenemos las del invitado
+        vidas = parseInt(localStorage.getItem('vidas')) || 7;
+        derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
+
+        // Guardamos todo en la nube para esta nueva cuenta
         await guardarStatsEnDB(user.id, {
-            scoreTotal: invitadoScore, 
-            vidas, 
-            victorias, 
-            derrotas, 
-            mejorTiempo, 
-            indiceCategoriaActual: invitadoNivel
+            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
         });
     }
 
-    // 3. Borrar el localStorage de invitado para que no se mezcle en el futuro
-    // (Opcional: lo puedes dejar si quieres que el invitado mantenga su progreso si cierra sesión)
-    // localStorage.removeItem('scoreTotal');
-    // localStorage.removeItem('indiceCategoriaActual');
+    // 🧹 LIMPIEZA IMPORTANTE: 
+    // Borramos el progreso de invitado del localStorage.
+    // Así, si cierra sesión, empezará de cero como invitado y no verá los datos de esta cuenta.
+    localStorage.removeItem('scoreTotal');
+    localStorage.removeItem('vidas');
+    localStorage.removeItem('victorias');
+    localStorage.removeItem('derrotas');
+    localStorage.removeItem('mejorTiempo');
+    localStorage.removeItem('indiceCategoriaActual');
 
-    // 4. Actualizar la pantalla
+    // Actualizar la pantalla
     actualizarUI();
     crearTablero();
 });
