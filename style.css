@@ -223,7 +223,7 @@ filter: drop-shadow( 0 4px 6px var(--color-claro));
 .card-back {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 90%;
     backface-visibility: hidden;
     color: var(--color-yellow);
     display: flex;
@@ -329,6 +329,7 @@ body.sin-animaciones .modal-overlay {
 }
 
 .pie {
+color: var(--color-primary);
 font-size: 0.7em;
 text-align: center;
 }
@@ -337,7 +338,6 @@ text-align: center;
 
 .game-container {
 display: none;
-background-color: background-color: var(--color-oscuro);
     padding: 8px 0 0;
 z-index: ;
 }
