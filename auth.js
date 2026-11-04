@@ -191,14 +191,19 @@ export function actualizarUILogin() {
 // ==========================================
 // ESCUCHAR CAMBIOS DE SESIÓN
 // ==========================================
+
 supabase.auth.onAuthStateChange(async (event, session) => {
     usuarioActual = session?.user || null;
     actualizarUILogin();
     
-    // Si el usuario acaba de verificar su correo, mostrar mensaje
     if (event === 'SIGNED_IN' && session) {
-        // Aquí más adelante podrás cargar las stats de la DB
-        console.log('Usuario logueado:', session.user.email);
+        // Avisar a main.js que el usuario entró
+        document.dispatchEvent(new CustomEvent('usuarioLogueado', { 
+            detail: { user: session.user } 
+        }));
+    } else if (event === 'SIGNED_OUT') {
+        // Avisar a main.js que el usuario salió
+        document.dispatchEvent(new CustomEvent('usuarioDeslogueado'));
     }
 });
 
