@@ -1,7 +1,7 @@
 export const categoriasFiguras = [
     { nombre: "Animales", items: ['icofont-dog-alt', 'icofont-cat-alt-2', 'icofont-rabbit', 'icofont-fox', 'icofont-bear-face', 'icofont-panda', 'icofont-rhino-head', 'icofont-lion-head', 'icofont-tiger-face', 'icofont-cow-head'] },
 
-    { nombre: "Animals", items: ['icofont-paw', 'icofont-turtle', 'icofont-woodpecker', 'icofont-pigeon', 'icofont-tiger', 'icofont-monkey', 'icofont-camel-alt', 'icofont-butterfly-alt', 'icofont-bear-tracks', 'cofont-squirrel'] },
+    { nombre: "Animals", items: ['icofont-paw', 'icofont-turtle', 'icofont-woodpecker', 'icofont-pigeon', 'icofont-tiger', 'icofont-monkey', 'icofont-camel-alt', 'icofont-butterfly-alt', 'icofont-bear-tracks', 'icofont-squirrel'] },
 
     { nombre: "Animals 2", items: ['icofont-rat', 'icofont-snake', 'icofont-pig', 'icofont-panther', 'icofont-lemur', 'icofont-frog', 'icofont-bat', 'icofont-deer-head', 'icofont-elk', 'icofont-giraffe-head-2'] },
 
