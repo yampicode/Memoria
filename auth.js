@@ -172,7 +172,7 @@ export function actualizarUILogin() {
                 || usuarioActual.email.split('@')[0];
             userInfo.innerHTML = `
 <div class="boton__flex">
-<button id="btn-login-menu" class="btn__menu" data-i18n="Cerrar sesión">Cerrar sesión <span id="btn-logout" style="margin-left: 5px; color: white; cursor: pointer; font-size: 1.5em;" class="icofont-duotone icofont-sign-out">
+<button id="btn-logout" class="btn__menu" data-i18n="Cerrar sesión">Cerrar sesión <span id="" style="margin-left: 5px; color: white; cursor: pointer; font-size: 1.5em;" class="icofont-duotone icofont-sign-out">
                 </span>    </button>
 
     
