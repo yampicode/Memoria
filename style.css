@@ -95,7 +95,7 @@ text-aline: center;
 .grid-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    gap: 5px;
     text-align: center;
 }
 
@@ -183,7 +183,7 @@ filter: drop-shadow( 0 4px 6px var(--color-claro));
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     /* Fuerza exactamente 4 columnas */
-    gap: 4px;
+    gap: 5px;
     /* Espacio entre las cartas */
     width: 100%;
 
