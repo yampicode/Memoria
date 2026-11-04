@@ -1,7 +1,7 @@
 import { categoriasFiguras } from './categorias.js';
 import { t } from './traducciones.js';
 import { abrirModalLogin, cerrarModalLogin, actualizarUILogin, getUsuarioActual } from './auth.js';
-import { guardarStatsEnDB, cargarStatsDesdeDB } from './db.js'; // <-- NUEVO
+import { guardarStatsEnDB, cargarStatsDesdeDB } from './db.js';
 
 // ==========================================
 // SISTEMA DE INTERNACIONALIZACIÓN (i18n)
@@ -9,15 +9,13 @@ import { guardarStatsEnDB, cargarStatsDesdeDB } from './db.js'; // <-- NUEVO
 let idiomaActual = localStorage.getItem('idioma') || 'es';
 
 function actualizarTextosEstaticos() {
-    // Actualizar textos con data-i18n
     document.querySelectorAll('[data-i18n]').forEach(elemento => {
         const clave = elemento.getAttribute('data-i18n');
         if (clave) {
             elemento.textContent = t(clave, idiomaActual);
         }
     });
-    
-    // Actualizar títulos con data-i18n-title
+
     document.querySelectorAll('[data-i18n-title]').forEach(elemento => {
         const clave = elemento.getAttribute('data-i18n-title');
         if (clave) {
@@ -29,8 +27,7 @@ function actualizarTextosEstaticos() {
 function actualizarPanelEstadisticas() {
     const panelStats = document.getElementById('panel-estadisticas');
     if (!panelStats) return;
-    
-    // Reconstruir el panel con las traducciones actuales
+
     panelStats.innerHTML = `
         <div class="grid-stats" style="display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: 10px;">
             <div><div>${t('tiempo', idiomaActual)}</div><strong id="cronometro">${tiempo}s</strong></div>
@@ -45,7 +42,7 @@ function actualizarPanelEstadisticas() {
 
 function actualizarBotonesJuego() {
     if (!btnIniciar) return;
-    
+
     if (vidas <= 0 && juegoIniciado) {
         btnIniciar.textContent = t('game_over', idiomaActual);
     } else if (!juegoIniciado) {
@@ -60,23 +57,17 @@ function actualizarBotonesJuego() {
 function cambiarIdioma(nuevoIdioma) {
     idiomaActual = nuevoIdioma;
     localStorage.setItem('idioma', idiomaActual);
-    
-    // Actualizar textos estáticos del HTML
+
     actualizarTextosEstaticos();
-    
-    // Actualizar panel de estadísticas si el juego está en pantalla
+
     if (pantallaJuego.style.display !== 'none') {
         actualizarPanelEstadisticas();
         actualizarBotonesJuego();
     }
-    
-    // Actualizar botones de sonido, animaciones y dark mode
+
     actualizarBotonSonidoVisual();
     actualizarBotonAnimacionesVisual();
     actualizarModoDarkVisual();
-    
-    // Actualizar textos del modal sistema si está abierto
-    // (se maneja dinámicamente cuando se llama a mostrarModal)
 }
 
 // ==========================================
@@ -134,14 +125,14 @@ const menuPrincipal = document.getElementById('menu-principal');
 const pantallaJuego = document.getElementById('pantalla-juego');
 const btnVolverMenu = document.getElementById('btn-volver-menu');
 const img = document.getElementById('img');
-const topBarUser = document.getElementById('top-bar-user'); // <-- NUEVA LÍNEA
+const topBarUser = document.getElementById('top-bar-user');
 
 btnJugar.addEventListener('click', () => {
     reproducirEfectoSonido('clic');
     menuPrincipal.style.display = 'none';
     footer.style.display = 'none';
     img.style.display = 'none';
-    if (topBarUser) topBarUser.style.display = 'none'; // <-- OCULTAR AQUÍ
+    if (topBarUser) topBarUser.style.display = 'none';
     pantallaJuego.style.display = 'block';
     actualizarPanelEstadisticas();
     actualizarBotonesJuego();
@@ -152,7 +143,7 @@ btnVolverMenu.addEventListener('click', () => {
     pantallaJuego.style.display = 'none';
     footer.style.display = 'block';
     img.style.display = 'block';
-    if (topBarUser) topBarUser.style.display = 'flex'; // <-- MOSTRAR AQUÍ (usamos flex porque así lo definimos)
+    if (topBarUser) topBarUser.style.display = 'flex';
     menuPrincipal.style.display = 'flex';
 });
 
@@ -166,9 +157,11 @@ if (btnSalir) {
 }
 
 const btnApoyo = document.getElementById('btn-apoyo');
-btnApoyo.addEventListener('click', () => {
-      reproducirEfectoSonido('clic');
-});
+if (btnApoyo) {
+    btnApoyo.addEventListener('click', () => {
+        reproducirEfectoSonido('clic');
+    });
+}
 
 // ==========================================
 // CONFIGURACIÓN DE ANIMACIONES
@@ -308,10 +301,10 @@ if (btnToggleDark) {
 // ==========================================
 const selectIdioma = document.getElementById('btn-toggle-idioma');
 
-selectIdioma.addEventListener('click', () => {
-    reproducirEfectoSonido('clic');
-});
 if (selectIdioma) {
+    selectIdioma.addEventListener('click', () => {
+        reproducirEfectoSonido('clic');
+    });
     selectIdioma.value = idiomaActual;
     selectIdioma.addEventListener('change', (e) => {
         reproducirEfectoSonido('clic');
@@ -319,7 +312,6 @@ if (selectIdioma) {
     });
 }
 
-// Inicializar traducciones al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
     cambiarIdioma(idiomaActual);
 });
@@ -327,15 +319,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 // LÓGICA DEL JUEGO
 // ==========================================
-
 const tablero = document.getElementById("tablero-juego");
 const btnReiniciar = document.getElementById("btn-reiniciar");
 const btnBorrar = document.getElementById("btn-borrar-historial");
 const btnIniciar = document.getElementById("btn-iniciar");
-
 const footer = document.getElementById("footer");
 
-// Carga de datos base desde localStorage
 let scoreTotal = parseInt(localStorage.getItem('scoreTotal')) || 0;
 let vidas = parseInt(localStorage.getItem('vidas')) || 7;
 let victorias = parseInt(localStorage.getItem('victorias')) || 0;
@@ -352,23 +341,21 @@ let cronometroInterval = null;
 
 function guardarDatos() {
     const usuario = getUsuarioActual();
-    
+
     if (usuario) {
-        // Guardar en Supabase en segundo plano
         guardarStatsEnDB(usuario.id, {
             scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
         });
     } else {
-        // Guardar en localStorage (modo invitado)
         localStorage.setItem('scoreTotal', scoreTotal);
         localStorage.setItem('vidas', vidas);
         localStorage.setItem('victorias', victorias);
         localStorage.setItem('derrotas', derrotas);
         localStorage.setItem('indiceCategoriaActual', indiceCategoriaActual);
+        if (mejorTiempo) localStorage.setItem('mejorTiempo', mejorTiempo);
     }
 }
 
-// Elementos visuales flotantes y estadísticas
 const vidasFlotantes = document.createElement('div');
 vidasFlotantes.className = 'vidas-flotantes';
 vidasFlotantes.innerHTML = `<strong id="vidas" style="color: #e74c3c;"><i class="icofont-heart" style="color: #e74c3c;"></i> ${vidas}</strong>`;
@@ -383,24 +370,31 @@ displayInfo.style.cssText = `
 `;
 tablero.parentNode.insertBefore(displayInfo, tablero);
 
-// Inicializar panel con traducciones
 actualizarPanelEstadisticas();
 
 function actualizarUI() {
-    document.getElementById('puntos-partida').innerText = puntuacionPartida;
-    document.getElementById('score-total').innerText = scoreTotal;
-    document.getElementById('victorias').innerText = victorias;
-    document.getElementById('derrotas').innerText = derrotas;
-    document.getElementById('cronometro').innerText = `${tiempo}s`;
-    document.getElementById('mejor-tiempo').innerText = mejorTiempo ? `${mejorTiempo}s` : '--';
+    const elPuntos = document.getElementById('puntos-partida');
+    const elScore = document.getElementById('score-total');
+    const elVictorias = document.getElementById('victorias');
+    const elDerrotas = document.getElementById('derrotas');
+    const elCronometro = document.getElementById('cronometro');
+    const elMejorTiempo = document.getElementById('mejor-tiempo');
 
-    const claseIcono = vidas > 0 ? 'icofont-heart' : 'icofont-heart-alt';
-    document.getElementById('vidas').innerHTML = `<i class="${claseIcono}" style="color: #e74c3c;"></i> ${Math.max(0, vidas)}`;
-    
+    if (elPuntos) elPuntos.innerText = puntuacionPartida;
+    if (elScore) elScore.innerText = scoreTotal;
+    if (elVictorias) elVictorias.innerText = victorias;
+    if (elDerrotas) elDerrotas.innerText = derrotas;
+    if (elCronometro) elCronometro.innerText = `${tiempo}s`;
+    if (elMejorTiempo) elMejorTiempo.innerText = mejorTiempo ? `${mejorTiempo}s` : '--';
+
+    const elVidas = document.getElementById('vidas');
+    if (elVidas) {
+        const claseIcono = vidas > 0 ? 'icofont-heart' : 'icofont-heart-alt';
+        elVidas.innerHTML = `<i class="${claseIcono}" style="color: #e74c3c;"></i> ${Math.max(0, vidas)}`;
+    }
     actualizarBotonesJuego();
 }
 
-// Botón de Iniciar / Pausar
 btnIniciar.onclick = () => {
     reproducirEfectoSonido('clic');
     if (vidas <= 0) return;
@@ -413,7 +407,8 @@ btnIniciar.onclick = () => {
         if (cronometroInterval) clearInterval(cronometroInterval);
         cronometroInterval = setInterval(() => {
             tiempo++;
-            document.getElementById('cronometro').innerText = `${tiempo}s`;
+            const elCronometro = document.getElementById('cronometro');
+            if (elCronometro) elCronometro.innerText = `${tiempo}s`;
         }, 1000);
 
     } else {
@@ -423,7 +418,8 @@ btnIniciar.onclick = () => {
             tablero.style.opacity = "1";
             cronometroInterval = setInterval(() => {
                 tiempo++;
-                document.getElementById('cronometro').innerText = `${tiempo}s`;
+                const elCronometro = document.getElementById('cronometro');
+                if (elCronometro) elCronometro.innerText = `${tiempo}s`;
             }, 1000);
         } else {
             clearInterval(cronometroInterval);
@@ -520,7 +516,7 @@ function verificarCoincidencia() {
         vidas++;
 
         reproducirEfectoSonido('acierto');
-        guardarDatosLocales();
+        guardarDatos(); // <-- CORREGIDO AQUÍ
         actualizarUI();
 
         resetearTurno();
@@ -528,7 +524,7 @@ function verificarCoincidencia() {
     } else {
         reproducirEfectoSonido('error');
         vidas--;
-        guardarDatosLocales();
+        guardarDatos(); // <-- CORREGIDO AQUÍ
         actualizarUI();
 
         if (vidas <= 0) {
@@ -598,7 +594,7 @@ function verificarVictoria() {
 
         if (mejorTiempo === null || tiempo < mejorTiempo) {
             mejorTiempo = tiempo;
-            localStorage.setItem('mejorTiempo', mejorTiempo);
+            // El guardado del mejor tiempo ahora lo maneja guardarDatos() de forma inteligente
             reproducirEfectoSonido('victoria');
 
             mostrarModal(
@@ -648,6 +644,7 @@ btnBorrar.onclick = () => {
         actualizarUI();
         crearTablero();
         actualizarPanelEstadisticas();
+        guardarDatos(); // <-- Aseguramos que borre en la nube también
     }
 };
 
@@ -677,12 +674,10 @@ document.querySelector('#modal-login .btn-cerrar-modal')?.addEventListener('clic
 // 1. Cuando el usuario inicia sesión
 document.addEventListener('usuarioLogueado', async (e) => {
     const user = e.detail.user;
-    
-    // Cargar datos de la nube
+
     const statsDB = await cargarStatsDesdeDB(user.id);
-    
+
     if (statsDB) {
-        // Si ya tenía progreso en la nube, lo aplicamos
         scoreTotal = statsDB.score_total;
         vidas = statsDB.vidas;
         victorias = statsDB.victorias;
@@ -690,27 +685,24 @@ document.addEventListener('usuarioLogueado', async (e) => {
         mejorTiempo = statsDB.mejor_tiempo;
         indiceCategoriaActual = statsDB.indice_categoria;
     } else {
-        // Si es su primera vez, subimos lo que tenga en localStorage
         await guardarStatsEnDB(user.id, {
             scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
         });
     }
-    
-    // Actualizar la pantalla
+
     actualizarUI();
     crearTablero();
 });
 
 // 2. Cuando el usuario cierra sesión
 document.addEventListener('usuarioDeslogueado', () => {
-    // Volver a cargar los datos del localStorage para el modo invitado
     scoreTotal = parseInt(localStorage.getItem('scoreTotal')) || 0;
     vidas = parseInt(localStorage.getItem('vidas')) || 7;
     victorias = parseInt(localStorage.getItem('victorias')) || 0;
     derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
     mejorTiempo = parseInt(localStorage.getItem('mejorTiempo')) || null;
     indiceCategoriaActual = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
-    
+
     actualizarUI();
     crearTablero();
 });
