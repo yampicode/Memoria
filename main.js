@@ -1,6 +1,7 @@
 import { categoriasFiguras } from './categorias.js';
-import { t, traducciones } from './traducciones.js';
-import { abrirModalLogin, cerrarModalLogin, actualizarUILogin } from './auth.js';
+import { t } from './traducciones.js';
+import { abrirModalLogin, cerrarModalLogin, actualizarUILogin, getUsuarioActual } from './auth.js';
+import { guardarStatsEnDB, cargarStatsDesdeDB } from './db.js'; // <-- NUEVO
 
 // ==========================================
 // SISTEMA DE INTERNACIONALIZACIÓN (i18n)
@@ -349,12 +350,22 @@ let puntuacionPartida = 0;
 let tiempo = 0;
 let cronometroInterval = null;
 
-function guardarDatosLocales() {
-    localStorage.setItem('scoreTotal', scoreTotal);
-    localStorage.setItem('vidas', vidas);
-    localStorage.setItem('victorias', victorias);
-    localStorage.setItem('derrotas', derrotas);
-    localStorage.setItem('indiceCategoriaActual', indiceCategoriaActual);
+function guardarDatos() {
+    const usuario = getUsuarioActual();
+    
+    if (usuario) {
+        // Guardar en Supabase en segundo plano
+        guardarStatsEnDB(usuario.id, {
+            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
+        });
+    } else {
+        // Guardar en localStorage (modo invitado)
+        localStorage.setItem('scoreTotal', scoreTotal);
+        localStorage.setItem('vidas', vidas);
+        localStorage.setItem('victorias', victorias);
+        localStorage.setItem('derrotas', derrotas);
+        localStorage.setItem('indiceCategoriaActual', indiceCategoriaActual);
+    }
 }
 
 // Elementos visuales flotantes y estadísticas
@@ -452,7 +463,7 @@ function inicializarNuevaPartida() {
     btnIniciar.disabled = false;
     tablero.style.opacity = "1";
     if (cronometroInterval) clearInterval(cronometroInterval);
-    guardarDatosLocales();
+    guardarDatos();
     actualizarUI();
     actualizarPanelEstadisticas();
 
@@ -529,7 +540,7 @@ function verificarCoincidencia() {
 
             reproducirEfectoSonido('derrota');
             derrotas++;
-            guardarDatosLocales();
+            guardarDatos();
             actualizarUI();
 
             document.querySelectorAll('.card').forEach(card => card.classList.add('flipped'));
@@ -579,7 +590,7 @@ function verificarVictoria() {
             indiceCategoriaActual = 0;
         }
 
-        guardarDatosLocales();
+        guardarDatos();
 
         if (typeof confetti === 'function') {
             confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
@@ -646,6 +657,8 @@ btnReiniciar.onclick = () => {
     crearTablero();
 }
 
+document.addEventListener("DOMContentLoaded", crearTablero);
+
 // ==========================================
 // CONEXIÓN CON EL SISTEMA DE LOGIN
 // ==========================================
@@ -657,4 +670,47 @@ document.querySelector('#modal-login .btn-cerrar-modal')?.addEventListener('clic
     cerrarModalLogin();
 });
 
-document.addEventListener("DOMContentLoaded", crearTablero);
+// ==========================================
+// SINCRONIZACIÓN CON LA NUBE
+// ==========================================
+
+// 1. Cuando el usuario inicia sesión
+document.addEventListener('usuarioLogueado', async (e) => {
+    const user = e.detail.user;
+    
+    // Cargar datos de la nube
+    const statsDB = await cargarStatsDesdeDB(user.id);
+    
+    if (statsDB) {
+        // Si ya tenía progreso en la nube, lo aplicamos
+        scoreTotal = statsDB.score_total;
+        vidas = statsDB.vidas;
+        victorias = statsDB.victorias;
+        derrotas = statsDB.derrotas;
+        mejorTiempo = statsDB.mejor_tiempo;
+        indiceCategoriaActual = statsDB.indice_categoria;
+    } else {
+        // Si es su primera vez, subimos lo que tenga en localStorage
+        await guardarStatsEnDB(user.id, {
+            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
+        });
+    }
+    
+    // Actualizar la pantalla
+    actualizarUI();
+    crearTablero();
+});
+
+// 2. Cuando el usuario cierra sesión
+document.addEventListener('usuarioDeslogueado', () => {
+    // Volver a cargar los datos del localStorage para el modo invitado
+    scoreTotal = parseInt(localStorage.getItem('scoreTotal')) || 0;
+    vidas = parseInt(localStorage.getItem('vidas')) || 7;
+    victorias = parseInt(localStorage.getItem('victorias')) || 0;
+    derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
+    mejorTiempo = parseInt(localStorage.getItem('mejorTiempo')) || null;
+    indiceCategoriaActual = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
+    
+    actualizarUI();
+    crearTablero();
+});
