@@ -1,9 +1,7 @@
 export const categoriasFiguras = [
     { nombre: "Animales", items: ['icofont-dog-alt', 'icofont-cat-alt-2', 'icofont-rabbit', 'icofont-fox', 'icofont-bear-face', 'icofont-panda', 'icofont-rhino-head', 'icofont-lion-head', 'icofont-tiger-face', 'icofont-cow-head'] },
 
-    { nombre: "Animals", items: ['icofont-paw', 'icofont-turtle', 'icofont-woodpecker', 'icofont-pigeon', 'icofont-tiger', 'icofont-monkey', 'icofont-camel-alt', 'icofont-butterfly-alt', 'icofont-bear-tracks', 'icofont-squirrel'] },
-
-    { nombre: "Animals 2", items: ['icofont-rat', 'icofont-snake', 'icofont-pig', 'icofont-panther', 'icofont-lemur', 'icofont-frog', 'icofont-bat', 'icofont-deer-head', 'icofont-elk', 'icofont-giraffe-head-2'] },
+    { nombre: "Animals", items: ['icofont-rat', 'icofont-snake', 'icofont-pig', 'icofont-panther', 'icofont-lemur', 'icofont-frog', 'icofont-bat', 'icofont-deer-head', 'icofont-elk', 'icofont-giraffe-head-2'] },
 
     { nombre: "Frutas", items: ['icofont-apple', 'icofont-banana', 'icofont-watermelon', 'icofont-grapes', 'icofont-strawberry', 'icofont-pineapple', 'icofont-kiwi', 'icofont-mango', 'icofont-cherry', 'icofont-lemon-alt'] },
 
@@ -37,7 +35,7 @@ export const categoriasFiguras = [
 
     { nombre: "Herramientas", items: ['icofont-fire-extinguisher-alt', 'icofont-glue-oil', 'icofont-power-zone', 'icofont-recycle-alt', 'icofont-recycling-man', 'icofont-safety-hat-light', 'icofont-tools-1', 'icofont-tools-bag', 'icofont-under-construction-alt', 'icofont-labour'] },
 
-    { nombre: "Industria", items: ['icofont-mining', 'icofont-pollution', 'icofont-industries', 'icofont-industries-3', 'icofont-industries-1', 'icofont-industries-2', 'icofont-industries-4', 'icofont-industries-5', 'icofont-industries', 'icofont-building-alt'] },
+    { nombre: "Industria", items: ['icofont-mining', 'icofont-pollution', 'icofont-architecture', 'icofont-industries-3', 'icofont-industries-1', 'icofont-industries-2', 'icofont-industries-4', 'icofont-industries-5', 'icofont-industries', 'icofont-building-alt'] },
 
     { nombre: "Maquinaria", items: ['icofont-vehicle-wrecking', 'icofont-vehicle-trucktor', 'icofont-vehicle-excavator', 'icofont-vehicle-dozer', 'icofont-vehicle-delivery-van', 'icofont-vehicle-crane', 'icofont-vehicle-cement', 'icofont-tow-truck', 'icofont-concrete-mixer', 'icofont-fork-lift'] },
 
