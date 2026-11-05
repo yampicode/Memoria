@@ -1,7 +1,7 @@
 export const categoriasFiguras = [
 
 { nombre: "Marcas de ropa", items: ['icofon-brand-louis-vuitton', 'icofont-brand-smashing-magazine', 'icofont-brand-casio', 'icofont-brand-levis', 'icofont-brand-puma', 'icofont-brand-loreal', 'icofont-brand-target', 'icofont-brand-nike',
-'icofont-brand-adidas' 'icofont-brand-reebok'] },
+'icofont-brand-adidas', 'icofont-brand-reebok'] },
 
     { nombre: "Animales", items: ['icofont-dog-alt', 'icofont-cat-alt-2', 'icofont-rabbit', 'icofont-fox', 'icofont-bear-face', 'icofont-panda', 'icofont-rhino-head', 'icofont-lion-head', 'icofont-tiger-face', 'icofont-cow-head'] },
 
