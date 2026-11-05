@@ -1,4 +1,8 @@
 export const categoriasFiguras = [
+
+{ nombre: "Marcas de ropa", items: ['icofon-brand-louis-vuitton', 'icofont-brand-smashing-magazine', 'icofont-brand-casio', 'icofont-brand-levis', 'icofont-brand-puma', 'icofont-brand-loreal', 'icofont-brand-target', 'icofont-brand-nike',
+'icofont-brand-adidas' 'icofont-brand-reebok'] },
+
     { nombre: "Animales", items: ['icofont-dog-alt', 'icofont-cat-alt-2', 'icofont-rabbit', 'icofont-fox', 'icofont-bear-face', 'icofont-panda', 'icofont-rhino-head', 'icofont-lion-head', 'icofont-tiger-face', 'icofont-cow-head'] },
 
     { nombre: "Animals", items: ['icofont-rat', 'icofont-snake', 'icofont-pig', 'icofont-panther', 'icofont-lemur', 'icofont-frog', 'icofont-bat', 'icofont-deer-head', 'icofont-elk', 'icofont-giraffe-head-2'] },
@@ -93,9 +97,9 @@ export const categoriasFiguras = [
 
     { nombre: "Marcas", items: ['icofont-brand-cnn', 'icofont-brand-apple', 'icofont-brand-amazon', 'icofont-brand-dell', 'icofont-brand-playstation', 'icofont-brand-netflix', 'icofont-brand-android-robot', 'icofont-brand-shell', 'icofont-brand-general-electric', 'icofont-brand-nasa'] },
 
-    { nombre: "Brand", items: ['icofont-brand-adidas', 'icofont-brand-blackberry', 'icofont-brand-puma', 'icofont-brand-casio', 'icofont-brand-natgeo', 'icofont-brand-gillette', 'icofont-brand-hp', 'icofont-brand-lg', 'icofont-brand-warnerbros', 'icofont-brand-motorola'] },
+    { nombre: "Brand", items: ['icofont-brand-sprint', 'icofont-brand-blackberry', 'icofont-brand-wire', 'icofont-brand-mac-os', 'icofont-brand-natgeo', 'icofont-brand-gillette', 'icofont-brand-hp', 'icofont-brand-lg', 'icofont-brand-warnerbros', 'icofont-brand-motorola'] },
 
-    { nombre: "Logos", items: ['icofont-brand-levis', 'icofont-brand-lego', 'icofont-brand-intel', 'icofont-brand-ikea', 'icofont-brand-linux', 'icofont-brand-nike', 'icofont-brand-mytv', 'icofont-brand-wikipedia', 'icofont-brand-samsung', 'icofont-brand-java'] },
+    { nombre: "Logos", items: ['icofont-brand-imdb', 'icofont-brand-lego', 'icofont-brand-intel', 'icofont-brand-ikea', 'icofont-brand-linux', 'icofont-brand-stc', 'icofont-brand-mytv', 'icofont-brand-wikipedia', 'icofont-brand-samsung', 'icofont-brand-java'] },
 
     { nombre: "Marca de comida", items: ['icofont-brand-nescafe', 'icofont-brand-redbull', 'icofont-brand-mcdonals', 'icofont-brand-cocal-cola', 'icofont-brand-nestle', 'icofont-brand-burger-king', 'icofont-brand-pizza-hut', 'icofont-brand-eleven', 'icofont-brand-pepsi', 'icofont-brand-starbucks'] },
 
