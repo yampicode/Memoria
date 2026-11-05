@@ -24,22 +24,6 @@ function actualizarTextosEstaticos() {
     });
 }
 
-function actualizarPanelEstadisticas() {
-    const panelStats = document.getElementById('panel-estadisticas');
-    if (!panelStats) return;
-
-    panelStats.innerHTML = `
-        <div class="grid-stats" style="display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: 10px;">
-            <div><div>${t('tiempo', idiomaActual)}</div><strong id="cronometro">${tiempo}s</strong></div>
-            <div><div>${t('puntos', idiomaActual)}</div><strong id="puntos-partida">${puntuacionPartida}</strong></div>
-            <div><div>${t('victorias_label', idiomaActual)}</div><strong id="victorias" style="color: #28a745;">${victorias}</strong></div>
-            <div><div>${t('record', idiomaActual)}</div><strong id="mejor-tiempo" style="color: #d9534f;">${mejorTiempo ? mejorTiempo + 's' : '--'}</strong></div>
-            <div><div>${t('score', idiomaActual)}</div><strong id="score-total" style="color: #0056b3;">${scoreTotal}</strong></div>
-            <div><div>${t('derrotas', idiomaActual)}</div><strong id="derrotas" style="color: #e74c3c;">${derrotas}</strong></div>
-        </div>
-    `;
-}
-
 function actualizarBotonesJuego() {
     if (!btnIniciar) return;
 
@@ -146,15 +130,6 @@ btnVolverMenu.addEventListener('click', () => {
     if (topBarUser) topBarUser.style.display = 'flex';
     menuPrincipal.style.display = 'flex';
 });
-
-const btnSalir = document.getElementById('btn-salir');
-
-if (btnSalir) {
-    btnSalir.addEventListener('click', () => {
-        reproducirEfectoSonido('clic');
-        window.close();
-    });
-}
 
 const btnApoyo = document.getElementById('btn-apoyo');
 if (btnApoyo) {
@@ -332,6 +307,10 @@ let derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
 let mejorTiempo = parseInt(localStorage.getItem('mejorTiempo')) || null;
 let indiceCategoriaActual = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
 
+// --- NUEVAS VARIABLES PARA LOS NIVELES ---
+let nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
+let tiempoMaximo = 60; // Segundos iniciales para el nivel 2 y 3
+
 let cartasVolteadas = [];
 let bloqueado = false;
 let juegoIniciado = false;
@@ -352,15 +331,12 @@ function guardarDatos() {
         localStorage.setItem('victorias', victorias);
         localStorage.setItem('derrotas', derrotas);
         localStorage.setItem('indiceCategoriaActual', indiceCategoriaActual);
+        localStorage.setItem('nivelActual', nivelActual); // Guardamos el nivel actual
         if (mejorTiempo) localStorage.setItem('mejorTiempo', mejorTiempo);
     }
 }
 
-const vidasFlotantes = document.createElement('div');
-vidasFlotantes.className = 'vidas-flotantes';
-vidasFlotantes.innerHTML = `<strong id="vidas" style="color: #e74c3c;"><i class="icofont-heart" style="color: #e74c3c;"></i> ${vidas}</strong>`;
-pantallaJuego.appendChild(vidasFlotantes);
-
+// Creamos el panel de estadísticas (SIN las vidas flotantes)
 const displayInfo = document.createElement('div');
 displayInfo.id = 'panel-estadisticas';
 displayInfo.style.cssText = `
@@ -370,28 +346,53 @@ displayInfo.style.cssText = `
 `;
 tablero.parentNode.insertBefore(displayInfo, tablero);
 
-actualizarPanelEstadisticas();
+function actualizarPanelEstadisticas() {
+    const panelStats = document.getElementById('panel-estadisticas');
+    if (!panelStats) return;
+    
+    const mostrarReloj = (nivelActual >= 2);
+    
+    panelStats.innerHTML = `
+        <div class="grid-stats" style="display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; gap: 10px; font-size: 14px;">
+            <!-- Fila de arriba -->
+            <div><div>Nivel</div><strong id="nivel-display" style="color: #8e44ad;">${nivelActual}</strong></div>
+            <div><div>${t('puntos', idiomaActual)}</div><strong id="puntos-partida">${puntuacionPartida}</strong></div>
+             <div><div>${mostrarReloj ? 'T. Restante' : t('tiempo', idiomaActual)}</div><strong id="cronometro" style="color: ${mostrarReloj ? '#e74c3c' : '#333'};">${tiempo}s</strong></div>
+            
+            <div><div>${t('victorias_label', idiomaActual)}</div><strong id="victorias" style="color: #28a745;">${victorias}</strong></div>
+           
+            <!-- Fila de abajo -->
+            <div><div>Vidas</div><strong id="vidas-panel" style="color: #e74c3c;"><i class="icofont-heart"></i> ${Math.max(0, vidas)}</strong></div>
+            <div><div>${t('score', idiomaActual)}</div><strong id="score-total" style="color: #0056b3;">${scoreTotal}</strong></div>
+            <div><div>${t('record', idiomaActual)}</div><strong id="mejor-tiempo" style="color: #d9534f;">${mejorTiempo ? mejorTiempo + 's' : '--'}</strong></div>
+            <div><div>${t('derrotas', idiomaActual)}</div><strong id="derrotas" style="color: #e74c3c;">${derrotas}</strong></div>
+            
+        </div>
+    `;
+}
 
+// Función actualizarUI restaurada y adaptada
 function actualizarUI() {
+    const elNivel = document.getElementById('nivel-display');
     const elPuntos = document.getElementById('puntos-partida');
-    const elScore = document.getElementById('score-total');
     const elVictorias = document.getElementById('victorias');
-    const elDerrotas = document.getElementById('derrotas');
     const elCronometro = document.getElementById('cronometro');
+    
+    const elVidasPanel = document.getElementById('vidas-panel');
+    const elScore = document.getElementById('score-total');
+    const elDerrotas = document.getElementById('derrotas');
     const elMejorTiempo = document.getElementById('mejor-tiempo');
 
+    if (elNivel) elNivel.innerText = nivelActual;
     if (elPuntos) elPuntos.innerText = puntuacionPartida;
-    if (elScore) elScore.innerText = scoreTotal;
     if (elVictorias) elVictorias.innerText = victorias;
-    if (elDerrotas) elDerrotas.innerText = derrotas;
     if (elCronometro) elCronometro.innerText = `${tiempo}s`;
+    
+    if (elVidasPanel) elVidasPanel.innerHTML = `<i class="icofont-heart"></i> ${Math.max(0, vidas)}`;
+    if (elScore) elScore.innerText = scoreTotal;
+    if (elDerrotas) elDerrotas.innerText = derrotas;
     if (elMejorTiempo) elMejorTiempo.innerText = mejorTiempo ? `${mejorTiempo}s` : '--';
 
-    const elVidas = document.getElementById('vidas');
-    if (elVidas) {
-        const claseIcono = vidas > 0 ? 'icofont-heart' : 'icofont-heart-alt';
-        elVidas.innerHTML = `<i class="${claseIcono}" style="color: #e74c3c;"></i> ${Math.max(0, vidas)}`;
-    }
     actualizarBotonesJuego();
 }
 
@@ -405,10 +406,28 @@ btnIniciar.onclick = () => {
         actualizarBotonesJuego();
 
         if (cronometroInterval) clearInterval(cronometroInterval);
+        
+        if (nivelActual >= 2 && tiempo === 0) {
+            tiempo = tiempoMaximo; 
+        }
+
         cronometroInterval = setInterval(() => {
-            tiempo++;
-            const elCronometro = document.getElementById('cronometro');
-            if (elCronometro) elCronometro.innerText = `${tiempo}s`;
+            if (nivelActual >= 2) {
+                tiempo--;
+                const elCronometro = document.getElementById('cronometro');
+                if (elCronometro) elCronometro.innerText = `${tiempo}s`;
+
+                if (tiempo <= 0) {
+                    clearInterval(cronometroInterval);
+                    vidas = 0; 
+                    actualizarUI();
+                    verificarGameOver(); 
+                }
+            } else {
+                tiempo++;
+                const elCronometro = document.getElementById('cronometro');
+                if (elCronometro) elCronometro.innerText = `${tiempo}s`;
+            }
         }, 1000);
 
     } else {
@@ -417,9 +436,16 @@ btnIniciar.onclick = () => {
             actualizarBotonesJuego();
             tablero.style.opacity = "1";
             cronometroInterval = setInterval(() => {
-                tiempo++;
-                const elCronometro = document.getElementById('cronometro');
-                if (elCronometro) elCronometro.innerText = `${tiempo}s`;
+                if (nivelActual >= 2) {
+                    tiempo--;
+                    const elCronometro = document.getElementById('cronometro');
+                    if (elCronometro) elCronometro.innerText = `${tiempo}s`;
+                    if (tiempo <= 0) { clearInterval(cronometroInterval); vidas = 0; actualizarUI(); verificarGameOver(); }
+                } else {
+                    tiempo++;
+                    const elCronometro = document.getElementById('cronometro');
+                    if (elCronometro) elCronometro.innerText = `${tiempo}s`;
+                }
             }, 1000);
         } else {
             clearInterval(cronometroInterval);
@@ -453,7 +479,9 @@ function inicializarNuevaPartida() {
     }
     bloqueado = false;
     juegoIniciado = false;
-    tiempo = 0;
+    
+    tiempo = (nivelActual >= 2) ? tiempoMaximo : 0; 
+    
     cartasVolteadas = [];
     actualizarBotonesJuego();
     btnIniciar.disabled = false;
@@ -513,10 +541,19 @@ function verificarCoincidencia() {
     if (primera.dataset.id === segunda.dataset.id) {
         puntuacionPartida += 2;
         scoreTotal += 2;
-        vidas++;
+        
+        if (nivelActual === 1 || nivelActual === 2) {
+            vidas++; 
+        }
+        
+        if (nivelActual === 2) {
+            tiempo += 5; 
+            const elCronometro = document.getElementById('cronometro');
+            if (elCronometro) elCronometro.innerText = `${tiempo}s`;
+        }
 
         reproducirEfectoSonido('acierto');
-        guardarDatos(); // <-- CORREGIDO AQUÍ
+        guardarDatos();
         actualizarUI();
 
         resetearTurno();
@@ -524,43 +561,11 @@ function verificarCoincidencia() {
     } else {
         reproducirEfectoSonido('error');
         vidas--;
-        guardarDatos(); // <-- CORREGIDO AQUÍ
+        guardarDatos();
         actualizarUI();
 
         if (vidas <= 0) {
-            clearInterval(cronometroInterval);
-            actualizarBotonesJuego();
-            btnIniciar.disabled = true;
-            tablero.style.opacity = "0.4";
-            bloqueado = true;
-
-            reproducirEfectoSonido('derrota');
-            derrotas++;
-            guardarDatos();
-            actualizarUI();
-
-            document.querySelectorAll('.card').forEach(card => card.classList.add('flipped'));
-
-            setTimeout(() => {
-                mostrarModal(
-                    t('game_over', idiomaActual),
-                    t('game_over_mensaje', idiomaActual),
-                    {
-                        textoBotonPrincipal: t('ir_menu', idiomaActual),
-                        callbackPrincipal: () => {
-                            pantallaJuego.style.display = 'none';
-                            img.style.display = 'block';
-                            menuPrincipal.style.display = 'flex';
-                            footer.style.display = 'block';
-                        },
-                        textoBotonSecundario: t('reintentar_nivel', idiomaActual),
-                        callbackSecundario: () => {
-                            vidas = 7;
-                            crearTablero();
-                        }
-                    }
-                );
-            }, 300);
+            verificarGameOver();
             return;
         }
 
@@ -570,6 +575,49 @@ function verificarCoincidencia() {
             resetearTurno();
         }, 1000);
     }
+}
+
+function verificarGameOver() {
+    clearInterval(cronometroInterval);
+    actualizarBotonesJuego();
+    btnIniciar.disabled = true;
+    tablero.style.opacity = "0.4";
+    bloqueado = true;
+
+    reproducirEfectoSonido('derrota');
+    derrotas++;
+    
+    nivelActual = 1;
+    indiceCategoriaActual = 0;
+    tiempo = 0;
+    
+    guardarDatos();
+    actualizarUI();
+    actualizarPanelEstadisticas();
+
+    document.querySelectorAll('.card').forEach(card => card.classList.add('flipped'));
+
+    setTimeout(() => {
+        mostrarModal(
+            t('game_over', idiomaActual),
+            "¡Te has quedado sin vidas o tiempo! Has vuelto al Nivel 1, Categoría 1.",
+            {
+                textoBotonPrincipal: t('ir_menu', idiomaActual),
+                callbackPrincipal: () => {
+                    pantallaJuego.style.display = 'none';
+                    img.style.display = 'block';
+                    menuPrincipal.style.display = 'flex';
+                    footer.style.display = 'block';
+                    crearTablero(); 
+                },
+                textoBotonSecundario: "Reintentar Nivel 1",
+                callbackSecundario: () => {
+                    vidas = 7;
+                    crearTablero();
+                }
+            }
+        );
+    }, 300);
 }
 
 function verificarVictoria() {
@@ -582,46 +630,56 @@ function verificarVictoria() {
 
         scoreTotal += puntuacionPartida;
         indiceCategoriaActual++;
+        
         if (indiceCategoriaActual >= categoriasFiguras.length) {
             indiceCategoriaActual = 0;
+            
+            if (nivelActual === 1) {
+                nivelActual = 2;
+                tiempoMaximo = 60;
+                vidas = 7; 
+            } else if (nivelActual === 2) {
+                nivelActual = 3;
+                tiempoMaximo = 60; 
+            } else {
+                nivelActual = 1; 
+                vidas = 7;
+            }
         }
 
         guardarDatos();
-
+        
         if (typeof confetti === 'function') {
             confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
         }
-
-        if (mejorTiempo === null || tiempo < mejorTiempo) {
-            mejorTiempo = tiempo;
-            // El guardado del mejor tiempo ahora lo maneja guardarDatos() de forma inteligente
-            reproducirEfectoSonido('victoria');
-
-            mostrarModal(
-                t('tiempo_record', idiomaActual, tiempo),
-                t('victoria_mensaje', idiomaActual),
-                {
-                    textoBotonPrincipal: t('siguiente_nivel', idiomaActual),
-                    callbackPrincipal: () => {
-                        crearTablero();
-                    }
-                }
-            );
-        } else {
-            reproducirEfectoSonido('victoria');
-
-            mostrarModal(
-                t('tiempo_victoria', idiomaActual, tiempo, puntuacionPartida),
-                t('victoria_mensaje', idiomaActual),
-                {
-                    textoBotonPrincipal: t('siguiente_nivel', idiomaActual),
-                    callbackPrincipal: () => {
-                        crearTablero();
-                    }
-                }
-            );
+        
+        let tituloModal = `¡Categoría Superada!`;
+        let mensajeModal = `¡Bien hecho! Ahora vas a la Categoría ${indiceCategoriaActual + 1} del Nivel ${nivelActual}.`;
+        
+        if (indiceCategoriaActual === 0 && nivelActual === 2) {
+            tituloModal = "¡Nivel 2 Desbloqueado!";
+            mensajeModal = "¡Ahora juegas contrarreloj! Cada acierto te da +1 vida y +5 segundos.";
+        } else if (indiceCategoriaActual === 0 && nivelActual === 3) {
+            tituloModal = "¡Nivel 3 Desbloqueado!";
+            mensajeModal = "¡Modo Extremo! No hay recompensas de tiempo ni vidas. ¡Demuestra lo que vales!";
+        } else if (indiceCategoriaActual === 0 && nivelActual === 1) {
+            tituloModal = "¡Juego Completado!";
+            mensajeModal = "¡Has superado los 3 niveles! Vuelves a empezar desde el Nivel 1.";
         }
-
+        
+        reproducirEfectoSonido('victoria');
+        
+        mostrarModal(
+            tituloModal,
+            mensajeModal,
+            {
+                textoBotonPrincipal: "Siguiente Categoría",
+                callbackPrincipal: () => {
+                    actualizarPanelEstadisticas();
+                    crearTablero();
+                }
+            }
+        );
         actualizarUI();
     }
 }
@@ -641,10 +699,11 @@ btnBorrar.onclick = () => {
         derrotas = 0;
         mejorTiempo = null;
         indiceCategoriaActual = 0;
+        nivelActual = 1; 
         actualizarUI();
         crearTablero();
         actualizarPanelEstadisticas();
-        guardarDatos(); // <-- Aseguramos que borre en la nube también
+        guardarDatos();
     }
 };
 
@@ -671,83 +730,65 @@ document.querySelector('#modal-login .btn-cerrar-modal')?.addEventListener('clic
 // SINCRONIZACIÓN CON LA NUBE
 // ==========================================
 
-// 1. Cuando el usuario inicia sesión o se registra
 document.addEventListener('usuarioLogueado', async (e) => {
     const user = e.detail.user;
 
-    // 1. Leer lo que tenemos en el localStorage (como invitado)
     const invitadoScore = parseInt(localStorage.getItem('scoreTotal')) || 0;
-    const invitadoNivel = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
+    const invitadoNivelCat = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
+    const invitadoNivelDificultad = parseInt(localStorage.getItem('nivelActual')) || 1; 
     const invitadoMejorTiempo = parseInt(localStorage.getItem('mejorTiempo')) || null;
     const invitadoVictorias = parseInt(localStorage.getItem('victorias')) || 0;
 
-    // 2. Cargar datos de la nube
     const statsDB = await cargarStatsDesdeDB(user.id);
 
     if (statsDB) {
-        // --- EL USUARIO YA TIENE DATOS EN LA NUBE ---
-        
-        // Regla 1: El Score Total más alto gana
         scoreTotal = Math.max(statsDB.score_total, invitadoScore);
+        indiceCategoriaActual = Math.max(statsDB.indice_categoria, invitadoNivelCat);
         
-        // Regla 2: El nivel más avanzado gana
-        indiceCategoriaActual = Math.max(statsDB.indice_categoria, invitadoNivel);
-        
-        // Regla 3: El mejor tiempo (el menor número de segundos) gana
+        nivelActual = Math.max(1, invitadoNivelDificultad); 
+
         if (invitadoMejorTiempo && (!statsDB.mejor_tiempo || invitadoMejorTiempo < statsDB.mejor_tiempo)) {
             mejorTiempo = invitadoMejorTiempo;
         } else {
             mejorTiempo = statsDB.mejor_tiempo;
         }
 
-        // Regla 4: Sumamos las victorias (porque el invitado pudo haber ganado rondas)
         victorias = statsDB.victorias + invitadoVictorias;
-        
-        // Las vidas y derrotas las tomamos de la nube
         vidas = statsDB.vidas;
         derrotas = statsDB.derrotas;
 
-        // Si los datos del invitado mejoraron la cuenta, actualizamos la nube
-        if (invitadoScore > statsDB.score_total || invitadoNivel > statsDB.indice_categoria) {
+        if (invitadoScore > statsDB.score_total || invitadoNivelCat > statsDB.indice_categoria) {
             await guardarStatsEnDB(user.id, {
                 scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
             });
         }
 
     } else {
-        // --- ES UNA CUENTA NUEVA (O VACÍA) ---
-        // Le pasamos TODOS los datos del invitado a la nueva cuenta
         scoreTotal = invitadoScore;
-        indiceCategoriaActual = invitadoNivel;
+        indiceCategoriaActual = invitadoNivelCat;
+        nivelActual = invitadoNivelDificultad;
         mejorTiempo = invitadoMejorTiempo;
         victorias = invitadoVictorias;
-        
-        // Las vidas se reinician a 7 para la nueva cuenta, o mantenemos las del invitado
         vidas = parseInt(localStorage.getItem('vidas')) || 7;
         derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
 
-        // Guardamos todo en la nube para esta nueva cuenta
         await guardarStatsEnDB(user.id, {
             scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
         });
     }
 
-    // 🧹 LIMPIEZA IMPORTANTE: 
-    // Borramos el progreso de invitado del localStorage.
-    // Así, si cierra sesión, empezará de cero como invitado y no verá los datos de esta cuenta.
     localStorage.removeItem('scoreTotal');
     localStorage.removeItem('vidas');
     localStorage.removeItem('victorias');
     localStorage.removeItem('derrotas');
     localStorage.removeItem('mejorTiempo');
     localStorage.removeItem('indiceCategoriaActual');
+    localStorage.removeItem('nivelActual');
 
-    // Actualizar la pantalla
     actualizarUI();
     crearTablero();
 });
 
-// 2. Cuando el usuario cierra sesión
 document.addEventListener('usuarioDeslogueado', () => {
     scoreTotal = parseInt(localStorage.getItem('scoreTotal')) || 0;
     vidas = parseInt(localStorage.getItem('vidas')) || 7;
@@ -755,6 +796,7 @@ document.addEventListener('usuarioDeslogueado', () => {
     derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
     mejorTiempo = parseInt(localStorage.getItem('mejorTiempo')) || null;
     indiceCategoriaActual = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
+    nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
 
     actualizarUI();
     crearTablero();
