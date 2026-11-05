@@ -14,6 +14,8 @@ export const categoriasFiguras = [
 
     { nombre: "Clima", items: ['icofont-sunny-day-temp', 'icofont-wind', 'icofont-sunny', 'icofont-rainy', 'icofont-celsius', 'icofont-fahrenheit', 'icofont-breakdown', 'icofont-rainy-thunder', 'icofont-sun-set', 'icofont-umbrella'] },
 
+{ nombre: "Viajar", items: ['icofont-air-ticket', 'icofont-direction-sign', 'icofont-island-alt', 'icofont-beach', 'icofont-5-star-hotel', 'icofont-camping-vest', 'icofont-hotel', 'icofont-island', 'icofont-sandals-female', 'icofont-sandals-male'] },
+
  { nombre: "Comida", items: ['icofont-pizza-slice', 'icofont-burger', 'icofont-french-fries', 'icofont-hot-dog', 'icofont-cheese', 'icofont-bread', 'icofont-chicken-fry', 'icofont-sandwich', 'icofont-taco', 'icofont-croissant'] },
 
 { nombre: "Bebidas", items: ['icofont-soft-drinks', 'icofont-coffee-mug', 'icofont-cola', 'icofont-juice', 'icofont-cocktail', 'icofont-beer', 'icofont-milk', 'icofont-tea-pot', 'icofont-coconut-water', 'icofont-coffee-alt'] },
@@ -70,8 +72,6 @@ export const categoriasFiguras = [
 
     { nombre: "Buscar", items: ['icofont-search-job', 'icofont-search-folder', 'icofont-search-document', 'icofont-search-property', 'icofont-search-restaurant', 'icofont-search-stock', 'icofont-search-user', 'icofont-search-map', 'icofont-search-2', 'icofont-search-1'] },
 
-    { nombre: "Viajar", items: ['icofont-air-ticket', 'icofont-direction-sign', 'icofont-island-alt', 'icofont-beach', 'icofont-5-star-hotel', 'icofont-camping-vest', 'icofont-hotel', 'icofont-island', 'icofont-sandals-female', 'icofont-sandals-male'] },
-
     { nombre: "Gym", items: ['icofont-gym-alt-2', 'icofont-muscle-weight', 'icofont-dumbbell', 'icofont-cycling', 'icofont-gym-alt-1', 'icofont-gym', 'icofont-gym-alt-3', 'icofont-dumbbells', 'icofont-cycling-alt', 'icofont-muscle'] },
 
     { nombre: "Chart", items: ['icofont-chart-flow-2', 'icofont-chart-histogram', 'icofont-chart-flow-1', 'icofont-chart-arrows-axis', 'icofont-chart-flow', 'icofont-chart-pie', 'icofont-chart-line', 'icofont-chart-pie-alt', 'icofont-chart-line-alt', 'icofont-chart-bar-graph'] },
@@ -105,7 +105,6 @@ export const categoriasFiguras = [
     { nombre: "Persona", items: ['icofont-boy', 'icofont-business-man', 'icofont-girl-alt', 'icofont-kid', 'icofont-woman-in-glasses', 'icofont-hotel-boy-alt', 'icofont-funky-man', 'icofont-girl', 'icofont-man-in-glasses', 'icofont-waiter'] },
 
     { nombre: "Person", items: ['icofont-support', 'icofont-user-alt-5', 'icofont-user-female', 'icofont-user-suited', 'icofont-users-alt-4', 'icofont-users-alt-6', 'icofont-users-social', 'icofont-users-alt-2', 'icofont-users-alt-1', 'icofont-group'] },
-
 
 { nombre: "Marcas de ropa", items: ['icofont-brand-louis-vuitton', 'icofont-brand-smashing-magazine', 'icofont-brand-casio', 'icofont-brand-levis', 'icofont-brand-puma', 'icofont-brand-loreal', 'icofont-brand-target', 'icofont-brand-nike',
 'icofont-brand-adidas', 'icofont-brand-reebok'] },
