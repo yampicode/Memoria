@@ -307,9 +307,9 @@ let derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
 let mejorTiempo = parseInt(localStorage.getItem('mejorTiempo')) || null;
 let indiceCategoriaActual = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
 
-// --- NUEVAS VARIABLES PARA LOS NIVELES ---
+// --- VARIABLES PARA LOS NIVELES ---
 let nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
-let tiempoMaximo = 60; // Segundos iniciales para el nivel 2 y 3
+let tiempoMaximo = 60; 
 
 let cartasVolteadas = [];
 let bloqueado = false;
@@ -317,6 +317,7 @@ let juegoIniciado = false;
 let puntuacionPartida = 0;
 let tiempo = 0;
 let cronometroInterval = null;
+let tiempoInicioCategoria = 0;
 
 function guardarDatos() {
     const usuario = getUsuarioActual();
@@ -331,12 +332,11 @@ function guardarDatos() {
         localStorage.setItem('victorias', victorias);
         localStorage.setItem('derrotas', derrotas);
         localStorage.setItem('indiceCategoriaActual', indiceCategoriaActual);
-        localStorage.setItem('nivelActual', nivelActual); // Guardamos el nivel actual
+        localStorage.setItem('nivelActual', nivelActual); 
         if (mejorTiempo) localStorage.setItem('mejorTiempo', mejorTiempo);
     }
 }
 
-// Creamos el panel de estadísticas (SIN las vidas flotantes)
 const displayInfo = document.createElement('div');
 displayInfo.id = 'panel-estadisticas';
 displayInfo.style.cssText = `
@@ -357,21 +357,18 @@ function actualizarPanelEstadisticas() {
             <!-- Fila de arriba -->
             <div><div>Nivel</div><strong id="nivel-display" style="color: #8e44ad;">${nivelActual}</strong></div>
             <div><div>${t('puntos', idiomaActual)}</div><strong id="puntos-partida">${puntuacionPartida}</strong></div>
-             <div><div>${mostrarReloj ? 'T. Restante' : t('tiempo', idiomaActual)}</div><strong id="cronometro" style="color: ${mostrarReloj ? '#e74c3c' : '#333'};">${tiempo}s</strong></div>
-            
+            <div><div>${mostrarReloj ? 'T. Restante' : t('tiempo', idiomaActual)}</div><strong id="cronometro" style="color: ${mostrarReloj ? '#e74c3c' : '#333'};">${tiempo}s</strong></div>
             <div><div>${t('victorias_label', idiomaActual)}</div><strong id="victorias" style="color: #28a745;">${victorias}</strong></div>
-           
+            
             <!-- Fila de abajo -->
             <div><div>Vidas</div><strong id="vidas-panel" style="color: #e74c3c;"><i class="icofont-heart"></i> ${Math.max(0, vidas)}</strong></div>
             <div><div>${t('score', idiomaActual)}</div><strong id="score-total" style="color: #0056b3;">${scoreTotal}</strong></div>
             <div><div>${t('record', idiomaActual)}</div><strong id="mejor-tiempo" style="color: #d9534f;">${mejorTiempo ? mejorTiempo + 's' : '--'}</strong></div>
             <div><div>${t('derrotas', idiomaActual)}</div><strong id="derrotas" style="color: #e74c3c;">${derrotas}</strong></div>
-            
         </div>
     `;
 }
 
-// Función actualizarUI restaurada y adaptada
 function actualizarUI() {
     const elNivel = document.getElementById('nivel-display');
     const elPuntos = document.getElementById('puntos-partida');
@@ -411,8 +408,14 @@ btnIniciar.onclick = () => {
             tiempo = tiempoMaximo; 
         }
 
+        // 🔥 Iniciamos el reloj real solo si es Nivel 1 (para el récord)
+        if (nivelActual === 1) {
+            tiempoInicioCategoria = Date.now(); 
+        }
+
         cronometroInterval = setInterval(() => {
             if (nivelActual >= 2) {
+                // Nivel 2 y 3: Cuenta regresiva
                 tiempo--;
                 const elCronometro = document.getElementById('cronometro');
                 if (elCronometro) elCronometro.innerText = `${tiempo}s`;
@@ -424,6 +427,7 @@ btnIniciar.onclick = () => {
                     verificarGameOver(); 
                 }
             } else {
+                // Nivel 1: Cuenta progresiva
                 tiempo++;
                 const elCronometro = document.getElementById('cronometro');
                 if (elCronometro) elCronometro.innerText = `${tiempo}s`;
@@ -435,6 +439,8 @@ btnIniciar.onclick = () => {
             bloqueado = false;
             actualizarBotonesJuego();
             tablero.style.opacity = "1";
+            
+            // Reanudar el reloj (ya no usamos Date.now() para el nivel 2 y 3)
             cronometroInterval = setInterval(() => {
                 if (nivelActual >= 2) {
                     tiempo--;
@@ -627,9 +633,18 @@ function verificarVictoria() {
         victorias++;
         actualizarBotonesJuego();
         btnIniciar.disabled = true;
-
+        
         scoreTotal += puntuacionPartida;
         indiceCategoriaActual++;
+        
+        // --- CÁLCULO DEL RÉCORD (Solo para Nivel 1) ---
+        if (nivelActual === 1) {
+            const tiempoTomado = Math.round((Date.now() - tiempoInicioCategoria) / 1000);
+            if (mejorTiempo === null || tiempoTomado < mejorTiempo) {
+                mejorTiempo = tiempoTomado;
+            }
+        }
+        // -----------------------------------------------
         
         if (indiceCategoriaActual >= categoriasFiguras.length) {
             indiceCategoriaActual = 0;
