@@ -130,9 +130,8 @@ filter: drop-shadow( 0 4px 6px var(--color-claro));
 }
 
 .cont__btn {
-    display: flex;
-    flex-direction: rows;
-flex-wrap: wrap:
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap-bottom: 20px;
     justify-content: center;
     align-items: center;
