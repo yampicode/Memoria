@@ -329,20 +329,22 @@ let tiempo = 0;
 let cronometroInterval = null;
 let tiempoInicioCategoria = 0;
 
-function guardarDatos() {
+async function guardarDatos() {
     const usuario = getUsuarioActual();
 
     if (usuario) {
-        guardarStatsEnDB(usuario.id, {
+        // Esperamos a que Supabase guarde de verdad antes de continuar
+        await guardarStatsEnDB(usuario.id, {
             scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
         });
     } else {
+        // Modo invitado: guardado local
         localStorage.setItem('scoreTotal', scoreTotal);
         localStorage.setItem('vidas', vidas);
         localStorage.setItem('victorias', victorias);
         localStorage.setItem('derrotas', derrotas);
         localStorage.setItem('indiceCategoriaActual', indiceCategoriaActual);
-        localStorage.setItem('nivelActual', nivelActual); 
+        localStorage.setItem('nivelActual', nivelActual);
         if (mejorTiempo) localStorage.setItem('mejorTiempo', mejorTiempo);
     }
 }
@@ -546,7 +548,7 @@ function flipCard(cardElement) {
     }
 }
 
-function verificarCoincidencia() {
+function async verificarCoincidencia() {
     bloqueado = true;
     const [primera, segunda] = cartasVolteadas;
 
@@ -565,7 +567,7 @@ function verificarCoincidencia() {
         }
 
         reproducirEfectoSonido('acierto');
-        guardarDatos();
+        await guardarDatos();
         actualizarUI();
 
         resetearTurno();
@@ -573,7 +575,7 @@ function verificarCoincidencia() {
     } else {
         reproducirEfectoSonido('error');
         vidas--;
-        guardarDatos();
+        await guardarDatos();
         actualizarUI();
 
         if (vidas <= 0) {
@@ -913,7 +915,24 @@ document.addEventListener('usuarioLogueado', async (e) => {
     crearTablero();
 });
 
-document.addEventListener('usuarioDeslogueado', () => {
+// Auto-guardado cada 10 segundos
+setInterval(async () => {
+    if (getUsuarioActual()) {
+        await guardarDatos();
+    }
+}, 10000);
+
+document.addEventListener('usuarioDeslogueado', async () => {
+    // 1. Asegurarnos de que los datos se guarden en la nube antes de perder la sesión
+    // (Esto es por si acaso, aunque ya deberían estar guardados por el paso 2)
+    const usuario = getUsuarioActual();
+    if (usuario) {
+        await guardarStatsEnDB(usuario.id, {
+            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
+        });
+    }
+
+    // 2. Ahora sí, cargamos lo que haya en localStorage (modo invitado)
     scoreTotal = parseInt(localStorage.getItem('scoreTotal')) || 0;
     vidas = parseInt(localStorage.getItem('vidas')) || 7;
     victorias = parseInt(localStorage.getItem('victorias')) || 0;
