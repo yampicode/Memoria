@@ -126,7 +126,7 @@ filter: drop-shadow( 0 4px 6px var(--color-claro));
     font-size: 0.7em;
     font-weight: 900;
     cursor: pointer;
-    width: 100px;
+    width: 90px;
 }
 
 .cont__btn {
