@@ -13,12 +13,12 @@ export async function guardarStatsEnDB(userId, stats) {
                 derrotas: stats.derrotas,
                 mejor_tiempo: stats.mejorTiempo,
                 indice_categoria: stats.indiceCategoriaActual,
-                nivel_actual: stats.nivelActual || 1, // <-- NUEVO
+                nivel_actual: stats.nivelActual || 1,
+                pais: stats.pais || '🌎', // <-- NUEVO
                 updated_at: new Date().toISOString()
             });
 
         if (error) throw error;
-        console.log("Estadísticas guardadas en DB.");
     } catch (error) {
         console.error('Error al guardar en DB:', error.message);
     }
