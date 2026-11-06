@@ -2,7 +2,7 @@ import { inicializarPayPal } from './paypal.js';
 import { categoriasFiguras } from './categorias.js';
 import { t } from './traducciones.js';
 import { abrirModalLogin, cerrarModalLogin, actualizarUILogin, getUsuarioActual } from './auth.js';
-import { guardarStatsEnDB, cargarStatsDesdeDB, obtenerTopRanking, obtenerMiPosicion } from './db.js'; // <-- IMPORT AQUÍ
+import { guardarStatsEnDB, cargarStatsDesdeDB, obtenerTopRanking, obtenerMiPosicion } from './db.js';
 
 // ==========================================
 // SISTEMA DE INTERNACIONALIZACIÓN (i18n)
@@ -188,13 +188,13 @@ function abrirModal(idModal) {
     const modal = document.getElementById(idModal);
     if (modal) {
         modal.classList.add('activo');
-        document.body.classList.add('modal-abierto'); // <-- BLOQUEA SCROLL
+        document.body.classList.add('modal-abierto');
     }
 }
 
 function ocultarModal() {
     modalOverlay.classList.remove('activo');
-    document.body.classList.remove('modal-abierto'); // <-- LIBERA SCROLL
+    document.body.classList.remove('modal-abierto');
 }
 
 const btnComoJugar = document.getElementById('btn-como-jugar');
@@ -212,7 +212,7 @@ botonesCerrar.forEach(boton => {
         const modalOverlay = e.target.closest('.modal-overlay');
         if (modalOverlay) {
             modalOverlay.classList.remove('activo');
-            document.body.classList.remove('modal-abierto'); // <-- LIBERA SCROLL
+            document.body.classList.remove('modal-abierto');
         }
     });
 });
@@ -248,7 +248,7 @@ function mostrarModal(titulo, mensaje, opciones = {}) {
     }
 
     modalOverlay.classList.add('activo');
-    document.body.classList.add('modal-abierto'); // <-- BLOQUEA SCROLL
+    document.body.classList.add('modal-abierto');
 }
 
 // ==========================================
@@ -319,8 +319,9 @@ let derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
 let mejorTiempo = parseInt(localStorage.getItem('mejorTiempo')) || null;
 let indiceCategoriaActual = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
 
-// --- VARIABLES PARA LOS NIVELES ---
+// --- VARIABLES PARA LOS NIVELES Y PAÍS ---
 let nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
+let paisUsuario = localStorage.getItem('paisUsuario') || '🌎'; // <-- NUEVO
 let tiempoMaximo = 60; 
 
 let cartasVolteadas = [];
@@ -337,7 +338,8 @@ async function guardarDatos() {
     if (usuario) {
         await guardarStatsEnDB(usuario.id, {
             scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual,
-            nivelActual
+            nivelActual,
+            pais: paisUsuario // <-- AÑADIDO
         });
     } else {
         localStorage.setItem('scoreTotal', scoreTotal);
@@ -346,6 +348,7 @@ async function guardarDatos() {
         localStorage.setItem('derrotas', derrotas);
         localStorage.setItem('indiceCategoriaActual', indiceCategoriaActual);
         localStorage.setItem('nivelActual', nivelActual);
+        localStorage.setItem('paisUsuario', paisUsuario); // <-- AÑADIDO
         if (mejorTiempo) localStorage.setItem('mejorTiempo', mejorTiempo);
     }
 }
@@ -367,13 +370,11 @@ function actualizarPanelEstadisticas() {
 
     panelStats.innerHTML = `
         <div class="grid-stats" style="display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; gap: 10px; font-size: 14px;">
-            <!-- Fila de arriba -->
             <div><div>${t('nivel_label', idiomaActual)}</div><strong id="nivel-display" style="color: #8e44ad;">${nivelActual}</strong></div>
             <div><div>${t('puntos', idiomaActual)}</div><strong id="puntos-partida">${puntuacionPartida}</strong></div>
             <div><div>${mostrarReloj ? t('tiempo_restante', idiomaActual) : t('tiempo', idiomaActual)}</div><strong id="cronometro" style="color: ${mostrarReloj ? '#e74c3c' : '#333'};">${tiempo}s</strong></div>
             <div><div>${t('victorias_label', idiomaActual)}</div><strong id="victorias" style="color: #28a745;">${victorias}</strong></div>
             
-            <!-- Fila de abajo -->
             <div><div>${t('vidas_label', idiomaActual)}</div><strong id="vidas-panel" style="color: #e74c3c;"><i class="icofont-heart"></i> ${Math.max(0, vidas)}</strong></div>
             <div><div>${t('score', idiomaActual)}</div><strong id="score-total" style="color: #0056b3;">${scoreTotal}</strong></div>
             <div><div>${t('record', idiomaActual)}</div><strong id="mejor-tiempo" style="color: #d9534f;">${mejorTiempo ? mejorTiempo + 's' : '--'}</strong></div>
@@ -616,13 +617,13 @@ function verificarGameOver() {
 
         modalSinVidas.style.display = 'block';
         modalSinVidas.classList.add('activo');
-        document.body.classList.add('modal-abierto'); // <-- BLOQUEA SCROLL
+        document.body.classList.add('modal-abierto');
 
         setTimeout(async() => {
             await inicializarPayPal((subscriptionID) => {
                 modalSinVidas.style.display = 'none';
                 modalSinVidas.classList.remove('activo');
-                document.body.classList.remove('modal-abierto'); // <-- LIBERA SCROLL
+                document.body.classList.remove('modal-abierto');
 
                 vidas = 7;
                 tiempo = 0;
@@ -650,7 +651,7 @@ document.getElementById('btn-ver-anuncio')?.addEventListener('click', () => {
     if (modalSinVidas) {
         modalSinVidas.style.display = 'none';
         modalSinVidas.classList.remove('activo');
-        document.body.classList.remove('modal-abierto'); // <-- LIBERA SCROLL
+        document.body.classList.remove('modal-abierto');
     }
 
     let adContainer = document.getElementById('ad-container');
@@ -875,6 +876,7 @@ document.addEventListener('usuarioLogueado', async (e) => {
         indiceCategoriaActual = Math.max(statsDB.indice_categoria, invitadoNivelCat);
 
         nivelActual = statsDB.nivel_actual || 1;
+        paisUsuario = statsDB.pais || '🌎'; // <-- CARGAR PAÍS DESDE DB
 
         if (invitadoMejorTiempo && (!statsDB.mejor_tiempo || invitadoMejorTiempo < statsDB.mejor_tiempo)) {
             mejorTiempo = invitadoMejorTiempo;
@@ -888,7 +890,8 @@ document.addEventListener('usuarioLogueado', async (e) => {
 
         if (invitadoScore > statsDB.score_total || invitadoNivelCat > statsDB.indice_categoria) {
             await guardarStatsEnDB(user.id, {
-                scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual
+                scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual,
+                pais: paisUsuario // <-- GUARDAR PAÍS
             });
         }
 
@@ -896,13 +899,15 @@ document.addEventListener('usuarioLogueado', async (e) => {
         scoreTotal = invitadoScore;
         indiceCategoriaActual = invitadoNivelCat;
         nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
+        paisUsuario = user.user_metadata?.pais || localStorage.getItem('paisUsuario') || '🌎'; // <-- PAÍS DEL REGISTRO
         mejorTiempo = invitadoMejorTiempo;
         victorias = invitadoVictorias;
         vidas = parseInt(localStorage.getItem('vidas')) || 7;
         derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
 
         await guardarStatsEnDB(user.id, {
-            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual
+            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual,
+            pais: paisUsuario // <-- GUARDAR PAÍS
         });
     }
 
@@ -913,6 +918,7 @@ document.addEventListener('usuarioLogueado', async (e) => {
     localStorage.removeItem('mejorTiempo');
     localStorage.removeItem('indiceCategoriaActual');
     localStorage.removeItem('nivelActual');
+    localStorage.removeItem('paisUsuario');
 
     actualizarUI();
     crearTablero();
@@ -929,7 +935,8 @@ document.addEventListener('usuarioDeslogueado', async () => {
     const usuario = getUsuarioActual();
     if (usuario) {
         await guardarStatsEnDB(usuario.id, {
-            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual
+            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual,
+            pais: paisUsuario // <-- GUARDAR PAÍS
         });
     }
 
@@ -940,6 +947,7 @@ document.addEventListener('usuarioDeslogueado', async () => {
     mejorTiempo = parseInt(localStorage.getItem('mejorTiempo')) || null;
     indiceCategoriaActual = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
     nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
+    paisUsuario = localStorage.getItem('paisUsuario') || '🌎'; // <-- CARGAR PAÍS INVITADO
 
     actualizarUI();
     crearTablero();
@@ -958,7 +966,7 @@ async function abrirModalRanking() {
     reproducirEfectoSonido('clic');
     modal.style.display = 'block';
     modal.classList.add('activo');
-    document.body.classList.add('modal-abierto'); // <-- BLOQUEA SCROLL
+    document.body.classList.add('modal-abierto');
     lista.innerHTML = '<p style="text-align: center; color: #999;">Cargando ranking...</p>';
     miPosicionDiv.style.display = 'none';
 
@@ -972,10 +980,11 @@ async function abrirModalRanking() {
             const medalla = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
             const nombre = jugador.username || 'Anónimo';
             const record = jugador.mejor_tiempo ? `${jugador.mejor_tiempo}s` : '--';
+            const paisEmoji = jugador.pais || '🌎'; // <-- BANDERA
 
             html += `
                 <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; font-size: 14px;">
-                    <span><strong>${medalla}</strong> ${nombre}</span>
+                    <span><strong>${medalla}</strong> ${paisEmoji} ${nombre}</span>
                     <span><strong>${jugador.score_total}</strong> pts | ${record}</span>
                 </div>
             `;
@@ -1000,6 +1009,6 @@ document.querySelector('#modal-ranking .btn-cerrar-modal')?.addEventListener('cl
     if (modal) {
         modal.style.display = 'none';
         modal.classList.remove('activo');
-        document.body.classList.remove('modal-abierto'); // <-- LIBERA SCROLL
+        document.body.classList.remove('modal-abierto');
     }
 });
