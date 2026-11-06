@@ -126,7 +126,7 @@ filter: drop-shadow( 0 4px 6px var(--color-claro));
     font-size: 0.7em;
     font-weight: 900;
     cursor: pointer;
-    width: 90px;
+    width: 100px;
 }
 
 .cont__btn {
@@ -196,7 +196,7 @@ filter: drop-shadow( 0 4px 6px var(--color-claro));
 .card-inner {
     position: relative;
     width: 100%;
-    height: 90%;
+    height: 100%;
     text-align: center;
     transition: transform 0.6s;
     transform-style: preserve-3d;
@@ -211,7 +211,7 @@ filter: drop-shadow( 0 4px 6px var(--color-claro));
 .card-back {
     position: absolute;
     width: 100%;
-    height: 90%;
+    height: 100%;
     backface-visibility: hidden;
     color: var(--color-yellow);
     display: flex;
