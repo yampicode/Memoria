@@ -24,6 +24,14 @@ function actualizarTextosEstaticos() {
             elemento.title = t(clave, idiomaActual);
         }
     });
+
+    // Añadido para los placeholders de los inputs
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(elemento => {
+        const clave = elemento.getAttribute('data-i18n-placeholder');
+        if (clave) {
+            elemento.placeholder = t(clave, idiomaActual);
+        }
+    });
 }
 
 function actualizarBotonesJuego() {
@@ -112,6 +120,7 @@ const pantallaJuego = document.getElementById('pantalla-juego');
 const btnVolverMenu = document.getElementById('btn-volver-menu');
 const img = document.getElementById('img');
 const topBarUser = document.getElementById('top-bar-user');
+const footer = document.getElementById("footer");
 
 btnJugar.addEventListener('click', () => {
     reproducirEfectoSonido('clic');
@@ -300,7 +309,6 @@ const tablero = document.getElementById("tablero-juego");
 const btnReiniciar = document.getElementById("btn-reiniciar");
 const btnBorrar = document.getElementById("btn-borrar-historial");
 const btnIniciar = document.getElementById("btn-iniciar");
-const footer = document.getElementById("footer");
 
 let scoreTotal = parseInt(localStorage.getItem('scoreTotal')) || 0;
 let vidas = parseInt(localStorage.getItem('vidas')) || 7;
@@ -351,19 +359,19 @@ tablero.parentNode.insertBefore(displayInfo, tablero);
 function actualizarPanelEstadisticas() {
     const panelStats = document.getElementById('panel-estadisticas');
     if (!panelStats) return;
-    
+
     const mostrarReloj = (nivelActual >= 2);
-    
+
     panelStats.innerHTML = `
         <div class="grid-stats" style="display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; gap: 10px; font-size: 14px;">
             <!-- Fila de arriba -->
-            <div><div>Nivel</div><strong id="nivel-display" style="color: #8e44ad;">${nivelActual}</strong></div>
+            <div><div>${t('nivel_label', idiomaActual)}</div><strong id="nivel-display" style="color: #8e44ad;">${nivelActual}</strong></div>
             <div><div>${t('puntos', idiomaActual)}</div><strong id="puntos-partida">${puntuacionPartida}</strong></div>
-            <div><div>${mostrarReloj ? 'T. Restante' : t('tiempo', idiomaActual)}</div><strong id="cronometro" style="color: ${mostrarReloj ? '#e74c3c' : '#333'};">${tiempo}s</strong></div>
+            <div><div>${mostrarReloj ? t('tiempo_restante', idiomaActual) : t('tiempo', idiomaActual)}</div><strong id="cronometro" style="color: ${mostrarReloj ? '#e74c3c' : '#333'};">${tiempo}s</strong></div>
             <div><div>${t('victorias_label', idiomaActual)}</div><strong id="victorias" style="color: #28a745;">${victorias}</strong></div>
             
             <!-- Fila de abajo -->
-            <div><div>Vidas</div><strong id="vidas-panel" style="color: #e74c3c;"><i class="icofont-heart"></i> ${Math.max(0, vidas)}</strong></div>
+            <div><div>${t('vidas_label', idiomaActual)}</div><strong id="vidas-panel" style="color: #e74c3c;"><i class="icofont-heart"></i> ${Math.max(0, vidas)}</strong></div>
             <div><div>${t('score', idiomaActual)}</div><strong id="score-total" style="color: #0056b3;">${scoreTotal}</strong></div>
             <div><div>${t('record', idiomaActual)}</div><strong id="mejor-tiempo" style="color: #d9534f;">${mejorTiempo ? mejorTiempo + 's' : '--'}</strong></div>
             <div><div>${t('derrotas', idiomaActual)}</div><strong id="derrotas" style="color: #e74c3c;">${derrotas}</strong></div>
@@ -376,7 +384,7 @@ function actualizarUI() {
     const elPuntos = document.getElementById('puntos-partida');
     const elVictorias = document.getElementById('victorias');
     const elCronometro = document.getElementById('cronometro');
-    
+
     const elVidasPanel = document.getElementById('vidas-panel');
     const elScore = document.getElementById('score-total');
     const elDerrotas = document.getElementById('derrotas');
@@ -386,7 +394,7 @@ function actualizarUI() {
     if (elPuntos) elPuntos.innerText = puntuacionPartida;
     if (elVictorias) elVictorias.innerText = victorias;
     if (elCronometro) elCronometro.innerText = `${tiempo}s`;
-    
+
     if (elVidasPanel) elVidasPanel.innerHTML = `<i class="icofont-heart"></i> ${Math.max(0, vidas)}`;
     if (elScore) elScore.innerText = scoreTotal;
     if (elDerrotas) elDerrotas.innerText = derrotas;
@@ -405,7 +413,7 @@ btnIniciar.onclick = () => {
         actualizarBotonesJuego();
 
         if (cronometroInterval) clearInterval(cronometroInterval);
-        
+
         if (nivelActual >= 2 && tiempo === 0) {
             tiempo = tiempoMaximo; 
         }
@@ -438,7 +446,7 @@ btnIniciar.onclick = () => {
             bloqueado = false;
             actualizarBotonesJuego();
             tablero.style.opacity = "1";
-            
+
             cronometroInterval = setInterval(() => {
                 if (nivelActual >= 2) {
                     tiempo--;
@@ -483,9 +491,9 @@ function inicializarNuevaPartida() {
     }
     bloqueado = false;
     juegoIniciado = false;
-    
+
     tiempo = (nivelActual >= 2) ? tiempoMaximo : 0; 
-    
+
     cartasVolteadas = [];
     actualizarBotonesJuego();
     btnIniciar.disabled = false;
@@ -545,11 +553,11 @@ function verificarCoincidencia() {
     if (primera.dataset.id === segunda.dataset.id) {
         puntuacionPartida += 2;
         scoreTotal += 2;
-        
+
         if (nivelActual === 1 || nivelActual === 2) {
             vidas++; 
         }
-        
+
         if (nivelActual === 2) {
             tiempo += 5; 
             const elCronometro = document.getElementById('cronometro');
@@ -587,52 +595,50 @@ function verificarGameOver() {
     btnIniciar.disabled = true;
     tablero.style.opacity = "0.4";
     bloqueado = true;
-    
+
     reproducirEfectoSonido('derrota');
     derrotas++;
-    
+
     guardarDatos();
     actualizarUI();
-    
+
     document.querySelectorAll('.card').forEach(card => card.classList.add('flipped'));
-    
+
     const modalSinVidas = document.getElementById('modal-sin-vidas');
     if (modalSinVidas) {
         const tituloModal = modalSinVidas.querySelector('h2');
         const mensajeModal = modalSinVidas.querySelector('p');
-        if (tituloModal) tituloModal.textContent = "¡Te has quedado sin vidas!";
-        if (mensajeModal) mensajeModal.textContent = "Suscríbete para mantener tu nivel, Score y récord, y continuar donde te quedaste.";
-        
+        if (tituloModal) tituloModal.textContent = t('sin_vidas_titulo', idiomaActual);
+        if (mensajeModal) mensajeModal.textContent = t('sin_vidas_mensaje_progreso', idiomaActual);
+
         modalSinVidas.style.display = 'block';
         modalSinVidas.classList.add('activo');
-        
-        // Aquí llamamos a la función de PayPal con un retraso
+
         setTimeout(async() => {
             await inicializarPayPal((subscriptionID) => {
-                // Lógica de éxito
                 modalSinVidas.style.display = 'none';
                 modalSinVidas.classList.remove('activo');
-                
+
                 vidas = 7;
                 tiempo = 0;
-                
+
                 guardarDatos();
                 actualizarUI();
                 actualizarPanelEstadisticas();
-                
+
                 mostrarModal(
-                    "¡Progreso Salvado!",
-                    "Gracias por suscribirte. Tienes 7 vidas nuevas y continuarás en tu categoría actual sin perder tu Score ni tu récord.",
+                    t('progreso_salvado_titulo', idiomaActual),
+                    t('progreso_salvado_suscripcion', idiomaActual),
                     {
-                        textoBotonPrincipal: "Continuar Jugando",
+                        textoBotonPrincipal: t('continuar_jugando', idiomaActual),
                         callbackPrincipal: () => crearTablero()
                     }
                 );
             });
-        }, 1000); // <-- EL RETRASO DE 1 SEGUNDO ESTÁ AQUÍ
+        }, 1000);
     }
 }
-// BOTÓN DE ANUNCIO (Ahora salva el progreso temporalmente)
+
 // Lógica para el botón de "Ver anuncio" (con Google IMA)
 document.getElementById('btn-ver-anuncio')?.addEventListener('click', () => {
     const modalSinVidas = document.getElementById('modal-sin-vidas');
@@ -640,8 +646,7 @@ document.getElementById('btn-ver-anuncio')?.addEventListener('click', () => {
         modalSinVidas.style.display = 'none';
         modalSinVidas.classList.remove('activo');
     }
-    
-    // 1. Creamos un contenedor para el video (lo ocultamos al principio)
+
     let adContainer = document.getElementById('ad-container');
     if (!adContainer) {
         adContainer = document.createElement('div');
@@ -651,19 +656,18 @@ document.getElementById('btn-ver-anuncio')?.addEventListener('click', () => {
     }
     adContainer.style.display = 'block';
     adContainer.innerHTML = '<div id="ad-video" style="width:100%; height:100%;"></div>';
-    
-    // 2. Inicializamos el SDK de IMA
+
     const videoElement = document.createElement('video');
     videoElement.id = 'ad-video-player';
     videoElement.style.cssText = 'width:100%; height:100%;';
     document.getElementById('ad-video').appendChild(videoElement);
-    
+
     const adDisplayContainer = new google.ima.AdDisplayContainer(
         document.getElementById('ad-video'),
         videoElement
     );
     adDisplayContainer.initialize();
-    
+
     const adsLoader = new google.ima.AdsLoader(adDisplayContainer);
     adsLoader.addEventListener(
         google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
@@ -675,24 +679,23 @@ document.getElementById('btn-ver-anuncio')?.addEventListener('click', () => {
         onAdError,
         false
     );
-    
+
     const adsRequest = new google.ima.AdsRequest();
-    // AQUÍ PEGAS TU ENLACE DE GOOGLE AD MANAGER
     adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?iu=/23390576740/memoria_reward&description_url=http%3A%2F%2Fmemoria-ymujica.vercel.app&tfcd=0&npa=0&sz=400x300&ciu_szs=1x1&min_ad_duration=20000&max_ad_duration=30000&gdfp_req=1&unviewed_position_start=1&output=vast&env=vp&impl=s&correlator=';
-    
+
     adsRequest.linearAdSlotWidth = window.innerWidth;
     adsRequest.linearAdSlotHeight = window.innerHeight;
     adsRequest.nonLinearAdSlotWidth = window.innerWidth;
     adsRequest.nonLinearAdSlotHeight = 150;
-    
+
     adsLoader.requestAds(adsRequest);
-    
+
     function onAdsManagerLoaded(adsManagerLoadedEvent) {
         const adsManager = adsManagerLoadedEvent.getAdsManager(videoElement);
-        
+
         adsManager.addEventListener(google.ima.AdEvent.Type.ALL_ADS_COMPLETED, onAdEvent);
         adsManager.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, onAdError);
-        
+
         try {
             adsManager.init(window.innerWidth, window.innerHeight, google.ima.ViewMode.NORMAL);
             adsManager.start();
@@ -700,35 +703,33 @@ document.getElementById('btn-ver-anuncio')?.addEventListener('click', () => {
             onAdError(adError);
         }
     }
-    
+
     function onAdEvent(adEvent) {
         if (adEvent.type === google.ima.AdEvent.Type.ALL_ADS_COMPLETED) {
-            // 🎉 EL ANUNCIO TERMINÓ -> DAR RECOMPENSA
             adContainer.style.display = 'none';
-            
-            // Salvamos el progreso
+
             vidas = 7;
             tiempo = 0;
             guardarDatos();
             actualizarUI();
             actualizarPanelEstadisticas();
-            
+
             mostrarModal(
-                "¡Progreso Salvado!",
-                "Gracias por ver el anuncio. Tienes 7 vidas nuevas y continúas en tu categoría actual sin perder tu Score ni tu récord.",
+                t('progreso_salvado_titulo', idiomaActual),
+                t('progreso_salvado_anuncio', idiomaActual),
                 {
-                    textoBotonPrincipal: "Continuar Jugando",
+                    textoBotonPrincipal: t('continuar_jugando', idiomaActual),
                     callbackPrincipal: () => crearTablero()
                 }
             );
         }
     }
-    
+
     function onAdError(adErrorEvent) {
         console.error("Error en el anuncio:", adErrorEvent.getError());
         adContainer.style.display = 'none';
-        mostrarModal("Anuncio no disponible", "No se pudo cargar el anuncio. Inténtalo más tarde.", {
-            textoBotonPrincipal: "Reiniciar partida",
+        mostrarModal(t('anuncio_no_disponible_titulo', idiomaActual), t('anuncio_no_disponible_mensaje', idiomaActual), {
+            textoBotonPrincipal: t('reiniciar_partida', idiomaActual),
             callbackPrincipal: () => {
                 nivelActual = 1;
                 indiceCategoriaActual = 0;
@@ -741,6 +742,7 @@ document.getElementById('btn-ver-anuncio')?.addEventListener('click', () => {
         });
     }
 });
+
 function verificarVictoria() {
     const todasLasCartas = document.querySelectorAll('.card');
     if (Array.from(todasLasCartas).every(card => card.classList.contains('flipped'))) {
@@ -748,20 +750,20 @@ function verificarVictoria() {
         victorias++;
         actualizarBotonesJuego();
         btnIniciar.disabled = true;
-        
+
         scoreTotal += puntuacionPartida;
         indiceCategoriaActual++;
-        
+
         if (nivelActual === 1) {
             const tiempoTomado = Math.round((Date.now() - tiempoInicioCategoria) / 1000);
             if (mejorTiempo === null || tiempoTomado < mejorTiempo) {
                 mejorTiempo = tiempoTomado;
             }
         }
-        
+
         if (indiceCategoriaActual >= categoriasFiguras.length) {
             indiceCategoriaActual = 0;
-            
+
             if (nivelActual === 1) {
                 nivelActual = 2;
                 tiempoMaximo = 60;
@@ -776,32 +778,32 @@ function verificarVictoria() {
         }
 
         guardarDatos();
-        
+
         if (typeof confetti === 'function') {
             confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
         }
-        
-        let tituloModal = `¡Categoría Superada!`;
-        let mensajeModal = `¡Bien hecho! Ahora vas a la Categoría ${indiceCategoriaActual + 1} del Nivel ${nivelActual}.`;
-        
+
+        let tituloModal = t('categoria_superada_titulo', idiomaActual);
+        let mensajeModal = t('categoria_superada_mensaje', idiomaActual, indiceCategoriaActual + 1, nivelActual);
+
         if (indiceCategoriaActual === 0 && nivelActual === 2) {
-            tituloModal = "¡Nivel 2 Desbloqueado!";
-            mensajeModal = "¡Ahora juegas contrarreloj! Cada acierto te da +1 vida y +5 segundos.";
+            tituloModal = t('nivel2_desbloqueado_titulo', idiomaActual);
+            mensajeModal = t('nivel2_desbloqueado_mensaje', idiomaActual);
         } else if (indiceCategoriaActual === 0 && nivelActual === 3) {
-            tituloModal = "¡Nivel 3 Desbloqueado!";
-            mensajeModal = "¡Modo Extremo! No hay recompensas de tiempo ni vidas. ¡Demuestra lo que vales!";
+            tituloModal = t('nivel3_desbloqueado_titulo', idiomaActual);
+            mensajeModal = t('nivel3_desbloqueado_mensaje', idiomaActual);
         } else if (indiceCategoriaActual === 0 && nivelActual === 1) {
-            tituloModal = "¡Juego Completado!";
-            mensajeModal = "¡Has superado los 3 niveles! Vuelves a empezar desde el Nivel 1.";
+            tituloModal = t('juego_completado_titulo', idiomaActual);
+            mensajeModal = t('juego_completado_mensaje', idiomaActual);
         }
-        
+
         reproducirEfectoSonido('victoria');
-        
+
         mostrarModal(
             tituloModal,
             mensajeModal,
             {
-                textoBotonPrincipal: "Siguiente Categoría",
+                textoBotonPrincipal: t('siguiente_categoria', idiomaActual),
                 callbackPrincipal: () => {
                     actualizarPanelEstadisticas();
                     crearTablero();
@@ -866,7 +868,7 @@ document.addEventListener('usuarioLogueado', async (e) => {
     if (statsDB) {
         scoreTotal = Math.max(statsDB.score_total, invitadoScore);
         indiceCategoriaActual = Math.max(statsDB.indice_categoria, invitadoNivelCat);
-        
+
         nivelActual = Math.max(1, invitadoNivelDificultad); 
 
         if (invitadoMejorTiempo && (!statsDB.mejor_tiempo || invitadoMejorTiempo < statsDB.mejor_tiempo)) {
