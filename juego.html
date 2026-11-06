@@ -158,6 +158,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 15px; display: none;"
             >
 
+<!-- En el formulario de registro, añade esto -->
+<div id="pais-container" style="display: none; margin-top: 10px;">
+    <label for="auth-pais" style="font-size: 14px; color: #333;">País de origen:</label>
+    <select id="auth-pais" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 15px; margin-top: 5px;">
+        <option value="🌎">🌎 Selecciona tu país</option>
+        <option value="🇻🇪">🇻🇪 Venezuela</option>
+        <option value="🇨🇴">🇨🇴 Colombia</option>
+        <option value="🇦🇷">🇦🇷 Argentina</option>
+        <option value="🇧🇷">🇧🇷 Brasil</option>
+        <option value="🇨🇱">🇨🇱 Chile</option>
+        <option value="🇵🇪">🇵🇪 Perú</option>
+        <option value="🇲🇽">🇲🇽 México</option>
+        <option value="🇪🇸">🇪🇸 España</option>
+        <option value="🇺🇸">🇺🇸 Estados Unidos</option>
+        <!-- Añade más países si quieres -->
+    </select>
+</div>
+
             <button type="submit" id="btn-auth-submit" class="btn" data-i18n="entrar" style="margin-top: 5px;">
                 Entrar
             </button>
