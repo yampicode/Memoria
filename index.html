@@ -12,6 +12,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <meta charset="UTF-8">
     <title>Memoria</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
 <meta name="google-adsense-account" content="ca-pub-4904948441378686">
     <meta name="author" content="Yanpiero Mujica">
@@ -55,10 +56,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta name="geo.position" content="10.4696;-68.0149" />
     <meta name="ICBM" content="10.4696, -68.0149" />
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="fuentes.css" type="text/css" media="all" />
-    <link rel="stylesheet" href="icofont.min.css" type="text/css" media="all" />
-    <link rel="shortcut icon" href="memoria-ico.webp" type="image/x-icon" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/fuentes.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/icofont.min.css" type="text/css" media="all" />
+    <link rel="shortcut icon" href="assets/memoria-ico.webp" type="image/x-icon" />
+    
+    <script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+    
+      <script defer src="https://www.paypal.com/sdk/js?client-id=AWzLgFu6y9ElpUoQCBYJPf7OWQUaOFPDxSVL7UrSVDQteqFinGalLvHEt4aJCNxUja_aO5AY-lYuT3KP&components=paypal-subscriptions&currency=USD"></script>
     <script src="//web.webpushs.com/js/push/d87d5962637fd4ed0592c606c1a87211_1.js" async></script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4904948441378686"
@@ -70,11 +75,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <header class="header">
-
-
-    <img id="img" class="img" src="memoria.svg" alt="Logotipo de Memoria." />
-
-
+    <img id="img" class="img" src="assets/memoria.svg" alt="Logotipo de Memoria." />
+  
 </header>
 
 <main class="menu-principal" id="menu-principal">
@@ -266,17 +268,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-card">
         <h2 data-i18n="sin_vidas_titulo">¡Te has quedado sin vidas!</h2>
         <p data-i18n="sin_vidas_mensaje">¿Qué deseas hacer para continuar?</p>
-
+        
+     
+        
         <div class="modal-botones">
-            <!-- Opción con Recompensa (Ver Anuncio) -->
-            <button id="btn-ver-anuncio" class="btn-video" data-i18n="ver_anuncio">
-                🎬 Ver anuncio y recuperar 7 vidas (Continuar partida)
-            </button>
-
-            <!-- Opción de Penalización (Reiniciar desde cero) -->
-            <button id="btn-reiniciar" class="btn-penalizacion" data-i18n="reiniciar_partida">
-                🔄 Reiniciar partida (Perder progreso)
-            </button>
+            
+               <!-- AQUÍ VA EL BOTÓN DE PAYPAL -->
+      <div id="paypal-button-container" style="margin: 15px 0;"></div>
+<!-- Dentro del modal-sin-vidas -->
+<button id="btn-ver-anuncio" class="btn-video" data-i18n="ver_anuncio" style="background: #28a745; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; width: 100%; margin-bottom: 10px; cursor: pointer;">
+    🎬 Ver anuncio y salvar mi progreso
+</button>
+<button id="btn-reiniciar" class="btn-penalizacion" data-i18n="reiniciar_partida" style="background: #e74c3c; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer;">
+    🔄 Reiniciar partida (Perder progreso)
+</button>
+           
         </div>
     </div>
 </div>
@@ -287,7 +293,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="icono-cafe icofont-coffee-mug"></span>
         <span class="texto-apoyo" data-i18n="invitar_cafe">Invítame un café</span>
     </a>
-    <div><p class="pie" <!-- data-i18n="version"--> >2026 © | V 2.9</p></div>
+    <div><p class="pie" data-i18n="version" >2026 © | V 2.9</p></div>
 </footer>
 
 <!-- Modal del sistema dinámico -->
@@ -300,8 +306,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 </div>
 
-<script type="module" src="main.js"></script>
+<script type="module" src="js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+ 
 </body>
 </html>
