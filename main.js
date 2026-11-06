@@ -90,12 +90,12 @@ function reproducirEfectoSonido(tipo) {
     if (!sonidoActivado) return;
 
     let rutaAudio = '';
-    if (tipo === 'clic') rutaAudio = 'assets/clic.ogg';
-    if (tipo === 'acierto') rutaAudio = 'assets/acierto.ogg';
-    if (tipo === 'error') rutaAudio = 'assets/error.ogg';
-    if (tipo === 'voltear') rutaAudio = 'assets/voltear.ogg';
-    if (tipo === 'derrota') rutaAudio = 'assets/derrota.ogg';
-    if (tipo === 'victoria') rutaAudio = 'assets/victoria.ogg';
+    if (tipo === 'clic') rutaAudio = 'clic.ogg';
+    if (tipo === 'acierto') rutaAudio = 'acierto.ogg';
+    if (tipo === 'error') rutaAudio = 'error.ogg';
+    if (tipo === 'voltear') rutaAudio = 'voltear.ogg';
+    if (tipo === 'derrota') rutaAudio = 'derrota.ogg';
+    if (tipo === 'victoria') rutaAudio = 'victoria.ogg';
 
     if (rutaAudio) {
         const sonido = new Audio(rutaAudio);
