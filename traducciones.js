@@ -2,6 +2,15 @@
 
 export const traducciones = {
     es: {
+             
+         // Ranking
+ranking_btn: "🏆 Ranking Global",
+ranking_titulo: "🏆 Ranking Global",
+ranking_subtitulo: "Los 10 mejores jugadores por Score.",
+ranking_cargando: "Cargando ranking...",
+ranking_vacio: "Aún no hay jugadores en el ranking.",
+ranking_tu_posicion: "Tu posición",
+ 
         // Menú principal
         jugar_ahora: "Jugar Ahora",
         como_jugar: "¿Cómo Jugar?",
