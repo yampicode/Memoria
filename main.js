@@ -188,7 +188,13 @@ function abrirModal(idModal) {
     const modal = document.getElementById(idModal);
     if (modal) {
         modal.classList.add('activo');
+        document.body.classList.add('modal-abierto'); // <-- BLOQUEA EL SCROLL
     }
+}
+
+function ocultarModal() {
+    modalOverlay.classList.remove('activo');
+    document.body.classList.remove('modal-abierto'); // <-- LIBERA EL SCROLL
 }
 
 const btnComoJugar = document.getElementById('btn-como-jugar');
@@ -241,10 +247,6 @@ function mostrarModal(titulo, mensaje, opciones = {}) {
     }
 
     modalOverlay.classList.add('activo');
-}
-
-function ocultarModal() {
-    modalOverlay.classList.remove('activo');
 }
 
 // ==========================================
