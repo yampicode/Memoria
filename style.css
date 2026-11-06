@@ -53,7 +53,7 @@ flex-direction: column;
 align-items: center;
 color: var(--color-primary);
 display: block;
-font-size: 1.3em;
+font-size: 1em;
 font-weight: bold;
 margin: 0 auto;
 padding: 5px 0;
@@ -64,7 +64,7 @@ text-aline: center;
     width: 85%;
     margin: 0 auto;
     max-width: 1200px;
-    padding: 20px 0 50px 0;
+    padding: 20px 0 30px 0;
 }
 
 .valores {
@@ -77,22 +77,6 @@ text-aline: center;
 .vidas-flotantes i, #vidas i {
     display: inline-block !important;
     font-style: normal !important;
-}
-
-.vidas-flotantes {
-    position: absolute;
-    top: 50px;
-    right: 15px;
-    background-color: #ffffff;
-    padding: 8px 15px;
-    border-radius: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-size: 1.1rem;
-    font-weight: bold;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    gap: 5px;
 }
 
 /* Estilo por defecto para Móviles: 3 columnas y 2 filas (3 arriba, 3 abajo) */
