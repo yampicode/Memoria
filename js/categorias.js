@@ -1,19 +1,42 @@
 export const categoriasFiguras = [
+
     { nombre: "Animales", items: ['icofont-dog-alt', 'icofont-cat-alt-2', 'icofont-rabbit', 'icofont-fox', 'icofont-bear-face', 'icofont-panda', 'icofont-rhino-head', 'icofont-lion-head', 'icofont-tiger-face', 'icofont-cow-head'] },
 
-    { nombre: "Animals", items: ['icofont-paw', 'icofont-turtle', 'icofont-woodpecker', 'icofont-pigeon', 'icofont-tiger', 'icofont-monkey', 'icofont-camel-alt', 'icofont-butterfly-alt', 'icofont-bear-tracks', 'icofont-squirrel'] },
+    { nombre: "Animals", items: ['icofont-rat', 'icofont-snake', 'icofont-pig', 'icofont-panther', 'icofont-lemur', 'icofont-frog', 'icofont-bat', 'icofont-deer-head', 'icofont-elk', 'icofont-giraffe-head-2'] },
 
-    { nombre: "Animals 2", items: ['icofont-rat', 'icofont-snake', 'icofont-pig', 'icofont-panther', 'icofont-lemur', 'icofont-frog', 'icofont-bat', 'icofont-deer-head', 'icofont-elk', 'icofont-giraffe-head-2'] },
+{ nombre: "Mamíferos", items: ['icofont-zebra', 'icofont-gorilla', 'icofont-horse-head-2', 'icofont-giraffe', 'icofont-squirrel', 'icofont-camel', 'icofont-monkey-3', 'icofont-kangaroo', 'icofont-bull', 'icofont-elephant-head'] },
+
+    { nombre: "Acuaticos", items: ['icofont-fish', 'icofont-crocodile', 'icofont-dolphin', 'icofont-crab', 'icofont-turtle', 'icofont-octopus', 'icofont-seahorse', 'icofont-shrimp-alt', 'icofont-whale', 'icofont-seal'] },
+
+{ nombre: "Aves", items: ['icofont-eagle-head', 'icofont-toy-duck', 'icofont-penguin', 'icofont-rooster', 'icofont-woodpecker', 'icofont-bird-alt', 'icofont-owl', 'icofont-pelican', 'icofont-pigeon-2', 'icofont-parrot'] },
+
+{ nombre: "Naturaleza", items: ['icofont-eclipse', 'icofont-forest-fire', 'icofont-night', 'icofont-sun-alt', 'icofont-thunder-light', 'icofont-snow', 'icofont-volcano', 'icofont-clouds', 'icofont-tornado', 'icofont-wave'] },
+
+    { nombre: "Clima", items: ['icofont-sunny-day-temp', 'icofont-wind', 'icofont-sunny', 'icofont-rainy', 'icofont-celsius', 'icofont-fahrenheit', 'icofont-breakdown', 'icofont-rainy-thunder', 'icofont-sun-set', 'icofont-umbrella'] },
+
+{ nombre: "Viajar", items: ['icofont-air-ticket', 'icofont-direction-sign', 'icofont-island-alt', 'icofont-beach', 'icofont-5-star-hotel', 'icofont-camping-vest', 'icofont-hotel', 'icofont-island', 'icofont-sandals-female', 'icofont-sandals-male'] },
+
+ { nombre: "Comida", items: ['icofont-pizza-slice', 'icofont-burger', 'icofont-french-fries', 'icofont-hot-dog', 'icofont-cheese', 'icofont-bread', 'icofont-chicken-fry', 'icofont-sandwich', 'icofont-taco', 'icofont-croissant'] },
+
+{ nombre: "Bebidas", items: ['icofont-soft-drinks', 'icofont-coffee-mug', 'icofont-cola', 'icofont-juice', 'icofont-cocktail', 'icofont-beer', 'icofont-milk', 'icofont-tea-pot', 'icofont-coconut-water', 'icofont-coffee-alt'] },
+
+{ nombre: "Marca de comida", items: ['icofont-brand-nescafe', 'icofont-brand-redbull', 'icofont-brand-mcdonals', 'icofont-brand-cocal-cola', 'icofont-brand-nestle', 'icofont-brand-burger-king', 'icofont-brand-pizza-hut', 'icofont-brand-eleven', 'icofont-brand-pepsi', 'icofont-brand-starbucks'] },
 
     { nombre: "Frutas", items: ['icofont-apple', 'icofont-banana', 'icofont-watermelon', 'icofont-grapes', 'icofont-strawberry', 'icofont-pineapple', 'icofont-kiwi', 'icofont-mango', 'icofont-cherry', 'icofont-lemon-alt'] },
 
     { nombre: "Fruts", items: ['icofont-avocado', 'icofont-coconut', 'icofont-corn', 'icofont-fruits', 'icofont-wheat', 'icofont-lemon', 'icofont-honey', 'icofont-cucumber', 'icofont-pear', 'icofont-orange'] },
 
+ { nombre: "Vegetables", items: ['icofont-egg-plant', 'icofont-bell-pepper-capsicum', 'icofont-broccoli', 'icofont-pumpkin', 'icofont-mushroom', 'icofont-onion', 'icofont-potato', 'icofont-carrot', 'icofont-pepper', 'icofont-tomato'] },
+
+ { nombre: "RRSS", items: ['icofont-facebook', 'icofont-linkedin', 'icofont-tiktok', 'icofont-tinder', 'icofont-instagram', 'icofont-youtube', 'icofont-telegram', 'icofont-wechat', 'icofont-pinterest', 'icofont-whatsapp'] },
+
+    { nombre: "RRSS 2", items: ['icofont-facebook-messenger', 'icofont-spotify', 'icofont-twitch', 'icofont-x', 'icofont-soundcloud', 'icofont-reddit', 'icofont-rss', 'icofont-discord', 'icofont-bbm-messenger', 'icofont-blogger'] },
+
+       { nombre: "RRSS 3", items: ['icofont-badoo', 'icofont-dropbox', 'icofont-google-hangouts', 'icofont-google-plus', 'icofont-line-messenger', 'icofont-live-messenger', 'icofont-shopify', 'icofont-trello', 'icofont-yahoo', 'icofont-ubercart'] },
+
     { nombre: "Deportes", items: ['icofont-football', 'icofont-basketball', 'icofont-football-american', 'icofont-golf-alt', 'icofont-table-tennis', 'icofont-volleyball', 'icofont-bowling', 'icofont-badminton-birdie', 'icofont-rugby', 'icofont-tennis'] },
 
     { nombre: "Sport", items: ['icofont-swimmer', 'icofont-steering', 'icofont-padding', 'icofont-hockey', 'icofont-baseballer', 'icofont-racer', 'icofont-skiing-man', 'icofont-runner-alt-1', 'icofont-tracking', 'icofont-climbing'] },
-
-    { nombre: "Comida", items: ['icofont-pizza-slice', 'icofont-burger', 'icofont-french-fries', 'icofont-hot-dog', 'icofont-cheese', 'icofont-bread', 'icofont-chicken-fry', 'icofont-sandwich', 'icofont-taco', 'icofont-croissant'] },
 
     { nombre: "Vehículos", items: ['icofont-car', 'icofont-car-alt-3', 'icofont-auto-rickshaw', 'icofont-bus-alt-1', 'icofont-truck-alt', 'icofont-truck', 'icofont-taxi', 'icofont-fast-delivery', 'icofont-fire-truck', 'icofont-tractor'] },
 
@@ -37,19 +60,11 @@ export const categoriasFiguras = [
 
     { nombre: "Herramientas", items: ['icofont-fire-extinguisher-alt', 'icofont-glue-oil', 'icofont-power-zone', 'icofont-recycle-alt', 'icofont-recycling-man', 'icofont-safety-hat-light', 'icofont-tools-1', 'icofont-tools-bag', 'icofont-under-construction-alt', 'icofont-labour'] },
 
-    { nombre: "Industria", items: ['icofont-mining', 'icofont-pollution', 'icofont-industries', 'icofont-industries-3', 'icofont-industries-1', 'icofont-industries-2', 'icofont-industries-4', 'icofont-industries-5', 'icofont-industries', 'icofont-building-alt'] },
+    { nombre: "Industria", items: ['icofont-mining', 'icofont-pollution', 'icofont-architecture', 'icofont-industries-3', 'icofont-industries-1', 'icofont-industries-2', 'icofont-industries-4', 'icofont-industries-5', 'icofont-industries', 'icofont-building-alt'] },
 
     { nombre: "Maquinaria", items: ['icofont-vehicle-wrecking', 'icofont-vehicle-trucktor', 'icofont-vehicle-excavator', 'icofont-vehicle-dozer', 'icofont-vehicle-delivery-van', 'icofont-vehicle-crane', 'icofont-vehicle-cement', 'icofont-tow-truck', 'icofont-concrete-mixer', 'icofont-fork-lift'] },
 
-    { nombre: "Naturaleza", items: ['icofont-eclipse', 'icofont-forest-fire', 'icofont-night', 'icofont-sun-alt', 'icofont-thunder-light', 'icofont-snow', 'icofont-volcano', 'icofont-clouds', 'icofont-tornado', 'icofont-wave'] },
-
-    { nombre: "Clima", items: ['icofont-sunny-day-temp', 'icofont-wind', 'icofont-sunny', 'icofont-rainy', 'icofont-celsius', 'icofont-fahrenheit', 'icofont-breakdown', 'icofont-rainy-thunder', 'icofont-sun-set', 'icofont-umbrella'] },
-
     { nombre: "Negocio", items: ['icofont-bank', 'icofont-barcode', 'icofont-briefcase-1', 'icofont-bill-alt', 'icofont-coins', 'icofont-stamp', 'icofont-files-stack', 'icofont-handshake-deal', 'icofont-money-bag', 'icofont-presentation'] },
-
-    { nombre: "Kids", items: ['icofont-baby-milk-bottle', 'icofont-candy', 'icofont-baby', 'icofont-baby-cloth', 'icofont-baby-trolley', 'icofont-toy-horse', 'icofont-toy-lattu', 'icofont-safety-pin', 'icofont-toy-hand', 'icofont-baby-backpack'] },
-
-    { nombre: "Bebidas", items: ['icofont-soft-drinks', 'icofont-coffee-mug', 'icofont-cola', 'icofont-juice', 'icofont-cocktail', 'icofont-beer', 'icofont-milk', 'icofont-tea-pot', 'icofont-coconut-water', 'icofont-coffee-alt'] },
 
     { nombre: "Interfaz", items: ['icofont-ui-bluetooth', 'icofont-ui-alarm', 'icofont-ui-calendar', 'icofont-ui-camera', 'icofont-ui-clip', 'icofont-ui-video-play', 'icofont-ui-password', 'icofont-ui-music', 'icofont-ui-network', 'icofont-ui-touch-phone'] },
 
@@ -57,17 +72,21 @@ export const categoriasFiguras = [
 
     { nombre: "Buscar", items: ['icofont-search-job', 'icofont-search-folder', 'icofont-search-document', 'icofont-search-property', 'icofont-search-restaurant', 'icofont-search-stock', 'icofont-search-user', 'icofont-search-map', 'icofont-search-2', 'icofont-search-1'] },
 
-    { nombre: "Viajar", items: ['icofont-air-ticket', 'icofont-direction-sign', 'icofont-island-alt', 'icofont-beach', 'icofont-5-star-hotel', 'icofont-camping-vest', 'icofont-hotel', 'icofont-island', 'icofont-sandals-female', 'icofont-sandals-male'] },
-
     { nombre: "Gym", items: ['icofont-gym-alt-2', 'icofont-muscle-weight', 'icofont-dumbbell', 'icofont-cycling', 'icofont-gym-alt-1', 'icofont-gym', 'icofont-gym-alt-3', 'icofont-dumbbells', 'icofont-cycling-alt', 'icofont-muscle'] },
 
     { nombre: "Chart", items: ['icofont-chart-flow-2', 'icofont-chart-histogram', 'icofont-chart-flow-1', 'icofont-chart-arrows-axis', 'icofont-chart-flow', 'icofont-chart-pie', 'icofont-chart-line', 'icofont-chart-pie-alt', 'icofont-chart-line-alt', 'icofont-chart-bar-graph'] },
 
-    { nombre: "Aves", items: ['icofont-eagle-head', 'icofont-toy-duck', 'icofont-penguin', 'icofont-rooster', 'icofont-woodpecker', 'icofont-bird-alt', 'icofont-owl', 'icofont-pelican', 'icofont-pigeon-2', 'icofont-parrot'] },
+ { nombre: "Kids", items: ['icofont-baby-milk-bottle', 'icofont-candy', 'icofont-baby', 'icofont-baby-cloth', 'icofont-baby-trolley', 'icofont-toy-horse', 'icofont-toy-lattu', 'icofont-safety-pin', 'icofont-toy-hand', 'icofont-baby-backpack'] },
 
     { nombre: "Education", items: ['icofont-abc', 'icofont-book-alt', 'icofont-globe-alt', 'icofont-instrument', 'icofont-pencil-alt-5', 'icofont-test-tube-alt', 'icofont-microscope-alt', 'icofont-certificate-alt-1', 'icofont-hat', 'icofont-paper'] },
 
     { nombre: "Educación", items: ['icofont-medal', 'icofont-lamp-light', 'icofont-school-bag', 'icofont-read-book', 'icofont-test-bulb', 'icofont-university', 'icofont-brainstorming', 'icofont-certificate-alt-2', 'icofont-black-board', 'icofont-graduate-alt'] },
+
+  { nombre: "Matemáticas", items: ['icofont-angle-180', 'icofont-square-root', 'icofont-abacus', 'icofont-angle-45', 'icofont-ui-calculator', 'icofont-angle-90', 'icofont-angle', 'icofont-calculator-alt-1', 'icofont-circle-ruler-alt', 'icofont-circle-ruler'] },
+
+    { nombre: "Matemáticas 2", items: ['icofont-compass-alt-1', 'icofont-golden-ratio', 'icofont-marker-alt-1', 'icofont-math', 'icofont-mathematical-alt-1', 'icofont-mathematical-alt-2', 'icofont-mathematical', 'icofont-pen-alt-2', 'icofont-ruler-alt-1', 'icofont-pen-holder'] },
+
+    { nombre: "Matemáticas 3", items: ['icofont-rulers', 'icofont-ruler-compass', 'icofont-pen-alt-3', 'icofont-ruler-compass-alt', 'icofont-pencil-alt-3', 'icofont-ruler-pencil', 'icofont-compass-alt-2', 'icofont-ruler-pencil-alt-2', 'icofont-ruler', 'icofont-pie-chart'] },
 
     { nombre: "Multimedia", items: ['icofont-music-disk', 'icofont-volume-up', 'icofont-multimedia', 'icofont-record', 'icofont-cassette-player', 'icofont-video-alt', 'icofont-video-clapper', 'icofont-cassette', 'icofont-volume-mute', 'icofont-video-cam'] },
 
@@ -77,13 +96,7 @@ export const categoriasFiguras = [
 
     { nombre: "Cosas", items: ['icofont-news', 'icofont-newspaper', 'icofont-telescope', 'icofont-space', 'icofont-paint', 'icofont-plugin', 'icofont-puzzle', 'icofont-usb-drive', 'icofont-royal', 'icofont-recycle'] },
 
-    { nombre: "Mamíferos", items: ['icofont-zebra', 'icofont-gorilla', 'icofont-horse-head-2', 'icofont-giraffe', 'icofont-squirrel', 'icofont-camel', 'icofont-monkey-3', 'icofont-kangaroo', 'icofont-bull', 'icofont-elephant-head'] },
-
-    { nombre: "Acuaticos", items: ['icofont-fish', 'icofont-crocodile', 'icofont-dolphin', 'icofont-crab', 'icofont-turtle', 'icofont-octopus', 'icofont-seahorse', 'icofont-shrimp-alt', 'icofont-whale', 'icofont-seal'] },
-
     { nombre: "Transporte", items: ['icofont-air-balloon', 'icofont-airplane-alt', 'icofont-bicycle', 'icofont-helicopter', 'icofont-rocket-alt-2', 'icofont-motor-biker', 'icofont-sail-boat', 'icofont-train-steam', 'icofont-ship-alt', 'icofont-cable-car'] },
-
-    { nombre: "Vegetables", items: ['icofont-egg-plant', 'icofont-bell-pepper-capsicum', 'icofont-broccoli', 'icofont-pumpkin', 'icofont-mushroom', 'icofont-onion', 'icofont-potato', 'icofont-carrot', 'icofont-pepper', 'icofont-tomato'] },
 
     { nombre: "Profesión", items: ['icofont-farmer-alt', 'icofont-police', 'icofont-lawyer', 'icofont-legal', 'icofont-nurse-alt', 'icofont-doctor', 'icofont-labour', 'icofont-military', 'icofont-investigator', 'icofont-burglar'] },
 
@@ -93,19 +106,24 @@ export const categoriasFiguras = [
 
     { nombre: "Person", items: ['icofont-support', 'icofont-user-alt-5', 'icofont-user-female', 'icofont-user-suited', 'icofont-users-alt-4', 'icofont-users-alt-6', 'icofont-users-social', 'icofont-users-alt-2', 'icofont-users-alt-1', 'icofont-group'] },
 
+{ nombre: "Marcas de ropa", items: ['icofont-brand-louis-vuitton', 'icofont-brand-smashing-magazine', 'icofont-brand-casio', 'icofont-brand-levis', 'icofont-brand-puma', 'icofont-brand-loreal', 'icofont-brand-target', 'icofont-brand-nike',
+'icofont-brand-adidas', 'icofont-brand-reebok'] },
+
     { nombre: "Marcas", items: ['icofont-brand-cnn', 'icofont-brand-apple', 'icofont-brand-amazon', 'icofont-brand-dell', 'icofont-brand-playstation', 'icofont-brand-netflix', 'icofont-brand-android-robot', 'icofont-brand-shell', 'icofont-brand-general-electric', 'icofont-brand-nasa'] },
 
-    { nombre: "Brand", items: ['icofont-brand-adidas', 'icofont-brand-blackberry', 'icofont-brand-puma', 'icofont-brand-casio', 'icofont-brand-natgeo', 'icofont-brand-gillette', 'icofont-brand-hp', 'icofont-brand-lg', 'icofont-brand-warnerbros', 'icofont-brand-motorola'] },
+    { nombre: "Brand", items: ['icofont-brand-sprint', 'icofont-brand-blackberry', 'icofont-brand-wire', 'icofont-brand-mac-os', 'icofont-brand-natgeo', 'icofont-brand-gillette', 'icofont-brand-hp', 'icofont-brand-lg', 'icofont-brand-warnerbros', 'icofont-brand-motorola'] },
 
-    { nombre: "Logos", items: ['icofont-brand-levis', 'icofont-brand-lego', 'icofont-brand-intel', 'icofont-brand-ikea', 'icofont-brand-linux', 'icofont-brand-nike', 'icofont-brand-mytv', 'icofont-brand-wikipedia', 'icofont-brand-samsung', 'icofont-brand-java'] },
+ { nombre: "Brand 2", items: ['icofont-brand-adobe', 'icofont-brand-airbnb', 'icofont-brand-android', 'icofont-brand-alibaba', 'icofont-brand-bbc', 'icofont-brand-asus', 'icofont-brand-bing', 'icofont-brand-unilever', 'icofont-brand-aliexpress', 'icofont-brand-att'] },
 
-    { nombre: "Marca de comida", items: ['icofont-brand-nescafe', 'icofont-brand-redbull', 'icofont-brand-mcdonals', 'icofont-brand-cocal-cola', 'icofont-brand-nestle', 'icofont-brand-burger-king', 'icofont-brand-pizza-hut', 'icofont-brand-eleven', 'icofont-brand-pepsi', 'icofont-brand-starbucks'] },
+    { nombre: "Brand 3", items: ['icofont-brand-toshiba', 'icofont-brand-box', 'icofont-brand-dodge', 'icofont-brand-cnet', 'icofont-brand-compaq', 'icofont-brand-citibank', 'icofont-brand-china-mobile', 'icofont-brand-cannon', 'icofont-brand-cisco', 'icofont-brand-foursquare'] },
 
-    { nombre: "RRSS", items: ['icofont-facebook', 'icofont-linkedin', 'icofont-tiktok', 'icofont-tinder', 'icofont-instagram', 'icofont-youtube', 'icofont-telegram', 'icofont-wechat', 'icofont-pinterest', 'icofont-whatsapp'] },
+    { nombre: "Brand 4", items: ['icofont-brand-disney', 'icofont-brand-emirates', 'icofont-brand-espn', 'icofont-brand-hsbc', 'icofont-brand-fedex', 'icofont-brand-forbes', 'icofont-brand-hallmark', 'icofont-brand-ibm', 'icofont-brand-huawei', 'icofont-brand-hulu'] },
 
-    { nombre: "RRSS 2", items: ['icofont-facebook-messenger', 'icofont-spotify', 'icofont-twitch', 'icofont-x', 'icofont-soundcloud', 'icofont-reddit', 'icofont-rss', 'icofont-discord', 'icofont-bbm-messenger', 'icofont-blogger'] },
+{ nombre: "Marcas de Carros", items: ['icofont-brand-gucci', 'icofont-brand-honda', 'icofont-brand-hyundai', 'icofont-brand-mercedes', 'icofont-brand-ferrari', 'icofont-brand-tesla', 'icofont-brand-toyota', 'icofont-brand-volkswagen', 'icofont-brand-audi', 'icofont-brand-bmw'] },
 
-       { nombre: "RRSS 3", items: ['icofont-badoo', 'icofont-dropbox', 'icofont-google-hangouts', 'icofont-google-plus', 'icofont-line-messenger', 'icofont-live-messenger', 'icofont-shopify', 'icofont-trello', 'icofont-yahoo', 'icofont-ubercart'] },
+{ nombre: "Más branding", items: ['icofont-visual-studio', 'icofont-vuejs', 'icofont-sass', 'icofont-brand-fujitsu', 'icofont-brand-hi5', 'icofont-brand-microsoft', 'icofont-brand-msi', 'icofont-brand-myspace', 'icofont-brand-nokia', 'icofont-brand-oracle'] },
+
+    { nombre: "Logos", items: ['icofont-brand-imdb', 'icofont-brand-lego', 'icofont-brand-intel', 'icofont-brand-ikea', 'icofont-brand-linux', 'icofont-brand-stc', 'icofont-brand-mytv', 'icofont-brand-wikipedia', 'icofont-brand-samsung', 'icofont-brand-java'] },
 
            { nombre: "Medicina", items: ['icofont-ambulance', 'icofont-bandage', 'icofont-capsule', 'icofont-heart-beat', 'icofont-drug', 'icofont-first-aid', 'icofont-stethoscope-alt', 'icofont-hospital', 'icofont-injection-syringe', 'icofont-medicine'] },
 
@@ -119,18 +137,10 @@ export const categoriasFiguras = [
 
     { nombre: "Interfaz 5", items: ['icofont-ui-contact-list', 'icofont-ui-copy', 'icofont-ui-cut', 'icofont-ui-delete', 'icofont-ui-dial-phone', 'icofont-ui-image', 'icofont-ui-edit', 'icofont-ui-email', 'icofont-ui-file', 'icofont-ui-folder'] },
 
-        { nombre: "Brand 2", items: ['icofont-brand-adobe', 'icofont-brand-airbnb', 'icofont-brand-android', 'icofont-brand-alibaba', 'icofont-brand-bbc', 'icofont-brand-asus', 'icofont-brand-bing', 'icofont-brand-unilever', 'icofont-brand-aliexpress', 'icofont-brand-att'] },
-
-    { nombre: "Brand 3", items: ['icofont-brand-toshiba', 'icofont-brand-box', 'icofont-brand-dodge', 'icofont-brand-cnet', 'icofont-brand-compaq', 'icofont-brand-citibank', 'icofont-brand-china-mobile', 'icofont-brand-cannon', 'icofont-brand-cisco', 'icofont-brand-foursquare'] },
-
-    { nombre: "Brand 4", items: ['icofont-brand-disney', 'icofont-brand-emirates', 'icofont-brand-espn', 'icofont-brand-hsbc', 'icofont-brand-fedex', 'icofont-brand-forbes', 'icofont-brand-hallmark', 'icofont-brand-ibm', 'icofont-brand-huawei', 'icofont-brand-hulu'] },
-
-{ nombre: "Marcas de Carros", items: ['icofont-brand-gucci', 'icofont-brand-honda', 'icofont-brand-hyundai', 'icofont-brand-mercedes', 'icofont-brand-ferrari', 'icofont-brand-tesla', 'icofont-brand-toyota', 'icofont-brand-volkswagen', 'icofont-brand-audi', 'icofont-brand-bmw'] },
-
         { nombre: "Dispositivos", items: ['icofont-playstation-alt', 'icofont-radio', 'icofont-washing-machine', 'icofont-refrigerator', 'icofont-wifi-router', 'icofont-mp3-player', 'icofont-xbox-360', 'icofont-wireless-mouse', 'icofont-lamp', 'icofont-bed'] },
 
     { nombre: "Dispositivos 2", items: ['icofont-game-console', 'icofont-fax', 'icofont-hard-disk', 'icofont-server', 'icofont-radio-mic', 'icofont-nintendo', 'icofont-micro-chip', 'icofont-ipod-nano', 'icofont-microphone-alt', 'icofont-headphone'] },
-  
+
     { nombre: "Abstract", items: ['icofont-angry-monster', 'icofont-bathtub', 'icofont-bird-wings', 'icofont-bow', 'icofont-castle', 'icofont-circuit', 'icofont-crown-king', 'icofont-crown-queen', 'icofont-dart', 'icofont-disability-race'] },
 
     { nombre: "Abstract 2", items: ['icofont-diving-goggle', 'icofont-eye-open', 'icofont-flora-flower', 'icofont-flora', 'icofont-gift-box', 'icofont-halloween-pumpkin', 'icofont-hand-power', 'icofont-hand-thunder', 'icofont-king-monster', 'icofont-love'] },
@@ -159,12 +169,6 @@ export const categoriasFiguras = [
 
  { nombre: "Archivos 4", items: ['icofont-file-alt', 'icofont-file-audio', 'icofont-file-avi-mp4', 'icofont-file-flv', 'icofont-file-image', 'icofont-file-file', 'icofont-file-mp3', 'icofont-file-psb', 'icofont-file-svg', 'icofont-file-eps'] },
 
-        { nombre: "Matemáticas", items: ['icofont-angle-180', 'icofont-square-root', 'icofont-abacus', 'icofont-angle-45', 'icofont-ui-calculator', 'icofont-angle-90', 'icofont-angle', 'icofont-calculator-alt-1', 'icofont-circle-ruler-alt', 'icofont-circle-ruler'] },
-
-    { nombre: "Matemáticas 2", items: ['icofont-compass-alt-1', 'icofont-golden-ratio', 'icofont-marker-alt-1', 'icofont-math', 'icofont-mathematical-alt-1', 'icofont-mathematical-alt-2', 'icofont-mathematical', 'icofont-pen-alt-2', 'icofont-ruler-alt-1', 'icofont-pen-holder'] },
-
-    { nombre: "Matemáticas 3", items: ['icofont-rulers', 'icofont-ruler-compass', 'icofont-pen-alt-3', 'icofont-ruler-compass-alt', 'icofont-pencil-alt-3', 'icofont-ruler-pencil', 'icofont-compass-alt-2', 'icofont-ruler-pencil-alt-2', 'icofont-ruler', 'icofont-pie-chart'] },
-
         { nombre: "Editor de texto", items: ['icofont-align-center', 'icofont-align-left', 'icofont-align-right', 'icofont-all-caps', 'icofont-bold', 'icofont-brush', 'icofont-clip-board', 'icofont-code-alt', 'icofont-color-bucket', 'icofont-color-picker'] },
 
     { nombre: "Editor de texto 2", items: ['icofont-copy-invert', 'icofont-copy', 'icofont-cut', 'icofont-delete-alt', 'icofont-edit-alt', 'icofont-eraser-alt', 'icofont-font', 'icofont-heading', 'icofont-indent', 'icofont-italic-alt'] },
@@ -186,8 +190,6 @@ export const categoriasFiguras = [
 { nombre: "Aplicación 6", items: ['icofont-qr-code', 'icofont-print', 'icofont-sale-discount', 'icofont-satellite', 'icofont-tack-pin', 'icofont-ssl-security', 'icofont-support-faq', 'icofont-telescope', 'icofont-street-view', 'icofont-traffic-light'] },
 
 { nombre: "Aplicación 7", items: ['icofont-tie', 'icofont-transparent', 'icofont-touch', 'icofont-unique-idea', 'icofont-usb', 'icofont-wallet', 'icofont-zigzag', 'icofont-world', 'icofont-web', 'icofont-wall'] },
-
-{ nombre: "Más branding", items: ['icofont-visual-studio', 'icofont-vuejs', 'icofont-sass', 'icofont-brand-fujitsu', 'icofont-brand-hi5', 'icofont-brand-microsoft', 'icofont-brand-msi', 'icofont-brand-myspace', 'icofont-brand-nokia', 'icofont-brand-oracle'] },
 
         { nombre: "Duotone", items: ['icofont-duotone icofont-access-levels', 'icofont-duotone icofont-accessibility', 'icofont-duotone icofont-add-users', 'icofont-duotone icofont-address', 'icofont-duotone icofont-angle-double-left', 'icofont-duotone icofont-angle-double-right', 'icofont-duotone icofont-apply', 'icofont-duotone icofont-archive', 'icofont-duotone icofont-arrow-first', 'icofont-duotone icofont-arrow-last'] },
 
