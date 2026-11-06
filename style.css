@@ -23,6 +23,10 @@ body {
     background-color: var(--color-claro);
 }
 
+/* Bloquear el scroll del fondo cuando un modal está abierto */
+body.modal-abierto {
+    overflow: hidden;
+}
 
 /* Estilos cuando se activa el Modo Oscuro */
 body.dark-mode {
