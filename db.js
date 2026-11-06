@@ -40,3 +40,49 @@ export async function cargarStatsDesdeDB(userId) {
         return null;
     }
 }
+
+// Obtener el Top 10 global
+export async function obtenerTopRanking() {
+    try {
+        const { data, error } = await supabase
+            .from('player_stats')
+            .select(`
+                score_total,
+                victorias,
+                mejor_tiempo,
+                profiles (username)
+            `)
+            .order('score_total', { ascending: false })
+            .limit(10);
+
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error al cargar ranking:', error.message);
+        return [];
+    }
+}
+
+// Obtener la posición del jugador actual
+export async function obtenerMiPosicion(userId) {
+    try {
+        const { data: miData, error: err1 } = await supabase
+            .from('player_stats')
+            .select('score_total')
+            .eq('user_id', userId)
+            .single();
+
+        if (err1 || !miData) return null;
+
+        const { count, error: err2 } = await supabase
+            .from('player_stats')
+            .select('*', { count: 'exact', head: true })
+            .gt('score_total', miData.score_total);
+
+        if (err2) throw err2;
+        return { posicion: (count || 0) + 1, score: miData.score_total };
+    } catch (error) {
+        console.error('Error al calcular posición:', error.message);
+        return null;
+    }
+}
