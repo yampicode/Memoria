@@ -4,7 +4,6 @@ import { t } from './traducciones.js';
 import { abrirModalLogin, cerrarModalLogin, actualizarUILogin, getUsuarioActual } from './auth.js';
 import { guardarStatsEnDB, cargarStatsDesdeDB } from './db.js';
 
-
 // ==========================================
 // SISTEMA DE INTERNACIONALIZACIÓN (i18n)
 // ==========================================
@@ -25,7 +24,6 @@ function actualizarTextosEstaticos() {
         }
     });
 
-    // Añadido para los placeholders de los inputs
     document.querySelectorAll('[data-i18n-placeholder]').forEach(elemento => {
         const clave = elemento.getAttribute('data-i18n-placeholder');
         if (clave) {
@@ -335,7 +333,8 @@ async function guardarDatos() {
     if (usuario) {
         // Esperamos a que Supabase guarde de verdad antes de continuar
         await guardarStatsEnDB(usuario.id, {
-            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
+            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual,
+            nivelActual // <-- AÑADIDO
         });
     } else {
         // Modo invitado: guardado local
@@ -548,7 +547,7 @@ function flipCard(cardElement) {
     }
 }
 
-function async verificarCoincidencia() {
+async function verificarCoincidencia() {
     bloqueado = true;
     const [primera, segunda] = cartasVolteadas;
 
@@ -861,7 +860,6 @@ document.addEventListener('usuarioLogueado', async (e) => {
 
     const invitadoScore = parseInt(localStorage.getItem('scoreTotal')) || 0;
     const invitadoNivelCat = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
-    const invitadoNivelDificultad = parseInt(localStorage.getItem('nivelActual')) || 1; 
     const invitadoMejorTiempo = parseInt(localStorage.getItem('mejorTiempo')) || null;
     const invitadoVictorias = parseInt(localStorage.getItem('victorias')) || 0;
 
@@ -870,8 +868,9 @@ document.addEventListener('usuarioLogueado', async (e) => {
     if (statsDB) {
         scoreTotal = Math.max(statsDB.score_total, invitadoScore);
         indiceCategoriaActual = Math.max(statsDB.indice_categoria, invitadoNivelCat);
-
-        nivelActual = Math.max(1, invitadoNivelDificultad); 
+        
+        // Usamos el nivel de la nube
+        nivelActual = statsDB.nivel_actual || 1;
 
         if (invitadoMejorTiempo && (!statsDB.mejor_tiempo || invitadoMejorTiempo < statsDB.mejor_tiempo)) {
             mejorTiempo = invitadoMejorTiempo;
@@ -885,21 +884,21 @@ document.addEventListener('usuarioLogueado', async (e) => {
 
         if (invitadoScore > statsDB.score_total || invitadoNivelCat > statsDB.indice_categoria) {
             await guardarStatsEnDB(user.id, {
-                scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
+                scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual
             });
         }
 
     } else {
         scoreTotal = invitadoScore;
         indiceCategoriaActual = invitadoNivelCat;
-        nivelActual = invitadoNivelDificultad;
+        nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
         mejorTiempo = invitadoMejorTiempo;
         victorias = invitadoVictorias;
         vidas = parseInt(localStorage.getItem('vidas')) || 7;
         derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
 
         await guardarStatsEnDB(user.id, {
-            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
+            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual
         });
     }
 
@@ -923,16 +922,13 @@ setInterval(async () => {
 }, 10000);
 
 document.addEventListener('usuarioDeslogueado', async () => {
-    // 1. Asegurarnos de que los datos se guarden en la nube antes de perder la sesión
-    // (Esto es por si acaso, aunque ya deberían estar guardados por el paso 2)
     const usuario = getUsuarioActual();
     if (usuario) {
         await guardarStatsEnDB(usuario.id, {
-            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual
+            scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual
         });
     }
 
-    // 2. Ahora sí, cargamos lo que haya en localStorage (modo invitado)
     scoreTotal = parseInt(localStorage.getItem('scoreTotal')) || 0;
     vidas = parseInt(localStorage.getItem('vidas')) || 7;
     victorias = parseInt(localStorage.getItem('victorias')) || 0;
