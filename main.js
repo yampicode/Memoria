@@ -968,7 +968,9 @@ async function abrirModalRanking() {
         let html = '';
         top.forEach((jugador, index) => {
             const medalla = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
-            const nombre = jugador.profiles?.username || 'Anónimo';
+            
+// Ahora debe decir:
+const nombre = jugador.username || 'Anónimo';
             const record = jugador.mejor_tiempo ? `${jugador.mejor_tiempo}s` : '--';
             
             html += `
