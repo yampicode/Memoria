@@ -940,3 +940,66 @@ document.addEventListener('usuarioDeslogueado', async () => {
     actualizarUI();
     crearTablero();
 });
+
+// ==========================================
+// RANKING GLOBAL
+// ==========================================
+import { obtenerTopRanking, obtenerMiPosicion } from './db.js';
+
+async function abrirModalRanking() {
+    const modal = document.getElementById('modal-ranking');
+    const lista = document.getElementById('ranking-lista');
+    const miPosicionDiv = document.getElementById('ranking-mi-posicion');
+    
+    if (!modal) return;
+    
+    reproducirEfectoSonido('clic');
+    modal.style.display = 'block';
+    modal.classList.add('activo');
+    lista.innerHTML = '<p style="text-align: center; color: #999;">Cargando ranking...</p>';
+    miPosicionDiv.style.display = 'none';
+
+    // Cargar Top 10
+    const top = await obtenerTopRanking();
+    
+    if (!top || top.length === 0) {
+        lista.innerHTML = '<p style="text-align: center; color: #999;">Aún no hay jugadores en el ranking.</p>';
+    } else {
+        let html = '';
+        top.forEach((jugador, index) => {
+            const medalla = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
+            const nombre = jugador.profiles?.username || 'Anónimo';
+            const record = jugador.mejor_tiempo ? `${jugador.mejor_tiempo}s` : '--';
+            
+            html += `
+                <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; font-size: 14px;">
+                    <span><strong>${medalla}</strong> ${nombre}</span>
+                    <span><strong>${jugador.score_total}</strong> pts | ${record}</span>
+                </div>
+            `;
+        });
+        lista.innerHTML = html;
+    }
+
+    // Cargar mi posición
+    const user = getUsuarioActual();
+    if (user) {
+        const miPos = await obtenerMiPosicion(user.id);
+        if (miPos) {
+            miPosicionDiv.style.display = 'block';
+            miPosicionDiv.innerHTML = `📊 Tu posición: <strong>#${miPos.posicion}</strong> (${miPos.score} pts)`;
+        }
+    }
+}
+
+// Evento del botón
+document.getElementById('btn-ranking')?.addEventListener('click', abrirModalRanking);
+
+// Cerrar modal
+document.querySelector('#modal-ranking .btn-cerrar-modal')?.addEventListener('click', () => {
+    const modal = document.getElementById('modal-ranking');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('activo');
+    }
+});
