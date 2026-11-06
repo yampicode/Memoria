@@ -31,6 +31,21 @@ function mostrarMensaje(texto, tipo = 'info') {
 function alternarModo() {
     modoRegistro = !modoRegistro;
     authMensaje.textContent = '';
+
+const paisContainer = document.getElementById('pais-container');
+
+function alternarModo() {
+    modoRegistro = !modoRegistro;
+    authMensaje.textContent = '';
+    
+    if (modoRegistro) {
+        // ... (tu código anterior)
+        if (paisContainer) paisContainer.style.display = 'block'; // <-- MOSTRAR
+    } else {
+        // ... (tu código anterior)
+        if (paisContainer) paisContainer.style.display = 'none'; // <-- OCULTAR
+    }
+}
     
     if (modoRegistro) {
         loginTitulo.textContent = 'Crear Cuenta';
