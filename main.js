@@ -2,7 +2,7 @@ import { inicializarPayPal } from './paypal.js';
 import { categoriasFiguras } from './categorias.js';
 import { t } from './traducciones.js';
 import { abrirModalLogin, cerrarModalLogin, actualizarUILogin, getUsuarioActual } from './auth.js';
-import { guardarStatsEnDB, cargarStatsDesdeDB } from './db.js';
+import { guardarStatsEnDB, cargarStatsDesdeDB, obtenerTopRanking, obtenerMiPosicion } from './db.js'; // <-- IMPORT AQUÍ
 
 // ==========================================
 // SISTEMA DE INTERNACIONALIZACIÓN (i18n)
@@ -188,13 +188,13 @@ function abrirModal(idModal) {
     const modal = document.getElementById(idModal);
     if (modal) {
         modal.classList.add('activo');
-        document.body.classList.add('modal-abierto'); // <-- BLOQUEA EL SCROLL
+        document.body.classList.add('modal-abierto'); // <-- BLOQUEA SCROLL
     }
 }
 
 function ocultarModal() {
     modalOverlay.classList.remove('activo');
-    document.body.classList.remove('modal-abierto'); // <-- LIBERA EL SCROLL
+    document.body.classList.remove('modal-abierto'); // <-- LIBERA SCROLL
 }
 
 const btnComoJugar = document.getElementById('btn-como-jugar');
@@ -212,6 +212,7 @@ botonesCerrar.forEach(boton => {
         const modalOverlay = e.target.closest('.modal-overlay');
         if (modalOverlay) {
             modalOverlay.classList.remove('activo');
+            document.body.classList.remove('modal-abierto'); // <-- LIBERA SCROLL
         }
     });
 });
@@ -247,6 +248,7 @@ function mostrarModal(titulo, mensaje, opciones = {}) {
     }
 
     modalOverlay.classList.add('activo');
+    document.body.classList.add('modal-abierto'); // <-- BLOQUEA SCROLL
 }
 
 // ==========================================
@@ -333,13 +335,11 @@ async function guardarDatos() {
     const usuario = getUsuarioActual();
 
     if (usuario) {
-        // Esperamos a que Supabase guarde de verdad antes de continuar
         await guardarStatsEnDB(usuario.id, {
             scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual,
-            nivelActual // <-- AÑADIDO
+            nivelActual
         });
     } else {
-        // Modo invitado: guardado local
         localStorage.setItem('scoreTotal', scoreTotal);
         localStorage.setItem('vidas', vidas);
         localStorage.setItem('victorias', victorias);
@@ -616,11 +616,13 @@ function verificarGameOver() {
 
         modalSinVidas.style.display = 'block';
         modalSinVidas.classList.add('activo');
+        document.body.classList.add('modal-abierto'); // <-- BLOQUEA SCROLL
 
         setTimeout(async() => {
             await inicializarPayPal((subscriptionID) => {
                 modalSinVidas.style.display = 'none';
                 modalSinVidas.classList.remove('activo');
+                document.body.classList.remove('modal-abierto'); // <-- LIBERA SCROLL
 
                 vidas = 7;
                 tiempo = 0;
@@ -648,6 +650,7 @@ document.getElementById('btn-ver-anuncio')?.addEventListener('click', () => {
     if (modalSinVidas) {
         modalSinVidas.style.display = 'none';
         modalSinVidas.classList.remove('activo');
+        document.body.classList.remove('modal-abierto'); // <-- LIBERA SCROLL
     }
 
     let adContainer = document.getElementById('ad-container');
@@ -870,8 +873,7 @@ document.addEventListener('usuarioLogueado', async (e) => {
     if (statsDB) {
         scoreTotal = Math.max(statsDB.score_total, invitadoScore);
         indiceCategoriaActual = Math.max(statsDB.indice_categoria, invitadoNivelCat);
-        
-        // Usamos el nivel de la nube
+
         nivelActual = statsDB.nivel_actual || 1;
 
         if (invitadoMejorTiempo && (!statsDB.mejor_tiempo || invitadoMejorTiempo < statsDB.mejor_tiempo)) {
@@ -946,35 +948,31 @@ document.addEventListener('usuarioDeslogueado', async () => {
 // ==========================================
 // RANKING GLOBAL
 // ==========================================
-import { obtenerTopRanking, obtenerMiPosicion } from './db.js';
-
 async function abrirModalRanking() {
     const modal = document.getElementById('modal-ranking');
     const lista = document.getElementById('ranking-lista');
     const miPosicionDiv = document.getElementById('ranking-mi-posicion');
-    
+
     if (!modal) return;
-    
+
     reproducirEfectoSonido('clic');
     modal.style.display = 'block';
     modal.classList.add('activo');
+    document.body.classList.add('modal-abierto'); // <-- BLOQUEA SCROLL
     lista.innerHTML = '<p style="text-align: center; color: #999;">Cargando ranking...</p>';
     miPosicionDiv.style.display = 'none';
 
-    // Cargar Top 10
     const top = await obtenerTopRanking();
-    
+
     if (!top || top.length === 0) {
         lista.innerHTML = '<p style="text-align: center; color: #999;">Aún no hay jugadores en el ranking.</p>';
     } else {
         let html = '';
         top.forEach((jugador, index) => {
             const medalla = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
-            
-// Ahora debe decir:
-const nombre = jugador.username || 'Anónimo';
+            const nombre = jugador.username || 'Anónimo';
             const record = jugador.mejor_tiempo ? `${jugador.mejor_tiempo}s` : '--';
-            
+
             html += `
                 <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; font-size: 14px;">
                     <span><strong>${medalla}</strong> ${nombre}</span>
@@ -985,7 +983,6 @@ const nombre = jugador.username || 'Anónimo';
         lista.innerHTML = html;
     }
 
-    // Cargar mi posición
     const user = getUsuarioActual();
     if (user) {
         const miPos = await obtenerMiPosicion(user.id);
@@ -996,14 +993,13 @@ const nombre = jugador.username || 'Anónimo';
     }
 }
 
-// Evento del botón
 document.getElementById('btn-ranking')?.addEventListener('click', abrirModalRanking);
 
-// Cerrar modal
 document.querySelector('#modal-ranking .btn-cerrar-modal')?.addEventListener('click', () => {
     const modal = document.getElementById('modal-ranking');
     if (modal) {
         modal.style.display = 'none';
         modal.classList.remove('activo');
+        document.body.classList.remove('modal-abierto'); // <-- LIBERA SCROLL
     }
 });
