@@ -11,21 +11,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="google-adsense-account" content="ca-pub-4904948441378686">
+    <meta name="google-adsense-account" content="ca-pub-4904948441378686">
     <title>Memoria | ¡Fortalece Tu Mente Jugando!</title>
-    <meta name="description" content="Juega Memoria, el desafío interactivo para entrenar tu agilidad mental. Supera niveles, mejora tus récords y diviértete.">    <meta name="keywords" content="Juego de memoria, entrena tu cerebro, aprende jugando, memoria online, memoria">
-
+    <meta name="description" content="Juega Memoria, el desafío interactivo para entrenar tu agilidad mental. Supera niveles, mejora tus récords y diviértete.">
+    <meta name="keywords" content="Juego de memoria, entrena tu cerebro, aprende jugando, memoria online, memoria">
     <meta name="theme-color" content="#fff7e7">
-
     <meta name="robots" content="index, follow">
 
     <!-- Apple -->
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Memoria | ¡Fortalece tu Memoria!">
     <meta name="format-detection" content="telephone=no, address=no, email=no">
-
     <link rel="apple-touch-icon" href="https://memoria-ymujica.vercel.app" sizes="180x180">
-
     <link rel="apple-touch-startup-image" href="https://memoria-ymujica.vercel.app/memoria.webp">
     <meta name="color-scheme" content="light dark">
 
@@ -47,23 +44,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta name="geo.placename" content="Puerto Cabello, Venezuela" />
     <meta name="geo.position" content="10.4696;-68.0149" />
     <meta name="ICBM" content="10.4696, -68.0149" />
-    
-    <!-- Enlaces a tus CSS (asegúrate de que las rutas sean correctas) -->
+
+    <!-- Enlaces a tus CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="fuentes.css">
     <link rel="stylesheet" href="icofont.min.css">
     <link rel="shortcut icon" href="memoria-ico.webp" type="image/x-icon">
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4904948441378686"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4904948441378686" crossorigin="anonymous"></script>
 
     <!-- ESTILOS ESPECÍFICOS PARA LA LANDING PAGE -->
     <style>
         body {
-            background-color: #fff7e7; /* Tu color de fondo */
+            background-color: #fff7e7; 
             color: #333;
             font-family: "VAG Rounded Next Regular", sans-serif;
-font-weight: 600;
+            font-weight: 600;
             margin: 0;
             padding: 0;
             display: flex;
@@ -111,12 +107,12 @@ font-weight: 600;
             margin-bottom: 10px;
             font-size: 16px;
         }
-          .párrafo {
+        .párrafo {
             color: var(--color-oscuro);
-         }
+        }
         .cta-button {
             display: inline-block;
-            background-color: var(--color-primary); /* Un color que resalte */
+            background-color: var(--color-primary); 
             color: white;
             padding: 15px 40px;
             font-size: 20px;
@@ -144,33 +140,35 @@ font-weight: 600;
 <body>
 
     <div class="landing-container">
-        <!-- Tu logo -->
+        <!-- Logo -->
         <img src="memoria.svg" alt="Logo de Memoria" class="header-logo">
 
-        <h1>Entrena tu Mente con Memoria</h1>
-        
-        <p>
+        <h1 data-i18n="landing_titulo">Entrena tu Mente con Memoria</h1>
+
+        <p data-i18n="landing_parrafo1">
             Bienvenido a <strong>Memoria</strong>, el juego interactivo diseñado para poner a prueba tu concentración y agilidad mental. No es solo un pasatiempo; es una forma divertida de ejercitar tu cerebro.
         </p>
 
         <div class="benefits">
-            <h2>¿Qué te espera en el juego?</h2>
+            <h2 data-i18n="landing_beneficios_titulo">¿Qué te espera en el juego?</h2>
             <ul>
-                <li><strong>3 Niveles de Dificultad:</strong> Desde el modo relajado hasta el contrarreloj extremo.</li>
-                <li><strong>Sistema de Récords:</strong> Compite contra ti mismo y mejora tu tiempo.</li>
-                <li><strong>Guarda tu Progreso:</strong> Crea una cuenta y sincroniza tus estadísticas en la nube.</li>
-                <li><strong>Múltiples Idiomas:</strong> Juega en el idioma que prefieras.</li>
+                <li><strong data-i18n="landing_b1_titulo">3 Niveles de Dificultad:</strong> <span data-i18n="landing_b1_texto">Desde el modo relajado hasta el contrarreloj extremo.</span></li>
+                <li><strong data-i18n="landing_b2_titulo">Sistema de Récords:</strong> <span data-i18n="landing_b2_texto">Compite contra ti mismo y mejora tu tiempo.</span></li>
+                <li><strong data-i18n="landing_b3_titulo">Guarda tu Progreso:</strong> <span data-i18n="landing_b3_texto">Crea una cuenta y sincroniza tus estadísticas en la nube.</span></li>
+                <li><strong data-i18n="landing_b4_titulo">Múltiples Idiomas:</strong> <span data-i18n="landing_b4_texto">Juega en el idioma que prefieras.</span></li>
             </ul>
         </div>
 
-        <p class="párrafo">¿Estás listo para el desafío? Haz clic en el botón de abajo para comenzar tu entrenamiento mental.</p>
+        <p class="párrafo" data-i18n="landing_cta_texto">¿Estás listo para el desafío? Haz clic en el botón de abajo para comenzar tu entrenamiento mental.</p>
 
         <!-- Llamada a la acción hacia el juego -->
-        <a href="juego.html" class="cta-button">🎮 ¡Jugar Ahora!</a>
+        <a href="juego.html" class="cta-button" data-i18n="landing_boton_jugar">🎮 ¡Jugar Ahora!</a>
     </div>
 
     <div class="footer-landing">
-        <p><a href="privacidad.html">Política de Privacidad</a> | © 2026 Memoria</p>
+        <p>
+            <a href="privacidad.html" data-i18n="politica_privacidad">Política de Privacidad</a> | <span data-i18n="version">© 2026 Memoria</span>
+        </p>
     </div>
 
 </body>
