@@ -94,7 +94,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- Barra de usuario (arriba del menú) -->
 <div class="login">
-        <button id="btn-login-menu" class="btn__menu" data-i18n="Iniciar sesión"><span id="" class="icofont-duotone icofont-sign-in">
+        <button id="btn-login-menu" class="btn__menu" data-i18n="iniciar_sesion"><span id="" class="icofont-duotone icofont-sign-in">
     </span> Iniciar sesión</button>
 
 <div id="user-info-menu" style="display: none; align-items: center; gap: 5px;"></div>
@@ -130,13 +130,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- MODAL: Login / Registro -->
 <div id="modal-login" class="modal-overlay" style="display: none;">
     <div class="modal-card">
-        <h2 id="login-titulo">Iniciar Sesión</h2>
+        <h2 id="login-titulo" data-i18n="iniciar_sesion">Iniciar Sesión</h2>
 
         <!-- Formulario -->
         <form id="form-auth" style="display: flex; flex-direction: column; gap: 12px; margin: 20px 0;">
             <input 
                 type="email" 
                 id="auth-email" 
+                data-i18n-placeholder="correo_electronico"
                 placeholder="Correo electrónico" 
                 required
                 style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 15px;"
@@ -144,6 +145,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <input 
                 type="password" 
                 id="auth-password" 
+                data-i18n-placeholder="contrasena_min"
                 placeholder="Contraseña (mín. 6 caracteres)" 
                 required
                 minlength="6"
@@ -152,11 +154,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <input 
                 type="text" 
                 id="auth-username" 
+                data-i18n-placeholder="nombre_usuario"
                 placeholder="Nombre de usuario (solo al registrarse)" 
                 style="padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 15px; display: none;"
             >
 
-            <button type="submit" id="btn-auth-submit" class="btn" style="margin-top: 5px;">
+            <button type="submit" id="btn-auth-submit" class="btn" data-i18n="entrar" style="margin-top: 5px;">
                 Entrar
             </button>
         </form>
@@ -166,13 +169,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <!-- Alternar entre login y registro -->
         <p style="text-align: center; font-size: 14px;">
-            <span id="auth-cambiar-texto">¿No tienes cuenta?</span>
-            <a href="#" id="auth-cambiar-modo" style="color: #0056b3; font-weight: bold;">
+            <span id="auth-cambiar-texto" data-i18n="no_tienes_cuenta">¿No tienes cuenta?</span>
+            <a href="#" id="auth-cambiar-modo" data-i18n="registrate" style="color: #0056b3; font-weight: bold;">
                 Regístrate
             </a>
         </p>
 
-        <button class="btn-cerrar-modal" style="margin-top: 15px;">Cerrar</button>
+        <button class="btn-cerrar-modal" data-i18n="cerrar" style="margin-top: 15px;">Cerrar</button>
     </div>
 </div>
 
@@ -200,19 +203,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- Opción de Sonido -->
         <div class="setting-item">
             <span data-i18n="sonido">Sonido:</span>
-            <button id="btn-toggle-sonido" class="btn-toggle activo"><i class="icofont-volume-bar"></i> Activado</button>
+            <button id="btn-toggle-sonido" class="btn-toggle activo"><i class="icofont-volume-bar"></i> <span data-i18n="activado">Activado</span></button>
         </div>
 
         <!-- Opción de Dark Mode -->
         <div class="setting-item">
             <span data-i18n="modo">Modo:</span>
-            <button id="btn-toggle-dark"><i class="icofont-moon"></i> Dark</button>
+            <button id="btn-toggle-dark"><i class="icofont-moon"></i> <span data-i18n="dark">Dark</span></button>
         </div>
 
         <!-- Ajustar Animaciones -->
         <div class="setting-item">
             <span data-i18n="animaciones">Animaciones</span>
-            <button id="btn-toggle-animaciones" class="btn-toggle">Activadas</button>
+            <button id="btn-toggle-animaciones" class="btn-toggle" data-i18n="animaciones_activadas">Activadas</button>
         </div>
 
        <!-- Ajustar Idiomas -->
@@ -277,10 +280,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div id="paypal-button-container" style="margin: 15px 0;"></div>
 <!-- Dentro del modal-sin-vidas -->
 <button id="btn-ver-anuncio" class="btn-video" data-i18n="ver_anuncio" style="background: #28a745; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; width: 100%; margin-bottom: 10px; cursor: pointer;">
-    🎬 Ver anuncio y salvar mi progreso
+    🎬 <span data-i18n="ver_anuncio_texto">Ver anuncio y salvar mi progreso</span>
 </button>
 <button id="btn-reiniciar" class="btn-penalizacion" data-i18n="reiniciar_partida" style="background: #e74c3c; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer;">
-    🔄 Reiniciar partida (Perder progreso)
+    🔄 <span data-i18n="reiniciar_partida_texto">Reiniciar partida (Perder progreso)</span>
 </button>
 
         </div>
@@ -290,7 +293,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <footer class="footer" id="footer">
   <!-- ENLACE A LA POLÍTICA DE PRIVACIDAD -->
     <div style="margin: 10px 0 10px 0; font-size: 12px;">
-        <a href="privacidad.html" style="color: #666; text-decoration: underline;">Política de Privacidad</a>
+        <a href="privacidad.html" data-i18n="politica_privacidad" style="color: #666; text-decoration: underline;">Política de Privacidad</a>
     </div>
     <div><p class="pie" data-i18n="version" >2026 © | V 2.9</p></div>
 </footer>
@@ -298,10 +301,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- Modal del sistema dinámico -->
 <div id="modal-sistema" class="modal-overlay" style="display: none;">
     <div class="modal-content">
-        <h2 id="modal-titulo" class="modal-titulo">¡Alerta!</h2>
-        <p id="modal-mensaje" class="modal-mensaje">Este es un mensaje genérico.</p>
-        <button id="modal-boton-secundario" class="modal-boton-secundario" style="display: none;">Jugar de nuevo</button>
-        <button id="modal-boton-principal" class="modal-boton-accion">Aceptar</button>
+        <h2 id="modal-titulo" class="modal-titulo" data-i18n="alerta">¡Alerta!</h2>
+        <p id="modal-mensaje" class="modal-mensaje" data-i18n="mensaje_generico">Este es un mensaje genérico.</p>
+        <button id="modal-boton-secundario" class="modal-boton-secundario" data-i18n="jugar_de_nuevo" style="display: none;">Jugar de nuevo</button>
+        <button id="modal-boton-principal" class="modal-boton-accion" data-i18n="aceptar">Aceptar</button>
     </div>
 </div>
 
