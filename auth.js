@@ -32,31 +32,20 @@ function alternarModo() {
     modoRegistro = !modoRegistro;
     authMensaje.textContent = '';
 
-const paisContainer = document.getElementById('pais-container');
+    const paisContainer = document.getElementById('pais-container'); // <-- AÑADIDO
 
-function alternarModo() {
-    modoRegistro = !modoRegistro;
-    authMensaje.textContent = '';
-    
-    if (modoRegistro) {
-        // ... (tu código anterior)
-        if (paisContainer) paisContainer.style.display = 'block'; // <-- MOSTRAR
-    } else {
-        // ... (tu código anterior)
-        if (paisContainer) paisContainer.style.display = 'none'; // <-- OCULTAR
-    }
-}
-    
     if (modoRegistro) {
         loginTitulo.textContent = 'Crear Cuenta';
         btnAuthSubmit.textContent = 'Registrarme';
         inputUsername.style.display = 'block';
+        if (paisContainer) paisContainer.style.display = 'block'; // <-- MOSTRAR PAIS
         authCambiarTexto.textContent = '¿Ya tienes cuenta?';
         authCambiarModo.textContent = 'Inicia sesión';
     } else {
         loginTitulo.textContent = 'Iniciar Sesión';
         btnAuthSubmit.textContent = 'Entrar';
         inputUsername.style.display = 'none';
+        if (paisContainer) paisContainer.style.display = 'none'; // <-- OCULTAR PAIS
         authCambiarTexto.textContent = '¿No tienes cuenta?';
         authCambiarModo.textContent = 'Regístrate';
     }
@@ -68,11 +57,13 @@ function alternarModo() {
 export function abrirModalLogin() {
     modalLogin.classList.add('activo');
     modalLogin.style.display = 'block';
+    document.body.classList.add('modal-abierto'); // <-- BLOQUEA SCROLL
 }
 
 export function cerrarModalLogin() {
     modalLogin.classList.remove('activo');
     modalLogin.style.display = 'none';
+    document.body.classList.remove('modal-abierto'); // <-- LIBERA SCROLL
     authMensaje.textContent = '';
     formAuth.reset();
 }
@@ -82,15 +73,15 @@ export function cerrarModalLogin() {
 // ==========================================
 formAuth.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const email = inputEmail.value.trim();
     const password = inputPassword.value;
     const username = inputUsername.value.trim();
-    
+
     btnAuthSubmit.disabled = true;
     btnAuthSubmit.textContent = modoRegistro ? 'Registrando...' : 'Entrando...';
     mostrarMensaje('');
-    
+
     try {
         if (modoRegistro) {
             // ---- REGISTRO ----
@@ -98,18 +89,24 @@ formAuth.addEventListener('submit', async (e) => {
                 mostrarMensaje('Por favor, elige un nombre de usuario', 'error');
                 return;
             }
-            
+
+            // 🔥 CAPTURAR EL PAÍS
+            const paisSeleccionado = document.getElementById('auth-pais')?.value || '🌎';
+
             const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-        data: { username: username },
-        emailRedirectTo: 'https://memoria-ymujica.vercel.app' // o la URL donde quieras que vuelva
-    }
-});
-            
+                email,
+                password,
+                options: {
+                    data: { 
+                        username: username,
+                        pais: paisSeleccionado // <-- AÑADIDO
+                    },
+                    emailRedirectTo: 'https://memoria-ymujica.vercel.app'
+                }
+            });
+
             if (error) throw error;
-            
+
             // Supabase por defecto NO da sesión activa hasta confirmar el email
             if (data.user && !data.session) {
                 mostrarMensaje(
@@ -118,18 +115,18 @@ formAuth.addEventListener('submit', async (e) => {
                 );
                 formAuth.reset();
             }
-            
+
         } else {
             // ---- LOGIN ----
             const { data, error } = await supabase.auth.signInWithPassword({
                 email,
                 password
             });
-            
+
             if (error) throw error;
-            
+
             mostrarMensaje('✅ ¡Bienvenido de vuelta!', 'exito');
-            
+
             setTimeout(() => {
                 cerrarModalLogin();
                 actualizarUILogin();
@@ -137,7 +134,7 @@ formAuth.addEventListener('submit', async (e) => {
         }
     } catch (error) {
         console.error('Error auth:', error);
-        
+
         // Traducir errores comunes de Supabase
         let mensajeError = error.message;
         if (mensajeError.includes('Invalid login credentials')) {
@@ -149,7 +146,7 @@ formAuth.addEventListener('submit', async (e) => {
         } else if (mensajeError.includes('Password should be at least')) {
             mensajeError = 'La contraseña debe tener al menos 6 caracteres';
         }
-        
+
         mostrarMensaje(mensajeError, 'error');
     } finally {
         btnAuthSubmit.disabled = false;
@@ -178,7 +175,7 @@ export async function cerrarSesion() {
 export function actualizarUILogin() {
     const btnLoginMenu = document.getElementById('btn-login-menu');
     const userInfo = document.getElementById('user-info-menu');
-    
+
     if (usuarioActual) {
         if (btnLoginMenu) btnLoginMenu.style.display = 'none';
         if (userInfo) {
@@ -209,7 +206,7 @@ export function actualizarUILogin() {
 supabase.auth.onAuthStateChange(async (event, session) => {
     usuarioActual = session?.user || null;
     actualizarUILogin();
-    
+
     if (event === 'SIGNED_IN' && session) {
         // Avisar a main.js que el usuario entró
         document.dispatchEvent(new CustomEvent('usuarioLogueado', { 
