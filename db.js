@@ -14,7 +14,7 @@ export async function guardarStatsEnDB(userId, stats) {
                 mejor_tiempo: stats.mejorTiempo,
                 indice_categoria: stats.indiceCategoriaActual,
                 nivel_actual: stats.nivelActual || 1,
-                pais: stats.pais || '🌎', // <-- NUEVO
+                pais: stats.pais || '🌎', 
                 updated_at: new Date().toISOString()
             });
 
@@ -33,7 +33,7 @@ export async function cargarStatsDesdeDB(userId) {
             .single();
 
         if (error && error.code !== 'PGRST116') throw error;
-        
+
         return data;
     } catch (error) {
         console.error('Error al cargar desde DB:', error.message);
@@ -44,10 +44,10 @@ export async function cargarStatsDesdeDB(userId) {
 // Obtener el Top 10 global
 export async function obtenerTopRanking() {
     try {
-        // 1. Traer los 10 mejores stats
+        // 1. Traer los 10 mejores stats (AHORA CON EL PAÍS)
         const { data: stats, error: err1 } = await supabase
             .from('player_stats')
-            .select('user_id, score_total, victorias, mejor_tiempo')
+            .select('user_id, score_total, victorias, mejor_tiempo, pais') // <-- AÑADIDO 'pais'
             .order('score_total', { ascending: false })
             .limit(10);
 
@@ -77,6 +77,7 @@ export async function obtenerTopRanking() {
         return [];
     }
 }
+
 // Obtener la posición del jugador actual
 export async function obtenerMiPosicion(userId) {
     try {
