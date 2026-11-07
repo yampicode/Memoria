@@ -3,7 +3,7 @@ import { categoriasFiguras } from './categorias.js';
 import { t } from './traducciones.js';
 import { abrirModalLogin, cerrarModalLogin, actualizarUILogin, getUsuarioActual } from './auth.js';
 import { guardarStatsEnDB, cargarStatsDesdeDB, obtenerTopRanking, obtenerMiPosicion } from './db.js';
-import { supabase } from './supabase-client.js'; // <-- IMPORTANTE: Añadido para leer la sesión
+import { supabase } from './supabase-client.js';
 
 // ==========================================
 // SISTEMA DE INTERNACIONALIZACIÓN (i18n)
@@ -878,7 +878,8 @@ document.addEventListener('usuarioLogueado', async (e) => {
         indiceCategoriaActual = Math.max(statsDB.indice_categoria, invitadoNivelCat);
 
         nivelActual = statsDB.nivel_actual || 1;
-        paisUsuario = statsDB.pais || '🌎'; 
+        paisUsuario = statsDB.pais || '🌎';
+        
         console.log("País desde DB:", paisUsuario);
 
         if (invitadoMejorTiempo && (!statsDB.mejor_tiempo || invitadoMejorTiempo < statsDB.mejor_tiempo)) {
@@ -891,7 +892,7 @@ document.addEventListener('usuarioLogueado', async (e) => {
         vidas = statsDB.vidas;
         derrotas = statsDB.derrotas;
 
-        if (invitadoScore > statsDB.score_total || invitadoNivelCat > statsDB.indice_categoria) {
+        if (invitadoScore > statsDB.score_total || invitadoNivelCat > statsDB.indice_categoria || paisUsuario !== statsDB.pais) {
             await guardarStatsEnDB(user.id, {
                 scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual,
                 pais: paisUsuario
@@ -908,10 +909,7 @@ document.addEventListener('usuarioLogueado', async (e) => {
         vidas = parseInt(localStorage.getItem('vidas')) || 7;
         derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
 
-        // 🔥 SOLUCIÓN: Obtener el país directamente de la sesión de Supabase
-        const { data: { session } } = await supabase.auth.getSession();
-        paisUsuario = session?.user?.user_metadata?.pais || user.user_metadata?.pais || '🌎';
-        
+        paisUsuario = user.user_metadata?.pais || '🌎';
         console.log("País detectado para cuenta nueva:", paisUsuario);
 
         await guardarStatsEnDB(user.id, {
@@ -989,7 +987,9 @@ async function abrirModalRanking() {
             const medalla = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
             const nombre = jugador.username || 'Anónimo';
             const record = jugador.mejor_tiempo ? `${jugador.mejor_tiempo}s` : '--';
-            const paisEmoji = jugador.pais || '🌎';
+            
+            // 🔥 CAMBIO AQUÍ: Usamos el valor directo, sin función de conversión
+            const paisEmoji = jugador.pais || '';
 
             html += `
                 <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; font-size: 14px;">
