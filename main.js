@@ -321,7 +321,7 @@ let indiceCategoriaActual = parseInt(localStorage.getItem('indiceCategoriaActual
 
 // --- VARIABLES PARA LOS NIVELES Y PAÍS ---
 let nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
-let paisUsuario = localStorage.getItem('paisUsuario') || '🌎'; // <-- NUEVO
+let paisUsuario = localStorage.getItem('paisUsuario') || '🌎';
 let tiempoMaximo = 60; 
 
 let cartasVolteadas = [];
@@ -339,7 +339,7 @@ async function guardarDatos() {
         await guardarStatsEnDB(usuario.id, {
             scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual,
             nivelActual,
-            pais: paisUsuario // <-- AÑADIDO
+            pais: paisUsuario
         });
     } else {
         localStorage.setItem('scoreTotal', scoreTotal);
@@ -348,7 +348,7 @@ async function guardarDatos() {
         localStorage.setItem('derrotas', derrotas);
         localStorage.setItem('indiceCategoriaActual', indiceCategoriaActual);
         localStorage.setItem('nivelActual', nivelActual);
-        localStorage.setItem('paisUsuario', paisUsuario); // <-- AÑADIDO
+        localStorage.setItem('paisUsuario', paisUsuario);
         if (mejorTiempo) localStorage.setItem('mejorTiempo', mejorTiempo);
     }
 }
@@ -876,7 +876,8 @@ document.addEventListener('usuarioLogueado', async (e) => {
         indiceCategoriaActual = Math.max(statsDB.indice_categoria, invitadoNivelCat);
 
         nivelActual = statsDB.nivel_actual || 1;
-        paisUsuario = statsDB.pais || '🌎'; // <-- CARGAR PAÍS DESDE DB
+        paisUsuario = statsDB.pais || '🌎';
+        console.log("País desde DB:", paisUsuario); // <-- VERIFICACIÓN
 
         if (invitadoMejorTiempo && (!statsDB.mejor_tiempo || invitadoMejorTiempo < statsDB.mejor_tiempo)) {
             mejorTiempo = invitadoMejorTiempo;
@@ -891,7 +892,7 @@ document.addEventListener('usuarioLogueado', async (e) => {
         if (invitadoScore > statsDB.score_total || invitadoNivelCat > statsDB.indice_categoria) {
             await guardarStatsEnDB(user.id, {
                 scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual,
-                pais: paisUsuario // <-- GUARDAR PAÍS
+                pais: paisUsuario
             });
         }
 
@@ -899,7 +900,8 @@ document.addEventListener('usuarioLogueado', async (e) => {
         scoreTotal = invitadoScore;
         indiceCategoriaActual = invitadoNivelCat;
         nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
-        paisUsuario = user.user_metadata?.pais || localStorage.getItem('paisUsuario') || '🌎'; // <-- PAÍS DEL REGISTRO
+        paisUsuario = user.user_metadata?.pais || localStorage.getItem('paisUsuario') || '🌎';
+        console.log("País desde Registro:", paisUsuario); // <-- VERIFICACIÓN
         mejorTiempo = invitadoMejorTiempo;
         victorias = invitadoVictorias;
         vidas = parseInt(localStorage.getItem('vidas')) || 7;
@@ -907,7 +909,7 @@ document.addEventListener('usuarioLogueado', async (e) => {
 
         await guardarStatsEnDB(user.id, {
             scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual,
-            pais: paisUsuario // <-- GUARDAR PAÍS
+            pais: paisUsuario
         });
     }
 
@@ -936,7 +938,7 @@ document.addEventListener('usuarioDeslogueado', async () => {
     if (usuario) {
         await guardarStatsEnDB(usuario.id, {
             scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual,
-            pais: paisUsuario // <-- GUARDAR PAÍS
+            pais: paisUsuario
         });
     }
 
@@ -947,7 +949,7 @@ document.addEventListener('usuarioDeslogueado', async () => {
     mejorTiempo = parseInt(localStorage.getItem('mejorTiempo')) || null;
     indiceCategoriaActual = parseInt(localStorage.getItem('indiceCategoriaActual')) || 0;
     nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
-    paisUsuario = localStorage.getItem('paisUsuario') || '🌎'; // <-- CARGAR PAÍS INVITADO
+    paisUsuario = localStorage.getItem('paisUsuario') || '🌎';
 
     actualizarUI();
     crearTablero();
@@ -980,7 +982,7 @@ async function abrirModalRanking() {
             const medalla = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
             const nombre = jugador.username || 'Anónimo';
             const record = jugador.mejor_tiempo ? `${jugador.mejor_tiempo}s` : '--';
-            const paisEmoji = jugador.pais || '🌎'; // <-- BANDERA
+            const paisEmoji = jugador.pais || '🌎';
 
             html += `
                 <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; font-size: 14px;">
