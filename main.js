@@ -3,6 +3,7 @@ import { categoriasFiguras } from './categorias.js';
 import { t } from './traducciones.js';
 import { abrirModalLogin, cerrarModalLogin, actualizarUILogin, getUsuarioActual } from './auth.js';
 import { guardarStatsEnDB, cargarStatsDesdeDB, obtenerTopRanking, obtenerMiPosicion } from './db.js';
+import { supabase } from './supabase-client.js'; // <-- IMPORTANTE: Añadido para leer la sesión
 
 // ==========================================
 // SISTEMA DE INTERNACIONALIZACIÓN (i18n)
@@ -872,12 +873,13 @@ document.addEventListener('usuarioLogueado', async (e) => {
     const statsDB = await cargarStatsDesdeDB(user.id);
 
     if (statsDB) {
+        // --- CUENTA EXISTENTE ---
         scoreTotal = Math.max(statsDB.score_total, invitadoScore);
         indiceCategoriaActual = Math.max(statsDB.indice_categoria, invitadoNivelCat);
 
         nivelActual = statsDB.nivel_actual || 1;
-        paisUsuario = statsDB.pais || '🌎';
-        console.log("País desde DB:", paisUsuario); // <-- VERIFICACIÓN
+        paisUsuario = statsDB.pais || '🌎'; 
+        console.log("País desde DB:", paisUsuario);
 
         if (invitadoMejorTiempo && (!statsDB.mejor_tiempo || invitadoMejorTiempo < statsDB.mejor_tiempo)) {
             mejorTiempo = invitadoMejorTiempo;
@@ -897,15 +899,20 @@ document.addEventListener('usuarioLogueado', async (e) => {
         }
 
     } else {
+        // --- CUENTA NUEVA ---
         scoreTotal = invitadoScore;
         indiceCategoriaActual = invitadoNivelCat;
         nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
-        paisUsuario = user.user_metadata?.pais || localStorage.getItem('paisUsuario') || '🌎';
-        console.log("País desde Registro:", paisUsuario); // <-- VERIFICACIÓN
         mejorTiempo = invitadoMejorTiempo;
         victorias = invitadoVictorias;
         vidas = parseInt(localStorage.getItem('vidas')) || 7;
         derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
+
+        // 🔥 SOLUCIÓN: Obtener el país directamente de la sesión de Supabase
+        const { data: { session } } = await supabase.auth.getSession();
+        paisUsuario = session?.user?.user_metadata?.pais || user.user_metadata?.pais || '🌎';
+        
+        console.log("País detectado para cuenta nueva:", paisUsuario);
 
         await guardarStatsEnDB(user.id, {
             scoreTotal, vidas, victorias, derrotas, mejorTiempo, indiceCategoriaActual, nivelActual,
