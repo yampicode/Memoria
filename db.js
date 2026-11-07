@@ -42,18 +42,18 @@ export async function cargarStatsDesdeDB(userId) {
 }
 
 // Obtener el Top 10 global
-export async function export async function obtenerTopRanking() {
+export async function obtenerTopRanking() {
     try {
         const { data: stats, error: err1 } = await supabase
             .from('player_stats')
-            .select('user_id, score_total, victorias, mejor_tiempo, pais') // <-- Asegúrate de tener 'pais' aquí
+            .select('user_id, score_total, victorias, mejor_tiempo, pais')
             .order('score_total', { ascending: false })
             .limit(10);
 
         if (err1) throw err1;
         if (!stats || stats.length === 0) return [];
 
-        console.log("Datos crudos del ranking desde Supabase:", stats); // <-- VERIFICACIÓN
+        console.log("Datos crudos del ranking desde Supabase:", stats);
 
         const userIds = stats.map(s => s.user_id);
         const { data: perfiles, error: err2 } = await supabase
