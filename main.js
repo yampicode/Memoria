@@ -880,7 +880,7 @@ document.addEventListener('usuarioLogueado', async (e) => {
         nivelActual = statsDB.nivel_actual || 1;
         
         // Leer país de DB o del user_metadata como respaldo
-        paisUsuario = statsDB.pais || user.user_metadata?.pais || '🌎';
+        paisUsuario = statsDB.pais || user.user_metadata?.pais || '';
         
         console.log("País desde DB:", paisUsuario);
 
@@ -913,7 +913,7 @@ document.addEventListener('usuarioLogueado', async (e) => {
         derrotas = parseInt(localStorage.getItem('derrotas')) || 0;
 
         // 🔥 FORZAR LECTURA DEL PAÍS DESDE EL USER_METADATA
-        paisUsuario = user.user_metadata?.pais || '🌎';
+        paisUsuario = user.user_metadata?.pais || '';
         console.log("País detectado para cuenta nueva:", paisUsuario);
 
         await guardarStatsEnDB(user.id, {
