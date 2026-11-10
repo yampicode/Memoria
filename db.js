@@ -14,7 +14,7 @@ export async function guardarStatsEnDB(userId, stats) {
                 mejor_tiempo: stats.mejorTiempo,
                 indice_categoria: stats.indiceCategoriaActual,
                 nivel_actual: stats.nivelActual || 1,
-                pais: stats.pais || '🌎', 
+                pais: stats.pais || '', 
                 updated_at: new Date().toISOString()
             });
 
