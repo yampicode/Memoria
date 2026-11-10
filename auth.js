@@ -91,7 +91,7 @@ formAuth.addEventListener('submit', async (e) => {
             }
 
             // 🔥 CAPTURAR EL PAÍS
-            const paisSeleccionado = document.getElementById('auth-pais')?.value || '🌎';
+            const paisSeleccionado = document.getElementById('auth-pais')?.value || '';
 
             const { data, error } = await supabase.auth.signUp({
                 email,
