@@ -322,7 +322,7 @@ let indiceCategoriaActual = parseInt(localStorage.getItem('indiceCategoriaActual
 
 // --- VARIABLES PARA LOS NIVELES Y PAÍS ---
 let nivelActual = parseInt(localStorage.getItem('nivelActual')) || 1;
-let paisUsuario = localStorage.getItem('paisUsuario') || '🌎';
+let paisUsuario = localStorage.getItem('paisUsuario') || '';
 let tiempoMaximo = 60; 
 
 let cartasVolteadas = [];
