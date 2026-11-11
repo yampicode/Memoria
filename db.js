@@ -47,13 +47,13 @@ export async function obtenerTopRanking() {
         const { data: stats, error: err1 } = await supabase
             .from('player_stats')
             .select('user_id, score_total, victorias, mejor_tiempo, pais')
+            .or('score_total.gt.0,mejor_tiempo.not.is.null') // <-- FILTRO AÑADIDO
             .order('score_total', { ascending: false })
+            .order('mejor_tiempo', { ascending: true, nullsFirst: false })
             .limit(10);
 
         if (err1) throw err1;
         if (!stats || stats.length === 0) return [];
-
-        console.log("Datos crudos del ranking desde Supabase:", stats);
 
         const userIds = stats.map(s => s.user_id);
         const { data: perfiles, error: err2 } = await supabase
@@ -80,7 +80,7 @@ export async function obtenerTopRanking() {
 // Obtener la posición del jugador actual
 export async function obtenerMiPosicion(userId) {
     try {
-        // 1. Obtener mis datos (puntos y tiempo)
+        // 1. Obtener mis datos
         const { data: miData, error: err1 } = await supabase
             .from('player_stats')
             .select('score_total, mejor_tiempo')
@@ -89,39 +89,21 @@ export async function obtenerMiPosicion(userId) {
 
         if (err1 || !miData) return null;
 
-        // 2. Contar cuántos tienen MÁS puntos que yo
-        const { count: countPuntos, error: err2 } = await supabase
-            .from('player_stats')
-            .select('*', { count: 'exact', head: true })
-            .gt('score_total', miData.score_total);
-
-        if (err2) throw err2;
-
-        // 3. Contar cuántos tienen LOS MISMOS puntos pero MEJOR tiempo
-        let countEmpate = 0;
-        if (miData.mejor_tiempo !== null) {
-            const { count: countTie, error: err3 } = await supabase
-                .from('player_stats')
-                .select('*', { count: 'exact', head: true })
-                .eq('score_total', miData.score_total)
-                .lt('mejor_tiempo', miData.mejor_tiempo);
-            
-            if (!err3) countEmpate = countTie || 0;
-        } else {
-            // Si no tengo tiempo, cuento a los que tienen el mismo puntaje y SÍ tienen tiempo
-            const { count: countTie, error: err3 } = await supabase
-                .from('player_stats')
-                .select('*', { count: 'exact', head: true })
-                .eq('score_total', miData.score_total)
-                .not('mejor_tiempo', 'is', null);
-            
-            if (!err3) countEmpate = countTie || 0;
+        // 2. Si no he jugado (0 puntos y sin tiempo), no tengo posición
+        if (miData.score_total === 0 && miData.mejor_tiempo === null) {
+            return null;
         }
 
-        // 4. Mi posición real es: los que tienen más puntos + los que empatan con mejor tiempo + 1
+        // 3. Calcular mi posición real con la función SQL
+        const { data: posData, error: err2 } = await supabase
+            .rpc('obtener_mi_posicion', { uid: userId });
+
+        if (err2) throw err2;
+        if (!posData || posData.length === 0) return null;
+
         return { 
-            posicion: (countPuntos || 0) + countEmpate + 1, 
-            score: miData.score_total 
+            posicion: posData[0].posicion, 
+            score: posData[0].score 
         };
     } catch (error) {
         console.error('Error al calcular posición:', error.message);
