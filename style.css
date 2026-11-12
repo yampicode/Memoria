@@ -19,7 +19,6 @@ body {
     align-items: center;
     font-size: 100%;
     font-family: "VAG Rounded Next Regular", sans-serif;
-    padding: 5px 10px;
     background-color: var(--color-claro);
 }
 
@@ -113,9 +112,59 @@ filter: drop-shadow( 0 4px 6px var(--color-claro));
     margin: 0 0 10px;
 }
 
+  .header-logo {
+      display: block;
+            width: 250px;
+            margin:0 auto;
+        }
+
+.titulo {
+            color: var(--color-oscuro);
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+ .parrafo {
+            text-align: left;
+        }
+        
+
+.subtitulo,
+h3 {
+    text-align: center;
+}
+.parrafo b {
+    color: var(--color-oscuro);
+    font-weight: 800;
+}
+
+  .parrafo__accion {
+            color: var(--color-oscuro);
+            text-align: center;
+        }
+        .cta-button {
+            display: block;
+            background-color: var(--color-primary); 
+            color: white;
+            margin: 0 auto;
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            width:300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,150,136,0.3);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .cta-button:hover {
+            background-color: var(--color-secundary);
+            transform: translateY(-2px);
+        }
 .btn,
 .btn__menu {
-    display:;
+    display:block;
     color: #fff7e7;
     background-color: #25b7b6;
     border: 4px double #fff;
@@ -273,6 +322,19 @@ body.sin-animaciones .modal-content,
 body.sin-animaciones .modal-overlay {
     transition: none !important;
 }
+
+    .footer-landingpage {
+          background: var(--color-yellow);
+          width: 100%;
+      }
+        .footer-landing {
+            font-size: 14px;
+            color: #777;
+        }
+        .footer-landing a {
+            color: #0056b3;
+            text-decoration: none;
+        }
 
 .btn-apoyo {
     display: inline-flex;
