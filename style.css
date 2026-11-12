@@ -30,7 +30,7 @@ body.modal-abierto {
 /* Estilos cuando se activa el Modo Oscuro */
 body.dark-mode {
     background-color: var(--color-oscuro);
-    color: var(--color-oscuro);
+    color: var(--color-primary);
 }
 
 /* Puedes adaptar las tarjetas o contenedores si es necesario */
