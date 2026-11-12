@@ -57,31 +57,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <!-- ESTILOS ESPECÍFICOS PARA LA LANDING PAGE -->
     <style>
-        body {
-            background-color: #fff7e7; 
-            color: #333;
-            font-family: "VAG Rounded Next Regular", sans-serif;
-            font-weight: 600;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        
         .landing-container {
             max-width: 800px;
             padding: 20px;
             text-align: center;
         }
-        .header-logo {
-            width: 200px;
-            margin-bottom: 0;
-        }
-        h1 {
-            color: var(--color-oscuro);
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
+      
+        
         p {
             font-size: 18px;
             line-height: 1.6;
@@ -97,6 +80,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             margin-bottom: 30px;
         }
         .benefits h2 {
+            text-align: center;
             color: var(--color-oscuro);
             font-size: 22px;
             margin-top: 0;
@@ -109,50 +93,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             margin-bottom: 10px;
             font-size: 16px;
         }
-        .párrafo {
-            color: var(--color-oscuro);
-        }
-        .cta-button {
-            display: inline-block;
-            background-color: var(--color-primary); 
-            color: white;
-            padding: 15px 40px;
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,150,136,0.3);
-            transition: transform 0.2s, background-color 0.2s;
-        }
-        .cta-button:hover {
-            background-color: var(--color-secundary);
-            transform: translateY(-2px);
-        }
-        .footer-landing {
-            margin-top: 40px;
-            font-size: 14px;
-            color: #777;
-        }
-        .footer-landing a {
-            color: #0056b3;
-            text-decoration: none;
-        }
+  
     </style>
 </head>
-<body>
-
+<body class="body__landing">
+<main>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NGZ45QMT"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-    <div class="landing-container">
+    <section class="contenedor">
         <!-- Logo -->
         <img src="memoria.svg" alt="Logo de Memoria" class="header-logo">
 
-        <h1 data-i18n="landing_titulo">Entrena tu Mente con Memoria</h1>
+        <h1 data-i18n="landing_titulo" class="titulo">Entrena tu Mente con Memoria</h1>
 
-        <p data-i18n="landing_parrafo1">
+        <p data-i18n="landing_parrafo1" class="parrafo__accion">
             Bienvenido a <strong>Memoria</strong>, el juego interactivo diseñado para poner a prueba tu concentración y agilidad mental. No es solo un pasatiempo; es una forma divertida de ejercitar tu cerebro.
         </p>
 
@@ -164,22 +121,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <li><strong data-i18n="landing_b3_titulo">Guarda tu Progreso:</strong> <span data-i18n="landing_b3_texto">Crea una cuenta y sincroniza tus estadísticas en la nube.</span></li>
                 <li><strong data-i18n="landing_b4_titulo">Múltiples Idiomas:</strong> <span data-i18n="landing_b4_texto">Juega en el idioma que prefieras.</span></li>
             </ul>
+            </div>
+        </section>
+           <section class="como__jugar" id="como-jugar">
+               <div class="contenedor">
+        <div class="instrucciones" id="instrucciones">
+            <h2 class="subtitulo">¿Cómo Jugar</h2>
+            <h3 class="">¡Pon a prueba tu memoria, acumula aciertos y mantén tus vidas a salvo!</h3>
+            <br />
+         
+            <p class="parrafo">
+<b>Voltea las cartas:</b> Haz clic en dos cartas para descubrir los iconos ocultos en el tablero.
+   </p>
+   <p class="parrafo">
+<b>Haz parejas y gana vidas:</b> Cada vez que encuentres una pareja correcta, ganarás vidas como recompensa para seguir jugando.
+   </p>
+   <p class="parrafo">
+<b>Cuidado con los errores:</b> Si las cartas no coinciden, perderás una vida. Tienes un límite inicial de 7 vidas. Si te quedas a cero, podrás ver un anuncio rápido para recuperarlas y continuar exactamente donde ibas.
+   </p>
+<p class="parrafo">
+<b>Objetivo:</b> Voltea las cartas de dos en dos para encontrar las parejas idénticas antes de que se te acaben las 7 vidas.</p>
         </div>
-
-        <p class="párrafo" data-i18n="landing_cta_texto">¿Estás listo para el desafío? Haz clic en el botón de abajo para comenzar tu entrenamiento mental.</p>
+ 
+        <p class="parrafo__accion" data-i18n="landing_cta_texto">¿Estás listo para el desafío? Haz clic en el botón de abajo para comenzar tu entrenamiento mental.</p>
 
         <!-- Llamada a la acción hacia el juego -->
         <a href="juego.html" class="cta-button" data-i18n="landing_boton_jugar">🎮 ¡Jugar Ahora!</a>
     </div>
-
-    <div class="footer-landing">
+     </section>
+  </main>
+    <footer class="footer-landingpage">
+        
+              <div class=" contenedor">
         <p>
+            
 <a href="javascript:window.googlefc.showRevocationMessage();">Configuración de privacidad y cookies</a>
 </br>
 </br>
             <a href="privacidad.html" data-i18n="politica_privacidad">Política de Privacidad</a> | <span data-i18n="version">© 2026 Memoria</span>
         </p>
-    </div>
+        </div>
+    </footer>
+    
+ 
 <script type="module" src="main.js"></script>
 </body>
 </html>
