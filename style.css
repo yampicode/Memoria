@@ -133,6 +133,7 @@ filter: drop-shadow( 0 4px 6px var(--color-claro));
 .subtitulo,
 h3 {
     text-align: center;
+color: var(--color-oscuro)
 }
 .parrafo b {
     color: var(--color-oscuro);
